@@ -7,4 +7,5 @@ class AppRoutes {
   static const home = '/home'; // 首页
   static const message = '/message'; // 聊天页面
   static const mine = '/mine'; // 我的
+  // static const signUpEmail = '/sign_up_email';//邮箱注册页面
 }

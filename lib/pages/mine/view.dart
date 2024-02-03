@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'index.dart';
 import 'widgets/widgets.dart';
+import 'login_Pages/login.dart';
 
 class MinePage extends GetView<MineController> {
   const MinePage({Key? key}) : super(key: key);
@@ -48,18 +49,23 @@ class MinePage extends GetView<MineController> {
               trailing: const Icon(Icons.chevron_right),
               onTap: () {},
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.logout_outlined,
-                color: Colors.red,
+              ListTile(
+                leading: const Icon(
+                  Icons.logout_outlined,
+                  color: Colors.red,
+                ),
+                title: const Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.red),
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context)=>LoginScreen()),
+                  );
+                },
               ),
-              title: const Text(
-                "Logout",
-                style: TextStyle(color: Colors.red),
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
-            ),
           ],
         ),
       ),
