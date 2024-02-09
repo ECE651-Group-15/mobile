@@ -1,3 +1,4 @@
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -72,7 +73,7 @@ class HomePage extends GetView<HomeController> {
       appBar: AppBar(title: const Text("Home")),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("TODO: implement create post page");
+          Get.toNamed(AppRoutes.createPost);
         },
         child: const Icon(Icons.add),
       ),
@@ -97,9 +98,17 @@ class HomePage extends GetView<HomeController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: Image.network(
-                          items[index]['image']!,
-                          fit: BoxFit.cover,
+                        child: IconButton(
+                          icon: Image.network(
+                            items[index]['image']!,
+                            fit: BoxFit.cover,
+                          ),
+                          iconSize: 50,
+                          onPressed: () {
+                            String imageUrl = items[index]['image']!;
+                            Get.toNamed(AppRoutes.imagePost,
+                                arguments: imageUrl);
+                          },
                         ),
                       ),
                     ),
