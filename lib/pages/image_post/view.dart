@@ -10,6 +10,38 @@ class ImagePostPage extends GetView<ImagePostController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Expanded(
+          child: SingleChildScrollView(
+              child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.25,
+                width: double.infinity,
+                child: Image.network(
+                  'https://picsum.photos/400/300',
+                  //fit: BoxFit.cover,
+                ),
+              ),
+            ],
+          )),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: ElevatedButton(
+            onPressed: () {
+              Get.toNamed(AppRoutes.home);
+              // Add your logic to navigate or perform actions on button press
+            },
+            child: const Text(
+              'View Seller Listings',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        /*
         Container(
           height: MediaQuery.of(context).size.height * 0.25,
           width: double.infinity,
@@ -49,6 +81,7 @@ class ImagePostPage extends GetView<ImagePostController> {
         ),
         const Padding(
           padding: EdgeInsets.all(16),
+          
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,6 +122,7 @@ class ImagePostPage extends GetView<ImagePostController> {
         // Button to view seller listings
         Padding(
           padding: const EdgeInsets.all(16),
+
           child: ElevatedButton(
             onPressed: () {
               Get.toNamed(AppRoutes.home);
@@ -103,6 +137,7 @@ class ImagePostPage extends GetView<ImagePostController> {
             ),
           ),
         ),
+        */
       ],
     );
   }
