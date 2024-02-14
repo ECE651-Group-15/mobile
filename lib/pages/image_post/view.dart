@@ -7,30 +7,34 @@ class ImagePostPage extends GetView<ImagePostController> {
   const ImagePostPage({Key? key}) : super(key: key);
 
   Widget _buildView(BuildContext context) {
+    const edgeInsetsPadding = EdgeInsets.only(left: 16.0, right: 16.0);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
           child: SingleChildScrollView(
-              child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.25,
-                width: double.infinity,
-                child: Image.network(
-                  'https://picsum.photos/400/300',
-                  //fit: BoxFit.cover,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Image.network('https://picsum.photos/500/600'),
                 ),
-              ),
-            ],
-          )),
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('This is an image'),
+                )
+              ],
+            ),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
             onPressed: () {
               Get.toNamed(AppRoutes.home);
-              // Add your logic to navigate or perform actions on button press
             },
             child: const Text(
               'View Seller Listings',
@@ -41,103 +45,6 @@ class ImagePostPage extends GetView<ImagePostController> {
             ),
           ),
         ),
-        /*
-        Container(
-          height: MediaQuery.of(context).size.height * 0.25,
-          width: double.infinity,
-          child: Image.network(
-            'https://picsum.photos/400/300',
-            //fit: BoxFit.cover,
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Description',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'This is an image',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              Text(
-                'Price: \$450',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(16),
-          
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Highlights',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text('For Sale By: Owner'),
-              Text('Condition: Used - Like new'),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Additional Details on Object ',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'Payment: Only  Accepted ✔',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-            ],
-          ),
-        ),
-        // Button to view seller listings
-        Padding(
-          padding: const EdgeInsets.all(16),
-
-          child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed(AppRoutes.home);
-              // Add your logic to navigate or perform actions on button press
-            },
-            child: const Text(
-              'View Seller Listings',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-        */
       ],
     );
   }

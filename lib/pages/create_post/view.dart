@@ -25,10 +25,7 @@ class CreatePostPage extends GetView<CreatePostController> {
             title: const Text("Create Post"),
             actions: [
               TextButton(
-                onPressed: () {
-                  // Handle the action when the "Create" button is pressed.
-                  // Add your logic here.
-                },
+                onPressed: () {},
                 child: Text(
                   "Create",
                   style: TextStyle(
