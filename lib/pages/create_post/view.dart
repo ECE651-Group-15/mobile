@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,11 +27,10 @@ class CreatePostPage extends GetView<CreatePostController> {
             actions: [
               TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "Create",
                   style: TextStyle(
-                    color: const Color.fromARGB(
-                        255, 250, 7, 7), // Customize the text color
+                    color: Color.fromARGB(255, 250, 7, 7),
                   ),
                 ),
               ),
@@ -55,12 +55,56 @@ class CreatePostPage extends GetView<CreatePostController> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  ElevatedButton(
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: "Category",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: "Price",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    icon: Icon(
+                      Icons.add_a_photo,
+                      size: 20,
+                    ),
+                    label: Text('Upload photo'),
                     onPressed: () async {
                       final XFile? image =
                           await picker.pickImage(source: ImageSource.gallery);
                     },
-                    child: Text("Choose an Image"),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(double.infinity, 56),
+                      backgroundColor: Colors.grey[300],
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Save Draft"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.home);
+                        },
+                        child: const Text("Go back to main page"),
+                      ),
+                    ],
                   ),
                 ],
               ),
