@@ -7,6 +7,8 @@ class CreatePostController extends GetxController {
 
   final state = CreatePostState();
 
+  // Client;
+
   // tap
   void handleTap(int index) {
     Get.snackbar(
@@ -15,10 +17,18 @@ class CreatePostController extends GetxController {
     );
   }
 
+  void handleUploadImage() {
+    // client.putObject
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+
+    // request backend authorizagion service
+    // get accessKey .....
+    // Client initializae
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

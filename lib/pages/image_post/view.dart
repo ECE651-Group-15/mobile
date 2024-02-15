@@ -56,7 +56,7 @@ class ImagePostPage extends GetView<ImagePostController> {
               Get.toNamed(AppRoutes.home);
             },
             child: const Text(
-              'View Seller Listings',
+              'Back to home page',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

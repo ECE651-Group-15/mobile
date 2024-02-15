@@ -78,6 +78,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                     onPressed: () async {
                       final XFile? image =
                           await picker.pickImage(source: ImageSource.gallery);
+                      // this.handleUploadImage(image);
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 56),
