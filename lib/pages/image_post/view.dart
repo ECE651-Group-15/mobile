@@ -23,9 +23,28 @@ class ImagePostPage extends GetView<ImagePostController> {
                   child: Image.network('https://picsum.photos/500/600'),
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Text('This is an image'),
-                )
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Tokeshimi Mirror'),
+                          Text('\$90'),
+                          Divider(color: Color.fromARGB(17, 0, 0, 0)),
+                          Text('Description',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text('This is an Image'),
+                          Divider(color: Color.fromARGB(17, 0, 0, 0)),
+                          Text('Highlights',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text('For Sale By:              Owner'),
+                          Divider(color: Color.fromARGB(17, 0, 0, 0)),
+                          Text('Location',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15)),
+                          Text('Ottawa'),
+                        ]))
               ],
             ),
           ),
