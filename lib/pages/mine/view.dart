@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'index.dart';
 import 'widgets/widgets.dart';
 import 'login_Pages/login.dart';
-
+import 'package:exchange/pages/mine/My_Stars_Page/Stars_Page.dart';
 class MinePage extends GetView<MineController> {
   const MinePage({Key? key}) : super(key: key);
 
@@ -34,7 +34,12 @@ class MinePage extends GetView<MineController> {
               leading: const Icon(Icons.star_border_outlined),
               title: const Text("My Stars"),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context)=>const StarsPage()),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.shopping_bag_outlined),

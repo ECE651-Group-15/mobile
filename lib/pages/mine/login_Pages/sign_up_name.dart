@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
 import 'sign_up_password.dart'; // 确保这个文件存在并且路径正确
+class NameInputScreen extends StatefulWidget {
+  final String email;
+  NameInputScreen({Key? key, required this.email}) : super(key: key);
+  @override
+  _NameInputScreenState createState() => _NameInputScreenState();
+}
 
-class NameInputScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>(); // 添加一个FormKey用于验证
+class _NameInputScreenState extends State<NameInputScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // 移动FormKey到State类
+  final TextEditingController _nameController = TextEditingController();
+  late final String name ;
 
+  @override
+  void dispose() {
+    _nameController.dispose(); // 正确地在State类中释放控制器资源
+    super.dispose();
+  }
+// class NameInputScreen extends StatefulWidget {
+//   final _formKey = GlobalKey<FormState>(); // 添加一个FormKey用于验证
+//   TextEditingController _nameController = TextEditingController();
+//   @override
+//   void dispose() {
+//     _nameController.dispose(); // 释放控制器资源
+//     super.dispose();
+//   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +55,7 @@ class NameInputScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextFormField( // 使用TextFormField代替TextField
+                controller: _nameController,
                 keyboardType: TextInputType.name,
                 decoration: InputDecoration(
                   hintText: 'Name',
@@ -55,10 +77,11 @@ class NameInputScreen extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) { // 当点击按钮时，验证表单
+                  if (_formKey.currentState!.validate()) {
+                    name = _nameController.text;// 当点击按钮时，验证表单
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignUpPassword()),
+                      MaterialPageRoute(builder: (context) => SignUpPassword(email: widget.email,name: name,)),
                     );
                   }
                 },

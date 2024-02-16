@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'sign_up_name.dart';
 
 class EmailInputScreen extends StatefulWidget {
+
   @override
   _EmailInputScreenState createState() => _EmailInputScreenState();
 }
@@ -9,7 +10,7 @@ class EmailInputScreen extends StatefulWidget {
 class _EmailInputScreenState extends State<EmailInputScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-
+  late final String email;
   bool isValidEmail(String email) {
     // 使用正则表达式来验证电子邮件地址的有效性
     return RegExp(r'^\S+@\S+\.\S+$').hasMatch(email);
@@ -77,8 +78,9 @@ class _EmailInputScreenState extends State<EmailInputScreen> {
                 onPressed: () {
                   // 只有当表单验证通过时，才会导航
                   if (_formKey.currentState!.validate()) {
+                    email=_emailController.text;
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NameInputScreen()));
+                        MaterialPageRoute(builder: (context) => NameInputScreen( email: email)));
                   }
                 },
                 style: ElevatedButton.styleFrom(
