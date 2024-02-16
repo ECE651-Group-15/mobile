@@ -1,6 +1,10 @@
 import 'package:exchange/pages/application/bindings.dart';
 import 'package:exchange/pages/application/view.dart';
+import 'package:exchange/pages/create_post/bindings.dart';
+import 'package:exchange/pages/create_post/view.dart';
 import 'package:exchange/pages/home/index.dart';
+import 'package:exchange/pages/image_post/bindings.dart';
+import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/message/index.dart';
 import 'package:exchange/pages/mine/index.dart';
 import 'package:exchange/pages/mine/login_Pages/login.dart';
@@ -60,10 +64,19 @@ class AppPages {
       binding: MineBinding(),
     ),
 
+    GetPage(
+      name: AppRoutes.createPost,
+      page: () => CreatePostPage(),
+      binding: CreatePostBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.imagePost,
+      page: () => ImagePostPage(),
+      binding: ImagePostBinding(),
+    ),
     GetPage(name: AppRoutes.login,
         page: ()=>  LoginScreen(),
     ),
-
     // GetPage(
     //     name: AppRoutes.signUpEmail,
     //     page: ()=> EmailInputScreen(),

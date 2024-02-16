@@ -1,3 +1,5 @@
+import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/pages/mine/my_post/My_Post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +30,12 @@ class MinePage extends GetView<MineController> {
               leading: const Icon(Icons.post_add_outlined),
               title: const Text("My Post"),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MyPostPage()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.star_border_outlined),

@@ -2,11 +2,11 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'index.dart';
-import 'widgets/widgets.dart';
+import 'package:exchange/pages/home/index.dart';
+import 'package:exchange/pages/home/widgets/widgets.dart';
 
-class HomePage extends GetView<HomeController> {
-  const HomePage({Key? key}) : super(key: key);
+class MyPostPage extends GetView<HomeController> {
+  const MyPostPage({Key? key}) : super(key: key);
 
   // 主视图
   Widget _buildView() {
@@ -70,7 +70,7 @@ class HomePage extends GetView<HomeController> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Home")),
+      appBar: AppBar(title: const Text("My Post")),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.toNamed(AppRoutes.createPost);
