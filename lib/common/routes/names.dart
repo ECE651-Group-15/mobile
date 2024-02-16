@@ -11,4 +11,5 @@ class AppRoutes {
   static const createPost = '/create_post'; // 创建post
   static const imagePost = '/image_post'; //view post
   //static const myPost = '/my_post'; // view my own post
+  // static const signUpEmail = '/sign_up_email';//邮箱注册页面
 }

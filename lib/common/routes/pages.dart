@@ -7,9 +7,10 @@ import 'package:exchange/pages/image_post/bindings.dart';
 import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/message/index.dart';
 import 'package:exchange/pages/mine/index.dart';
+import 'package:exchange/pages/mine/login_Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
 import 'routes.dart';
 
 class AppPages {
@@ -62,6 +63,7 @@ class AppPages {
       page: () => const MinePage(),
       binding: MineBinding(),
     ),
+
     GetPage(
       name: AppRoutes.createPost,
       page: () => CreatePostPage(),
@@ -72,6 +74,13 @@ class AppPages {
       page: () => ImagePostPage(),
       binding: ImagePostBinding(),
     ),
+    GetPage(name: AppRoutes.login,
+        page: ()=>  LoginScreen(),
+    ),
+    // GetPage(
+    //     name: AppRoutes.signUpEmail,
+    //     page: ()=> EmailInputScreen(),
+    // ),
   ];
 
 // static final unknownRoute = GetPage(
