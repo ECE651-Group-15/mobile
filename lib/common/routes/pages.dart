@@ -3,9 +3,10 @@ import 'package:exchange/pages/application/view.dart';
 import 'package:exchange/pages/home/index.dart';
 import 'package:exchange/pages/message/index.dart';
 import 'package:exchange/pages/mine/index.dart';
+import 'package:exchange/pages/mine/login_Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
 import 'routes.dart';
 
 class AppPages {
@@ -58,6 +59,15 @@ class AppPages {
       page: () => const MinePage(),
       binding: MineBinding(),
     ),
+
+    GetPage(name: AppRoutes.login,
+        page: ()=>  LoginScreen(),
+    ),
+
+    // GetPage(
+    //     name: AppRoutes.signUpEmail,
+    //     page: ()=> EmailInputScreen(),
+    // ),
   ];
 
 // static final unknownRoute = GetPage(
