@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpPassword> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: CheckboxListTile(
-                    title: Text(
+                    title: const Text(
                         "I understand and agree that my personal information will be processed in accordance with the Privacy Policy."),
                     value: _agreedToPrivacy,
                     onChanged: (newValue) {
@@ -159,15 +159,15 @@ class _SignUpScreenState extends State<SignUpPassword> {
                       print(response.reasonPhrase);
                     }
                   },
-                  child: Text(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    backgroundColor : Color(0xFF00008B), // match_parent width
+                  ),
+                  child: const Text(
                       'Sign up',
                   style: TextStyle(
                     color: Colors.white,
                   ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor : Color(0xFF00008B), // match_parent width
                   ),
                 ),
               ],
