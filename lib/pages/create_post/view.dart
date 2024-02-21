@@ -12,7 +12,9 @@ class CreatePostPage extends GetView<CreatePostController> {
   CreatePostPage({Key? key}) : super(key: key);
   // 主视图
   final ImagePicker picker = ImagePicker();
-
+  final List<String> categories = ['Textbook', 'Furniture'];
+  // This will hold the currently selected category
+  String? selectedCategory;
   Widget _buildView() {
     return const HelloWidget();
   }
@@ -55,11 +57,23 @@ class CreatePostPage extends GetView<CreatePostController> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  TextField(
+                  DropdownButtonFormField<String>(
                     decoration: InputDecoration(
-                      hintText: "Category",
+                      hintText: "Select Category",
                       border: OutlineInputBorder(),
                     ),
+                    value: selectedCategory,
+                    items: categories.map((String category) {
+                      return DropdownMenuItem(
+                        value: category,
+                        child: Text(category),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      // Update the selected category
+                      selectedCategory = value;
+                      // If using a state management solution, update the state here
+                    },
                   ),
                   const SizedBox(height: 16),
                   TextField(
