@@ -5,8 +5,6 @@ import 'dart:convert';
 
 class EmailInputScreen extends StatefulWidget {
   const EmailInputScreen({super.key});
-
-
   @override
   _EmailInputScreenState createState() => _EmailInputScreenState();
 }

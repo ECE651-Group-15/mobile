@@ -36,11 +36,11 @@ class _SignUpScreenState extends State<SignUpPassword> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('registration success'),
-          content: Text('Congratulations, you have successfully registered as a user'),
+          title: const Text('registration success'),
+          content: const Text('Congratulations, you have successfully registered as a user'),
           actions: <Widget>[
             TextButton(
-              child: Text('Return to login interface'),
+              child: const Text('Return to login interface'),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(
@@ -73,8 +73,8 @@ class _SignUpScreenState extends State<SignUpPassword> {
             key: _formKey,
             child: Column(
               children:<Widget> [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
                   child: Text(
                     "Set a password",
                     style: TextStyle(
@@ -87,9 +87,9 @@ class _SignUpScreenState extends State<SignUpPassword> {
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     suffixIcon: IconButton(
-                      icon: Icon(Icons.visibility),
+                      icon: const Icon(Icons.visibility),
                       onPressed: () {
                         setState(() {
                           _isPasswordVisible = !_isPasswordVisible;
@@ -111,7 +111,7 @@ class _SignUpScreenState extends State<SignUpPassword> {
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: CheckboxListTile(
-                    title: Text("I understand and agree to the Terms of Use."),
+                    title: const Text("I understand and agree to the Terms of Use."),
                     value: _agreedToTerms,
                     onChanged: (newValue) {
                       setState(() {
@@ -135,33 +135,43 @@ class _SignUpScreenState extends State<SignUpPassword> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                  onPressed:() async {
-                    pwd = _passwordController.text;
-                    var headers = {
-                      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-                      'Content-Type': 'application/json'
-                    };
-                    var request = http.Request('POST', Uri.parse('http://ec2-18-222-250-106.us-east-2.compute.amazonaws.com:8080/v1/api/profile/create-profile'));
-                    request.body = json.encode({
-                      "email": widget.email,
-                      "name": widget.name,
-                      "password": pwd
-                    });
-                    request.headers.addAll(headers);
+                    onPressed: () async {
+                      pwd = _passwordController.text;
+                      // 定义一个内部函数，用于处理成功的逻辑
+                      void onSuccess() {
+                        if (!mounted) return;
+                        showSuccessDialog(context);
+                      }
 
-                    http.StreamedResponse response = await request.send();
+                      var headers = {
+                        'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+                        'Content-Type': 'application/json'
+                      };
+                      var request = http.Request('POST', Uri.parse('你的API地址'));
+                      request.body = json.encode({
+                        "email": widget.email,
+                        "name": widget.name,
+                        "password": pwd
+                      });
+                      request.headers.addAll(headers);
 
-                    if (response.statusCode == 200) {
-                      print(await response.stream.bytesToString());
-                      showSuccessDialog(context);
-                    }
-                    else {
-                      print(response.reasonPhrase);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor : Color(0xFF00008B), // match_parent width
+                      try {
+                        http.StreamedResponse response = await request.send();
+                        String responseBody = await response.stream.bytesToString();
+                        var decodedResponse = json.decode(responseBody);
+                        if (decodedResponse['code'] == 200) {
+                          onSuccess(); // 使用内部函数处理成功逻辑
+                        } else {
+                          print(response.reasonPhrase);
+                        }
+                      } catch (e) {
+                        print(e.toString());
+                        // 也许需要处理异常
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor : const Color(0xFF00008B), // match_parent width
                   ),
                   child: const Text(
                       'Sign up',
