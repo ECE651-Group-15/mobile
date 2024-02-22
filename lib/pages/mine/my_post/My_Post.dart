@@ -10,9 +10,6 @@ class MyPostPage extends GetView<HomeController> {
    MyPostPage({Key? key}) : super(key: key);
 
   // 主视图
-  Widget _buildView() {
-    return const HelloWidget();
-  }
   Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) async {
     var headers = {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
