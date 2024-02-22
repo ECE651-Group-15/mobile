@@ -1,21 +1,15 @@
-import 'dart:io';
-
-import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'index.dart';
-import 'widgets/widgets.dart';
 
 class CreatePostPage extends GetView<CreatePostController> {
   CreatePostPage({Key? key}) : super(key: key);
-  // 主视图
-  final ImagePicker picker = ImagePicker();
 
-  Widget _buildView() {
-    return const HelloWidget();
-  }
+  final ImagePicker picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -25,87 +19,179 @@ class CreatePostPage extends GetView<CreatePostController> {
           appBar: AppBar(
             title: const Text("Create Post"),
             actions: [
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Create",
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 250, 7, 7),
-                  ),
-                ),
+              FilledButton(
+                onPressed: controller.createPost,
+                child: const Text("Create"),
+              ),
+              const SizedBox(
+                width: 8,
               ),
             ],
           ),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
               child: Column(
                 children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Title",
-                      border: OutlineInputBorder(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: TextField(
+                      controller: controller.titleController,
+                      decoration: const InputDecoration(
+                        hintText: "Please input title",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Description",
-                      border: OutlineInputBorder(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: TextField(
+                      controller: controller.descriptionController,
+                      decoration: const InputDecoration(
+                        hintText: "Please input description",
+                        border: OutlineInputBorder(),
+                      ),
+                      maxLines: 10,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Category",
-                      border: OutlineInputBorder(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    child: TextField(
+                      controller: controller.priceController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\d*\.?\d*')),
+                      ],
+                      decoration: const InputDecoration(
+                        hintText: "What's the product price?",
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Price",
-                      border: OutlineInputBorder(),
+                  Obx(
+                    () => ListTile(
+                      title: const Text("Select Category"),
+                      subtitle: controller.state.category == ""
+                          ? const Text("Please select a category")
+                          : Text("You selected ${controller.state.category}"),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () {
+                        showBarModalBottomSheet(
+                          context: context,
+                          builder: (context) => ListView(
+                            shrinkWrap: false,
+                            children: [
+                              ListTile(
+                                title: const Text("Online Services"),
+                                onTap: () {
+                                  controller.state.category = "ONLINE_SERVICES";
+                                  Get.back();
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Housing"),
+                                onTap: () {
+                                  controller.state.category = "HOUSING";
+                                  Get.back();
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Electronics"),
+                                onTap: () {
+                                  controller.state.category = "ELECTRONICS";
+                                  Get.back();
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Clothing"),
+                                onTap: () {
+                                  controller.state.category = "CLOTHING";
+                                  Get.back();
+                                },
+                              ),
+                              ListTile(
+                                title: const Text("Other"),
+                                onTap: () {
+                                  controller.state.category = "OTHER";
+                                  Get.back();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  ElevatedButton.icon(
-                    icon: Icon(
-                      Icons.add_a_photo,
-                      size: 20,
-                    ),
-                    label: Text('Upload photo'),
-                    onPressed: () async {
+                  ListTile(
+                    onTap: () async {
                       final XFile? image =
                           await picker.pickImage(source: ImageSource.gallery);
-                      // this.handleUploadImage(image);
+                      controller.uploadImage(image);
                     },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 56),
-                      backgroundColor: Colors.grey[300],
-                      foregroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                    title: const Text("Choose Image"),
+                    subtitle:
+                        const Text("You can choose a image from your gallery"),
                   ),
-                  Expanded(
-                    child: Container(),
+                  const SizedBox(
+                    height: 16,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Save Draft"),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.home);
-                        },
-                        child: const Text("Go back to main page"),
-                      ),
-                    ],
+                  Obx(
+                    () => controller.state.images.length > 0
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: InkWell(
+                              onTap: () {
+                                showBarModalBottomSheet(
+                                  context: context,
+                                  builder: (context) => ListTile(
+                                    title: const Text("Delete Image"),
+                                    trailing: const Icon(Icons.delete),
+                                    onTap: () => {
+                                      controller.state.images.clear(),
+                                      Get.back(),
+                                    },
+                                  ),
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.network(
+                                  'https://ece-651.oss-us-east-1.aliyuncs.com/${controller.state.images[0]}',
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container(),
+                    // child: GridView.builder(
+                    //   shrinkWrap: true,
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   gridDelegate:
+                    //       const SliverGridDelegateWithFixedCrossAxisCount(
+                    //     crossAxisCount: 3,
+                    //     crossAxisSpacing: 8,
+                    //     mainAxisSpacing: 8,
+                    //   ),
+                    //   itemCount: 9,
+                    //   itemBuilder: (context, index) {
+                    //     return ClipRRect(
+                    //       borderRadius: BorderRadius.circular(8),
+                    //       child: Image.network(
+                    //         // "https://picsum.photos/seed/picsum/200/200",
+                    //         "https://ece651.oss-cn-hangzhou.aliyuncs.com/image_picker_F92ABC5B-ACAD-418E-9362-0C89589E1B5E-34048-0000352AF353F147.jpg",
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   ),
                 ],
               ),
