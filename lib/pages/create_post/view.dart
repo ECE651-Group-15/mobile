@@ -144,55 +144,53 @@ class CreatePostPage extends GetView<CreatePostController> {
                     height: 16,
                   ),
                   Obx(
-                    () => controller.state.images.length > 0
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: InkWell(
-                              onTap: () {
-                                showBarModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => ListTile(
-                                    title: const Text("Delete Image"),
-                                    trailing: const Icon(Icons.delete),
-                                    onTap: () => {
-                                      controller.state.images.clear(),
-                                      Get.back(),
-                                    },
-                                  ),
-                                );
-                              },
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  'https://ece-651.oss-us-east-1.aliyuncs.com/${controller.state.images[0]}',
-                                  fit: BoxFit.cover,
+                    () => controller.state.images.isNotEmpty
+                        ? SingleChildScrollView(
+                            // 使用 Expanded 包裹
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              child: GridView.builder(
+                                shrinkWrap: true, // 使 GridView 自适应高度
+                                physics:
+                                    NeverScrollableScrollPhysics(), // 因为已在 SingleChildScrollView 中
+                                itemCount: controller.state.images.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3, // 一行显示3张图片
+                                  crossAxisSpacing: 10, // 水平间距
+                                  mainAxisSpacing: 10, // 垂直间距
                                 ),
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      showBarModalBottomSheet(
+                                        context: context,
+                                        builder: (context) => ListTile(
+                                          title: const Text("Delete Image"),
+                                          trailing: const Icon(Icons.delete),
+                                          onTap: () {
+                                            controller.state.images
+                                                .removeAt(index); // 改为删除特定图片
+                                            Get.back();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        'https://ece-651.oss-us-east-1.aliyuncs.com/${controller.state.images[index]}',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           )
-                        : Container(),
-                    // child: GridView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   gridDelegate:
-                    //       const SliverGridDelegateWithFixedCrossAxisCount(
-                    //     crossAxisCount: 3,
-                    //     crossAxisSpacing: 8,
-                    //     mainAxisSpacing: 8,
-                    //   ),
-                    //   itemCount: 9,
-                    //   itemBuilder: (context, index) {
-                    //     return ClipRRect(
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       child: Image.network(
-                    //         // "https://picsum.photos/seed/picsum/200/200",
-                    //         "https://ece651.oss-cn-hangzhou.aliyuncs.com/image_picker_F92ABC5B-ACAD-418E-9362-0C89589E1B5E-34048-0000352AF353F147.jpg",
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                  ),
+                        : Container(), // 如果没有图片，显示一个空的容器
+                  )
                 ],
               ),
             ),
