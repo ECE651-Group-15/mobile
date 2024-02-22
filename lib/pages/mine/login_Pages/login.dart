@@ -1,6 +1,5 @@
 import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
 import 'package:flutter/material.dart';
-import 'sign_up_email.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 

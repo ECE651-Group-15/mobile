@@ -34,7 +34,7 @@ class MinePage extends GetView<MineController> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const MyPostPage()));
+                        builder: (context) =>  MyPostPage()));
               },
             ),
             ListTile(
