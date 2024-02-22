@@ -1,2 +1,3 @@
 // 后端服务线上地址
-const serverApiEndpoint = 'http://192.168.124.4:9000'; // local debug
+const serverApiEndpoint =
+    'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080'; // local debug
