@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:exchange/pages/home/index.dart';
-import 'package:exchange/pages/home/widgets/widgets.dart';
 
 class MyPostPage extends GetView<HomeController> {
    MyPostPage({Key? key}) : super(key: key);
