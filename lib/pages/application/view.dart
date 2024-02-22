@@ -15,7 +15,7 @@ class ApplicationPage extends GetView<ApplicationController> {
       physics: const NeverScrollableScrollPhysics(),
       controller: controller.pageController,
       onPageChanged: controller.handlePageChanged,
-      children: const [
+      children:  [
         HomePage(),
         MessagePage(),
         MinePage(),
