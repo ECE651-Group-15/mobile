@@ -44,7 +44,7 @@ class MinePage extends GetView<MineController> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>const StarsPage()),
+                  MaterialPageRoute(builder: (context)=> StarsPage()),
                 );
               },
             ),
