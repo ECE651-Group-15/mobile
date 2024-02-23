@@ -240,39 +240,36 @@ class PostDetailsPage extends StatelessWidget {
               if (images.isNotEmpty)
                 Container(
                   height: 200,
-                  child: SingleChildScrollView(
+                  child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: images.map<Widget>((imageUrl) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                              right: 8.0), // Space between images.
-                          child: Image.network(
-                            'https://ece-651.oss-us-east-1.aliyuncs.com/${imageUrl}',
-                            fit: BoxFit.cover,
-                            width: 200,
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                    itemCount: images.length,
+                    itemBuilder: (context, index) {
+                      String imageUrl =
+                          'https://ece-651.oss-us-east-1.aliyuncs.com/${images[index]}';
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.cover,
+                          width: 200,
+                          height: 200,
+                        ),
+                      );
+                    },
                   ),
                 )
               else
                 Image.network(
                   'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg',
-                  width: double.infinity,
+                  width: 200,
                   height: 200,
                   fit: BoxFit.cover,
                 ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  OutlinedTextBox(text: 'Title: ${item['title']}'),
-                  OutlinedTextBox(text: 'Price: \$${item['price']}'),
-                  OutlinedTextBox(text: 'Category: ${item['category']}'),
-                  OutlinedTextBox(text: 'Description: ${item['description']}'),
-                ],
-              ),
+              SizedBox(height: 16),
+              OutlinedTextBox(text: 'Title: ${item['title']}'),
+              OutlinedTextBox(text: 'Price: \$${item['price']}'),
+              OutlinedTextBox(text: 'Category: ${item['category']}'),
+              OutlinedTextBox(text: 'Description: ${item['description']}'),
             ],
           ),
         ),
