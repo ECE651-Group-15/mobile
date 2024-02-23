@@ -2,6 +2,7 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:exchange/pages/home/index.dart';
+import '../image_post/view.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -41,16 +42,26 @@ class HomePage extends StatelessWidget {
                       Expanded(
                         child: Stack(
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                      item['listingDetails']['images']?.isNotEmpty == true
-                                          ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
-                                          : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PostDetailsPage(item: item)),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                        item['listingDetails']['images']?.isNotEmpty == true
+                                            ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
+                                            : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
+                                    ),
+                                    fit: BoxFit.cover,
                                   ),
-                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),

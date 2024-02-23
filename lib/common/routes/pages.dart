@@ -70,7 +70,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.imagePost,
-      page: () => ImagePostPage(),
+      page: () => PostDetailsPage(item: null,),
       binding: ImagePostBinding(),
     ),
     GetPage(name: AppRoutes.login,
