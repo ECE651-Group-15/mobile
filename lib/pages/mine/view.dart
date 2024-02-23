@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
-import 'widgets/widgets.dart';
 import 'login_Pages/login.dart';
 import 'package:exchange/pages/mine/My_Stars_Page/Stars_Page.dart';
 class MinePage extends GetView<MineController> {
