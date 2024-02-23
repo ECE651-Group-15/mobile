@@ -4,6 +4,7 @@ import 'package:exchange/pages/home/index.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../../common/routes/names.dart';
+import '../../image_post/view.dart';
 class StarsPage extends GetView<HomeController> {
   const StarsPage({Key? key}) : super(key: key);
 
@@ -77,11 +78,15 @@ class StarsPage extends GetView<HomeController> {
                     var item = items[index];
                     return GestureDetector(
                       onTap: () {
+                        Map<String, dynamic> newList = {};
+                        newList['listingDetails']={};
+                        newList['customerProfilesDetails']={};
+                          newList['listingDetails']=item;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  PostDetailsPage(item: item)),
+                                  PostDetailsPage(item: newList)),
                         );
                       },
                       child: GridTile(
@@ -119,98 +124,6 @@ class StarsPage extends GetView<HomeController> {
                 );
               }
             },
-          ),
-        ),
-      ),
-    );
-  }
-}
-class OutlinedTextBox extends StatelessWidget {
-  final String text;
-
-  OutlinedTextBox({Key? key, required this.text}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Padding(
-      padding: EdgeInsets.only(bottom: 12),
-      child: Container(
-        width: screenWidth - 32,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.shade300,
-            width: 1,
-          ),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: 18,
-            color: const Color.fromARGB(255, 0, 0, 0),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class PostDetailsPage extends StatelessWidget {
-  final dynamic item;
-
-  PostDetailsPage({Key? key, required this.item}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<dynamic> images = item['images'];
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(item['title']),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              if (images.isNotEmpty)
-                Container(
-                  height: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: images.length,
-                    itemBuilder: (context, index) {
-                      String imageUrl =
-                          'https://ece-651.oss-us-east-1.aliyuncs.com/${images[index]}';
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
-                          width: 200,
-                          height: 200,
-                        ),
-                      );
-                    },
-                  ),
-                )
-              else
-                Image.network(
-                  'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg',
-                  width: 200,
-                  height: 200,
-                  fit: BoxFit.cover,
-                ),
-              SizedBox(height: 16),
-              OutlinedTextBox(text: 'Title: ${item['title']}'),
-              OutlinedTextBox(text: 'Price: \$${item['price']}'),
-              OutlinedTextBox(text: 'Category: ${item['category']}'),
-              OutlinedTextBox(text: 'Description: ${item['description']}'),
-            ],
           ),
         ),
       ),
