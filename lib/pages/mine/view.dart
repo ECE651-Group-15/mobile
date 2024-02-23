@@ -1,4 +1,3 @@
-import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/pages/mine/my_post/My_Post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,11 +8,6 @@ import 'login_Pages/login.dart';
 import 'package:exchange/pages/mine/My_Stars_Page/Stars_Page.dart';
 class MinePage extends GetView<MineController> {
   const MinePage({Key? key}) : super(key: key);
-
-  // 主视图
-  Widget _buildView() {
-    return const HelloWidget();
-  }
 
   @override
   Widget build(BuildContext context) {

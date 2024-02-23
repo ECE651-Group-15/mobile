@@ -10,7 +10,6 @@ import 'package:exchange/pages/mine/index.dart';
 import 'package:exchange/pages/mine/login_Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
 import 'routes.dart';
 
 class AppPages {
