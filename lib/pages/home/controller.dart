@@ -49,7 +49,16 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
   }
-
+  // 新增方法，处理收藏/取消收藏操作
+  void toggleFavorite(String listingId) {
+    if (state.favorites[listingId] == true) {
+      state.favorites[listingId] = false;
+    } else {
+      state.favorites[listingId] = true;
+    }
+    state.favorites.refresh();
+    update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
+  }
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
   @override
   void onReady() {
