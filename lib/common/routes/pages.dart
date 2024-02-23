@@ -10,7 +10,6 @@ import 'package:exchange/pages/mine/index.dart';
 import 'package:exchange/pages/mine/login_Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
 import 'routes.dart';
 
 class AppPages {
@@ -48,7 +47,7 @@ class AppPages {
     // 首页
     GetPage(
       name: AppRoutes.home,
-      page: () => const HomePage(),
+      page: () =>  HomePage(),
       binding: HomeBinding(),
     ),
     // 聊天页面
@@ -60,7 +59,7 @@ class AppPages {
     // 我的页面
     GetPage(
       name: AppRoutes.mine,
-      page: () => const MinePage(),
+      page: () =>  MinePage(),
       binding: MineBinding(),
     ),
 
