@@ -140,13 +140,14 @@ class MyPostController extends GetxController{
                 Navigator.of(context).pop(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF00008B), // Set the background color
+                backgroundColor: const Color(0xFF00008B), // Use backgroundColor instead of primary
               ),
               child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.white),
               ),
             ),
+
           ],
 
         );
