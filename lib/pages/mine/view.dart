@@ -1,13 +1,11 @@
-import 'package:exchange/pages/mine/my_post/My_Post.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../common/routes/names.dart';
 import 'index.dart';
-import 'login_Pages/login.dart';
-import 'package:exchange/pages/mine/My_Stars_Page/Stars_Page.dart';
+import 'login_Pages/view.dart';
+
 class MinePage extends GetView<MineController> {
   const MinePage({Key? key}) : super(key: key);
-
-  // 主视图
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +23,7 @@ class MinePage extends GetView<MineController> {
               title: const Text("My Post"),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>  MyPostPage()));
+                Get.toNamed(AppRoutes.myPost);
               },
             ),
             ListTile(
@@ -36,10 +31,7 @@ class MinePage extends GetView<MineController> {
               title: const Text("My Stars"),
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context)=>const StarsPage()),
-                );
+                Get.toNamed(AppRoutes.myLikedPost);
               },
             ),
             ListTile(

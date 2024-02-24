@@ -6,12 +6,18 @@ import 'package:exchange/pages/home/index.dart';
 import 'package:exchange/pages/image_post/bindings.dart';
 import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/message/index.dart';
+import 'package:exchange/pages/mine/My_Liked_Page/bindings.dart';
 import 'package:exchange/pages/mine/index.dart';
-import 'package:exchange/pages/mine/login_Pages/login.dart';
+import 'package:exchange/pages/mine/login_Pages/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_email.dart';
+import '../../pages/mine/login_Pages/sign_up_pages/bindings.dart';
 import 'routes.dart';
-
+import 'package:exchange/pages/mine/my_post/index.dart';
+import 'package:exchange/pages/mine/My_Liked_Page/view.dart';
+import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_name.dart';
+import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_password.dart';
 class AppPages {
   static const initial = AppRoutes.initial;
   static const application = AppRoutes.application;
@@ -69,17 +75,41 @@ class AppPages {
       binding: CreatePostBinding(),
     ),
     GetPage(
-      name: AppRoutes.imagePost,
-      page: () => PostDetailsPage(item: null,),
+      name: AppRoutes.postDetails,
+      page: () => PostDetailsPage(),
       binding: ImagePostBinding(),
     ),
     GetPage(name: AppRoutes.login,
         page: ()=>  LoginScreen(),
     ),
-    // GetPage(
-    //     name: AppRoutes.signUpEmail,
-    //     page: ()=> EmailInputScreen(),
-    // ),
+    GetPage(
+      name: AppRoutes.myPost,
+      page: () => MyPostPage(),
+      binding: MyPostBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.myLikedPost,
+      page: () =>  LikedPage(),
+      binding: MyLikedPostBinding(),
+    ),
+
+    GetPage(
+        name: AppRoutes.signUpEmail,
+        page: ()=> EmailInputScreen(),
+        binding: SignupBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.signUpName,
+      page: ()=> NameInputScreen(),
+      binding: SignupBinding(),
+    ),
+
+    GetPage(
+      name: AppRoutes.signUpPwd,
+      page: ()=> SignUpPassword(),
+      binding: SignupBinding(),
+    ),
   ];
 
 // static final unknownRoute = GetPage(

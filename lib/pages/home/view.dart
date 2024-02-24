@@ -2,7 +2,6 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:exchange/pages/home/index.dart';
-import '../image_post/view.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -44,12 +43,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PostDetailsPage(item: item)),
-                                );
+                                Get.toNamed(AppRoutes.postDetails, arguments: item);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
@@ -70,7 +64,8 @@ class HomePage extends StatelessWidget {
                               right: 6, // 距离右侧8单位
                               child: Obx(() {
                                 // 将 isFavorite 的计算移动到 Obx 内部
-                                bool isFavorite = controller.state.favorites[listingId] ?? false;
+                                bool isStared = controller.isStared(item['listingDetails']['id']);
+                                //传入controller检查是否已经点赞过了
                                 return IconButton(
                                 icon: Container(
                                   width: 36, // 设置圆圈大小
@@ -81,14 +76,21 @@ class HomePage extends StatelessWidget {
                                   ),
                                   child: Center( // 确保图标位于容器中心
                                     child: Icon(
-                                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                                      color: isFavorite ? Colors.red : Colors.grey, // 更新爱心颜色为灰色而非透明
+                                      isStared ? Icons.star : Icons.star_border,
+                                      color: isStared ? Colors.red : Colors.grey,
                                     ),
                                   ),
                                 ),
                                 onPressed: () {
-                                  controller.toggleFavorite(listingId);
-                                  // starListing('b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b', listingId);
+                                  //点赞功能
+                                  // controller.toggleFavorite(listingId);
+                                  if(!isStared){
+                                    controller.starListing(listingId);
+                                    controller.state.staredLists.add(listingId);
+                                  }
+                                  else{
+                                    //取消点赞功能
+                                  }
                                 },
                                 );
                               }),

@@ -1,5 +1,3 @@
-import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/image_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -37,9 +35,9 @@ class OutlinedTextBox extends StatelessWidget {
 }
 
 class PostDetailsPage extends StatelessWidget {
-  final dynamic item;
-
-  PostDetailsPage({Key? key, required this.item}) : super(key: key);
+  // final dynamic item;
+  final dynamic item = Get.arguments;
+  PostDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

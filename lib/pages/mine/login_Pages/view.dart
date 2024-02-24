@@ -1,5 +1,6 @@
-import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -10,7 +11,8 @@ class LoginScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.of(context).pop(); // 关闭当前页面
+            Navigator.of(context).pop();
+           // Get.offAllNamed(AppRoutes.application);
           },
         ),
       ),
@@ -56,18 +58,19 @@ class LoginScreen extends StatelessWidget {
             // 登录按钮
             // 忘记密码链接
             TextButton(
-              child: Text('Forgot password?'),
+              child: const Text('Forgot password?'),
               onPressed: () {
                 // 处理忘记密码逻辑
               },
             ),
             // 注册新账号链接
             TextButton(
-              child: Text('Don\'t have an account? Sign up'),
+              child: const Text('Don\'t have an account? Sign up'),
               onPressed: () {
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context)=>EmailInputScreen()),
-               ); // 处理注册逻辑
+                Get.toNamed(AppRoutes.signUpEmail);
+               // Navigator.push(context,
+               //     MaterialPageRoute(builder: (context)=>EmailInputScreen()),
+               // ); // 处理注册逻辑
               },
             ),
             Spacer(),
