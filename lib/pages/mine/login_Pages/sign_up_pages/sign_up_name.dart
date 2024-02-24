@@ -1,8 +1,10 @@
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
-import 'sign_up_password.dart'; // 确保这个文件存在并且路径正确
+import 'package:get/get.dart';
+import 'controller.dart';
+
 class NameInputScreen extends StatefulWidget {
-  final String email;
-  NameInputScreen({Key? key, required this.email}) : super(key: key);
+  const NameInputScreen({Key? key}) : super(key: key);
   @override
   _NameInputScreenState createState() => _NameInputScreenState();
 }
@@ -10,21 +12,14 @@ class NameInputScreen extends StatefulWidget {
 class _NameInputScreenState extends State<NameInputScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>(); // 移动FormKey到State类
   final TextEditingController _nameController = TextEditingController();
-  late final String name ;
+  final SignUpController controller = Get.find<SignUpController>();
 
   @override
   void dispose() {
     _nameController.dispose(); // 正确地在State类中释放控制器资源
     super.dispose();
   }
-// class NameInputScreen extends StatefulWidget {
-//   final _formKey = GlobalKey<FormState>(); // 添加一个FormKey用于验证
-//   TextEditingController _nameController = TextEditingController();
-//   @override
-//   void dispose() {
-//     _nameController.dispose(); // 释放控制器资源
-//     super.dispose();
-//   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +41,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 80),
-              Text(
+              const Text(
                 "What's your name?",
                 style: TextStyle(
                   fontSize: 24,
@@ -57,7 +52,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               TextFormField( // 使用TextFormField代替TextField
                 controller: _nameController,
                 keyboardType: TextInputType.name,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Name',
                   border: OutlineInputBorder(),
                 ),
@@ -65,29 +60,28 @@ class _NameInputScreenState extends State<NameInputScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter your name'; // 如果输入为空或只包含空格，则提示错误
                   }
-                  return null; // 如果输入正确，不返回错误信息
+                  else{
+                    return null; // 如果输入正确，不返回错误信息
+                  }
                 },
               ),
               Spacer(),
               ElevatedButton(
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    name = _nameController.text;// 当点击按钮时，验证表单
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignUpPassword(email: widget.email,name: name,)),
-                    );
+                    controller.state.name = _nameController.text;
+                    Get.toNamed(AppRoutes.signUpPwd);// 验证通过，执行后续操作，比如导航到下一个页面
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size.fromHeight(50),
                   backgroundColor : Color(0xFF00008B),
+                ),
+                child: const Text(
+                  'Continue',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

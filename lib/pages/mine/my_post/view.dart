@@ -1,50 +1,16 @@
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:exchange/pages/home/index.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../../../common/routes/names.dart';
-import '../../image_post/view.dart';
-class StarsPage extends GetView<HomeController> {
-  const StarsPage({Key? key}) : super(key: key);
+import 'index.dart';
 
-  Future<List<dynamic>> fetchStarredListings(String customerId, int page, int pageSize) async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-      'Content-Type': 'application/json'
-    };
-
-    var request = http.Request('POST', Uri.parse('http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/starred-listings'));
-    request.body = json.encode({
-      "customerId": customerId,
-      "page": page,
-      "pageSize": pageSize
-    });
-    request.headers.addAll(headers);
-    List<dynamic> postedListings = [];
-    try {
-      http.StreamedResponse response = await request.send();
-      String responseBody = await response.stream.bytesToString();
-      Map<String, dynamic> parsedJson = jsonDecode(responseBody);
-      if (parsedJson['code']== 200) {
-        // 这里可以根据需要进一步处理响应体
-        print(responseBody);
-        postedListings = parsedJson['data']['starredListings'];
-      } else {
-        print("Failed to fetch starred listings: ${response.reasonPhrase}");
-      }
-
-    } catch (e) {
-      print("Exception caught: $e");
-      // 这里可以处理异常情况
-    }
-    return postedListings;
-  }
-
+class MyPostPage extends GetView<MyPostController> {
+  MyPostPage({Key? key}) : super(key: key);
+  @override
+  final MyPostController controller = Get.find<MyPostController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("My Liked Post")),
+      appBar: AppBar(title: const Text("My Post")),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           // 假设 AppRoutes.createPost 是你定义的路由
@@ -56,12 +22,12 @@ class StarsPage extends GetView<HomeController> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: FutureBuilder<List<dynamic>>(
-            future: fetchStarredListings(
-                "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", 1,1),
-            builder: (BuildContext context,
-                AsyncSnapshot<List<dynamic>> snapshot) {
+            future: controller.fetchCustomerPostedListings(
+                "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", 0),
+            builder:
+                (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
@@ -81,13 +47,11 @@ class StarsPage extends GetView<HomeController> {
                         Map<String, dynamic> newList = {};
                         newList['listingDetails']={};
                         newList['customerProfilesDetails']={};
-                          newList['listingDetails']=item;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  PostDetailsPage(item: newList)),
-                        );
+                        newList['listingDetails']=item;
+                        Get.toNamed(AppRoutes.postDetails, arguments: newList);
+                      },
+                      onLongPress: () {
+                        controller.showOptions(context,item['id']); // 长按时调用_showOptions函数
                       },
                       child: GridTile(
                         child: Column(
@@ -99,11 +63,10 @@ class StarsPage extends GetView<HomeController> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        items[index]['images'].isNotEmpty
-                                            ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${items[index]['images'][0] }'
-                                            : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
-                                    ),
+                                    image: NetworkImage(items[index]['images']
+                                            .isNotEmpty
+                                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${items[index]['images'][0]}'
+                                        : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

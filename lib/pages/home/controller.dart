@@ -31,7 +31,7 @@ class HomeController extends GetxController {
       var decodedResponse = json.decode(responseBody);
 
       if (decodedResponse['code'] == 200) {
-        print(responseBody);
+        // print(responseBody);
         postedListings = decodedResponse['data']['listingDetails'];
       } else {
         print(response.reasonPhrase);

@@ -9,7 +9,11 @@ class AppRoutes {
   static const mine = '/mine'; // 我的
 
   static const createPost = '/create_post'; // 创建post
-  static const imagePost = '/image_post'; //view post
-  //static const myPost = '/my_post'; // view my own post
-  // static const signUpEmail = '/sign_up_email';//邮箱注册页面
+  // static const imagePost = '/image_post'; //view post
+  static const signUpEmail = '/sign_up_email';//邮箱注册页面
+  static const myPost = '/my_post'; //我创建的帖子界面
+  static const myLikedPost = '/my_likedPost'; //我点赞的帖子界面
+  static const postDetails = '/post_details';//帖子的详情界面
+  static const signUpName = '/sign_up_name'; //注册输入名字
+  static const signUpPwd = '/sign_up_pwd';//注册输入密码
 }

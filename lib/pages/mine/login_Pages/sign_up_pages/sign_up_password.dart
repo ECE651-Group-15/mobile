@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import '../view.dart';
-import 'login.dart';
+import 'package:get/get.dart';
+import '../../../../common/routes/names.dart';
+import 'controller.dart';
+
 class SignUpPassword extends StatefulWidget {
-  late final String email;
-  late final String name ;
-  SignUpPassword({Key? key, required this.email,required this.name}) : super(key: key);
+  // final args = Get.arguments as Map<String, dynamic>;
+  SignUpPassword({Key? key}) : super(key: key);
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -14,46 +13,17 @@ class SignUpPassword extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpPassword> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passwordController = TextEditingController();
-  late final String pwd ;
+  final SignUpController controller = Get.find<SignUpController>();
   bool _agreedToTerms = false;
   bool _agreedToPrivacy = false;
   bool _isPasswordVisible = false;
-  // String email = _emailController.text;
+
   @override
   void dispose() {
-    _passwordController.dispose(); // 释放控制器资源
+    _passwordController.dispose(); // 正确地释放控制器资源
     super.dispose();
   }
-  void _trySubmitForm() {
-    final isValid = _formKey.currentState?.validate() ?? false;
-    if (isValid && _agreedToTerms && _agreedToPrivacy) {
-      // If the form is valid and agreements are checked, submit the form
-    }
-  }
 
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('registration success'),
-          content: const Text('Congratulations, you have successfully registered as a user'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Return to login interface'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );// 关闭对话框
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +32,7 @@ class _SignUpScreenState extends State<SignUpPassword> {
           icon: Icon(Icons.close),
           onPressed: () {
             // Navigator.of(context).pop();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MinePage()));// 关闭当前页面
+
           },
         ),
       ),
@@ -135,41 +104,31 @@ class _SignUpScreenState extends State<SignUpPassword> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                    onPressed: () async {
-                      pwd = _passwordController.text;
-                      // 定义一个内部函数，用于处理成功的逻辑
-                      void onSuccess() {
-                        if (!mounted) return;
-                        showSuccessDialog(context);
-                      }
-
-                      var headers = {
-                        'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-                        'Content-Type': 'application/json'
-                      };
-                      var request = http.Request('POST', Uri.parse('你的API地址'));
-                      request.body = json.encode({
-                        "email": widget.email,
-                        "name": widget.name,
-                        "password": pwd
-                      });
-                      request.headers.addAll(headers);
-
+                  onPressed: () async { // 添加 async 关键字以处理异步操作
+                    if (_formKey.currentState!.validate()) {
+                      controller.state.pwd = _passwordController.text;
                       try {
-                        http.StreamedResponse response = await request.send();
-                        String responseBody = await response.stream.bytesToString();
-                        var decodedResponse = json.decode(responseBody);
-                        if (decodedResponse['code'] == 200) {
-                          onSuccess(); // 使用内部函数处理成功逻辑
+                        // 假设 registerUser 是一个异步函数，我们使用 await 等待其完成
+                        bool isSuccess = await controller.registerUser();
+                        if (isSuccess) {
+                          // 注册成功，执行成功操作，例如显示成功对话框或导航到下一个页面
+                          controller.showSuccessDialog(context);
                         } else {
-                          print(response.reasonPhrase);
+                          // 注册失败，显示失败提示。这里不需要额外的操作，因为 isSuccess 已经是 false
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text('Registration failed. Please try again.'),
+                          ));
                         }
                       } catch (e) {
-                        print(e.toString());
-                        // 也许需要处理异常
+                        // 捕获异常并显示错误提示
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('An error occurred: $e'),
+                        ));
                       }
-                    },
-                    style: ElevatedButton.styleFrom(
+                    }
+                  },
+
+                  style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor : const Color(0xFF00008B), // match_parent width
                   ),

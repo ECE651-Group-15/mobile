@@ -2,7 +2,6 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:exchange/pages/home/index.dart';
-import '../image_post/view.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
@@ -44,12 +43,7 @@ class HomePage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PostDetailsPage(item: item)),
-                                );
+                                Get.toNamed(AppRoutes.postDetails, arguments: item);
                               },
                               child: Container(
                                 decoration: BoxDecoration(

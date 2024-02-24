@@ -1,5 +1,7 @@
-import 'package:exchange/pages/mine/login_Pages/sign_up_email.dart';
+import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_email.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
@@ -10,7 +12,8 @@ class LoginScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.of(context).pop(); // 关闭当前页面
+            Navigator.of(context).pop();
+           // Get.offAllNamed(AppRoutes.application);
           },
         ),
       ),
@@ -65,9 +68,10 @@ class LoginScreen extends StatelessWidget {
             TextButton(
               child: Text('Don\'t have an account? Sign up'),
               onPressed: () {
-               Navigator.push(context,
-                   MaterialPageRoute(builder: (context)=>EmailInputScreen()),
-               ); // 处理注册逻辑
+                Get.toNamed(AppRoutes.signUpEmail);
+               // Navigator.push(context,
+               //     MaterialPageRoute(builder: (context)=>EmailInputScreen()),
+               // ); // 处理注册逻辑
               },
             ),
             Spacer(),
