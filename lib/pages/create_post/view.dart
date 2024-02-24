@@ -19,7 +19,9 @@ class CreatePostPage extends GetView<CreatePostController> {
             title: const Text("Create Post"),
             actions: [
               FilledButton(
-                onPressed: controller.createPost,
+                onPressed: () {
+                  controller.createPost(context);
+                },
                 child: const Text("Create"),
               ),
               const SizedBox(
@@ -32,108 +34,127 @@ class CreatePostPage extends GetView<CreatePostController> {
               child: Column(
                 children: [
                   Padding(
-                    padding:const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Obx(
-                        () => controller.state.images.isNotEmpty
-                        ? Container(
-                      height: 150, // 调整为合适的高度
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: controller.state.images.length + 1, // 包含添加按钮
-                        itemBuilder: (context, index) {
-                          if (index == controller.state.images.length) {
-                            // 添加图片的按钮
-                            return GestureDetector(
-                              onTap: () async {
-                                final XFile? image =
-                                await picker.pickImage(source: ImageSource.gallery);
-                                controller.uploadImage(image);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all( // 添加边框
-                                    color: Colors.black, // 边框颜色
-                                    width: 1, // 边框宽度
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Obx(
+                      () => controller.state.images.isNotEmpty
+                          ? Container(
+                              height: 150, // 调整为合适的高度
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: controller.state.images.length +
+                                    1, // 包含添加按钮
+                                itemBuilder: (context, index) {
+                                  if (index == controller.state.images.length) {
+                                    // 添加图片的按钮
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        final XFile? image =
+                                            await picker.pickImage(
+                                                source: ImageSource.gallery);
+                                        controller.uploadImage(image);
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            // 添加边框
+                                            color: Colors.black, // 边框颜色
+                                            width: 1, // 边框宽度
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8), // 边框圆角
+                                        ),
+                                        width: 100, // 调整为合适的宽度
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment
+                                              .center, // 垂直方向居中对齐
+                                          children: <Widget>[
+                                            Icon(Icons.add,
+                                                color: Theme.of(context)
+                                                    .primaryColor), // 图标
+                                            Text('Add photo',
+                                                style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor)),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    // 显示图片
+                                    return Row(
+                                      children: [
+                                        Container(
+                                          width: 100, // 图片宽度
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 5),
+                                          child: Stack(
+                                            alignment: Alignment.topRight,
+                                            children: [
+                                              Image.network(
+                                                'https://ece-651.oss-us-east-1.aliyuncs.com/${controller.state.images[index]}',
+                                                fit: BoxFit.cover,
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.cancel),
+                                                color: Colors.white,
+                                                onPressed: () {
+                                                  controller.state.images
+                                                      .removeAt(index);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                },
+                              ),
+                            )
+                          : SizedBox(
+                              height: 150,
+                              child: OutlinedButton(
+                                onPressed: () async {
+                                  final XFile? image = await picker.pickImage(
+                                      source: ImageSource.gallery);
+                                  controller
+                                      .uploadImage(image); // Handle add photo
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  side: BorderSide(
+                                      color: Theme.of(context).dividerColor),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8), // 边框圆角
                                 ),
-                                width: 100, // 调整为合适的宽度
-                                child:  Column(
-                                mainAxisAlignment: MainAxisAlignment.center, // 垂直方向居中对齐
-                                children: <Widget>[
-                                  Icon(Icons.add, color: Theme.of(context).primaryColor), // 图标
-                                  Text('Add photo', style: TextStyle(color: Theme.of(context).primaryColor)),
-                                ],
-                              ),
-                              ),
-                            );
-                          } else {
-                            // 显示图片
-                            return Row(
-                              children: [
-                                Container(
-                                  width: 100, // 图片宽度
-                                  margin: EdgeInsets.symmetric(horizontal: 5),
-                                  child: Stack(
-                                    alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Image.network(
-                                        'https://ece-651.oss-us-east-1.aliyuncs.com/${controller.state.images[index]}',
-                                        fit: BoxFit.cover,
-                                      ),
-                                      IconButton(
-                                        icon: Icon(Icons.cancel),
-                                        color: Colors.white,
-                                        onPressed: () {
-                                          controller.state.images.removeAt(index);
-                                        },
-                                      ),
+                                      Icon(Icons.add,
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                      SizedBox(width: 8.0),
+                                      Text('Add photo',
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 18,
+                                          )),
                                     ],
                                   ),
                                 ),
-                              ],
-                            );
-                          }
-                        },
-                      ),
-                    )
-                        : SizedBox(
-                          height: 150,
-                          child: OutlinedButton(
-                              onPressed: () async{
-                                final XFile? image =
-                                    await picker.pickImage(source: ImageSource.gallery);
-                                controller.uploadImage(image);// Handle add photo
-                              },
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: Theme.of(context).dividerColor),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
                               ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.add, color: Theme.of(context).primaryColor),
-                                  SizedBox(width: 8.0),
-                                  Text('Add photo', style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 18,
-                                  )
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),// 如果没有图片，显示一个空的容器
-                  ),
-                  // Other widgets...
+                            ), // 如果没有图片，显示一个空的容器
+                    ),
+                    // Other widgets...
                   ),
                   Padding(
                     padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: TextField(
                       controller: controller.titleController,
                       decoration: const InputDecoration(
@@ -164,7 +185,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                     child: TextField(
                       controller: controller.priceController,
                       keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
+                          const TextInputType.numberWithOptions(decimal: true),
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.allow(
                             RegExp(r'^\d*\.?\d*')),
@@ -176,7 +197,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                     ),
                   ),
                   Obx(
-                        () => ListTile(
+                    () => ListTile(
                       title: const Text("Select Category"),
                       subtitle: controller.state.category == ""
                           ? const Text("Please select a category")
@@ -287,26 +308,26 @@ class CreatePostPage extends GetView<CreatePostController> {
                   // )
 
                   // child: GridView.builder(
-                    //   shrinkWrap: true,
-                    //   physics: const NeverScrollableScrollPhysics(),
-                    //   gridDelegate:
-                    //       const SliverGridDelegateWithFixedCrossAxisCount(
-                    //     crossAxisCount: 3,
-                    //     crossAxisSpacing: 8,
-                    //     mainAxisSpacing: 8,
-                    //   ),
-                    //   itemCount: 9,
-                    //   itemBuilder: (context, index) {
-                    //     return ClipRRect(
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       child: Image.network(
-                    //         // "https://picsum.photos/seed/picsum/200/200",
-                    //         "https://ece651.oss-cn-hangzhou.aliyuncs.com/image_picker_F92ABC5B-ACAD-418E-9362-0C89589E1B5E-34048-0000352AF353F147.jpg",
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
+                  //   shrinkWrap: true,
+                  //   physics: const NeverScrollableScrollPhysics(),
+                  //   gridDelegate:
+                  //       const SliverGridDelegateWithFixedCrossAxisCount(
+                  //     crossAxisCount: 3,
+                  //     crossAxisSpacing: 8,
+                  //     mainAxisSpacing: 8,
+                  //   ),
+                  //   itemCount: 9,
+                  //   itemBuilder: (context, index) {
+                  //     return ClipRRect(
+                  //       borderRadius: BorderRadius.circular(8),
+                  //       child: Image.network(
+                  //         // "https://picsum.photos/seed/picsum/200/200",
+                  //         "https://ece651.oss-cn-hangzhou.aliyuncs.com/image_picker_F92ABC5B-ACAD-418E-9362-0C89589E1B5E-34048-0000352AF353F147.jpg",
+                  //         fit: BoxFit.cover,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                 ],
               ),
             ),

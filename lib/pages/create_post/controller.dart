@@ -2,12 +2,13 @@ import 'dart:typed_data';
 
 import 'package:exchange/common/apis/post.dart';
 import 'package:exchange/common/entities/post.dart';
+import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:exchange/pages/mine/my_post/view.dart';
 import 'index.dart';
 
 class CreatePostController extends GetxController {
@@ -42,7 +43,7 @@ class CreatePostController extends GetxController {
     }
   }
 
-  void createPost() async {
+  void createPost(BuildContext context) async {
     if (state.images.isEmpty) {
       EasyLoading.showInfo("Please select at least one image");
       return;
@@ -85,7 +86,9 @@ class CreatePostController extends GetxController {
     try {
       CreatePostResponseEntity res = await PostApi.createPost(req);
       if (res.code == 200) {
-        EasyLoading.showSuccess('create post success');
+        EasyLoading.dismiss();
+        //EasyLoading.showSuccess('create post success');
+        showSuccessPost(context);
       } else {
         EasyLoading.showError('create post failed, try later');
       }
@@ -122,4 +125,35 @@ class CreatePostController extends GetxController {
     priceController.dispose();
     super.dispose();
   }
+}
+
+void showSuccessPost(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Create post successfully'),
+        content:
+            const Text('Congratulations, you have successfully create a post'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Return to my post page'),
+            onPressed: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MinePage()),
+              // );
+              /// Navigator.pushReplacement(
+              ///   context,
+              ///   MaterialPageRoute(builder: (context) => MyPostPage()),
+              //  ); //
+              Get.toNamed(AppRoutes.application);
+
+// 关闭对话框
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
