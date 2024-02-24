@@ -1,12 +1,9 @@
-import 'package:exchange/pages/mine/my_post/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../common/routes/names.dart';
 import 'index.dart';
 import 'login_Pages/view.dart';
-import 'package:exchange/pages/mine/My_Liked_Page/view.dart';
 
-import 'my_post/controller.dart';
 class MinePage extends GetView<MineController> {
   const MinePage({Key? key}) : super(key: key);
 

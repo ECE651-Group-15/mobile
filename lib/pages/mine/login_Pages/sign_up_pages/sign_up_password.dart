@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../common/routes/names.dart';
 import 'controller.dart';
 
 class SignUpPassword extends StatefulWidget {

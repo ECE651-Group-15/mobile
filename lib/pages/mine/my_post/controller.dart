@@ -6,8 +6,8 @@ import 'package:exchange/pages/mine/my_post/state.dart';
 import 'package:get/get.dart';
 
 class MyPostController extends GetxController{
-  MyPostController();
 
+  MyPostController();
   final state = MyPostPostState();
 
   Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) async {
@@ -33,8 +33,9 @@ class MyPostController extends GetxController{
       var decodedResponse = json.decode(responseBody);
 
       if (decodedResponse['code'] == 200) {
-        print(responseBody);
+        // print(responseBody);
         postedListings = decodedResponse['data']['postedListings'];
+        // state.postedListings=postedListings;
       } else {
         print(response.reasonPhrase);
         // 可选: 抛出异常或返回错误信息
@@ -46,6 +47,7 @@ class MyPostController extends GetxController{
     }
     return postedListings;
   }
+
   void showOptions(BuildContext context,String listingId) {
     showModalBottomSheet(
       context: context,
@@ -100,8 +102,7 @@ class MyPostController extends GetxController{
       String responseBody = await response.stream.bytesToString();
       var decodedResponse = json.decode(responseBody);
       if (decodedResponse['code'] == 200) {
-        print(responseBody);
-        // print(await response.stream.bytesToString());
+        // print(responseBody);
         EasyLoading.showSuccess('delete post success');
         return true; // 返回 true 表示删除成功
       } else {
@@ -114,10 +115,59 @@ class MyPostController extends GetxController{
     }
   }
 
+  void showDeleteConfirmationDialog(BuildContext context, String postID) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          title: const Text('Delete this listing?'),
+          content: const Text('Are you sure you delete this listing?'),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 30.0),
+              child: TextButton(
+                child: const Text('Yes, delete', style: TextStyle(color: Colors.green)),
+                onPressed: () {
+                  deleteListing(postID);
+                  refreshUI();
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF00008B), // Set the background color
+              ),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+
+        );
+      },
+    );
+  }
+
+  Future<void> loadData() async {
+    state.customerId=   "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b" ;
+    state.postedListings = await fetchCustomerPostedListings(state.customerId, 0) ;
+  }
+
+  void refreshUI() {
+    loadData();
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    loadData();
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

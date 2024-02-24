@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'Controller.dart';
+import 'controller.dart';
 
 class MyLikedPostBinding implements Bindings {
   @override

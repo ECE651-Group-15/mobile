@@ -5,53 +5,44 @@ import 'index.dart';
 
 class MyPostPage extends GetView<MyPostController> {
   MyPostPage({Key? key}) : super(key: key);
-  @override
-  final MyPostController controller = Get.find<MyPostController>();
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MyPostController>(); // 确保控制器被正确初始化和注入
+
     return Scaffold(
       appBar: AppBar(title: const Text("My Post")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // 假设 AppRoutes.createPost 是你定义的路由
-          Get.toNamed(AppRoutes.createPost);
-        },
+        onPressed: () => Get.toNamed(AppRoutes.createPost),
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder<List<dynamic>>(
-            future: controller.fetchCustomerPostedListings(
-                "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", 0),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else {
-                // 假设 items 是从 snapshot.data 获取的数据
-                var items = snapshot.data ?? [];
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                  ),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    var item = items[index];
-                    return GestureDetector(
+        child: Obx(() {
+          if (controller.state.postedListings.isEmpty) {
+            return const Center(
+              child: Text('No my posts to display.'),
+            );
+            // return Center(child: CircularProgressIndicator());
+          } else {
+            return GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 8.0,
+                crossAxisSpacing: 8.0,
+              ),
+              itemCount: controller.state.postedListings.length,
+              itemBuilder: (context, index) {
+                var item = controller.state.postedListings[index];
+                return Stack(
+                  children: [
+                    GestureDetector(
                       onTap: () {
-                        Map<String, dynamic> newList = {};
-                        newList['listingDetails']={};
-                        newList['customerProfilesDetails']={};
+                        Map<String, dynamic> newList = {
+                          'listingDetails' : {},
+                        'customerProfilesDetails' : {},
+                        };
                         newList['listingDetails']=item;
                         Get.toNamed(AppRoutes.postDetails, arguments: newList);
-                      },
-                      onLongPress: () {
-                        controller.showOptions(context,item['id']); // 长按时调用_showOptions函数
                       },
                       child: GridTile(
                         child: Column(
@@ -63,10 +54,11 @@ class MyPostPage extends GetView<MyPostController> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
                                   image: DecorationImage(
-                                    image: NetworkImage(items[index]['images']
-                                            .isNotEmpty
-                                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${items[index]['images'][0]}'
-                                        : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
+                                    image: NetworkImage(
+                                        item['images'].isNotEmpty
+                                            ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
+                                            : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
+                                    ),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -75,20 +67,64 @@ class MyPostPage extends GetView<MyPostController> {
                             Padding(
                               padding: const EdgeInsets.all(4.0),
                               child: Text(
-                                items[index]['title'],
+                                item['title'],
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    );
-                  },
+                    ),
+                    Positioned(
+                      top: 6,
+                      right: 6,
+                      child: PopupMenuButton<String>(
+                        icon: Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.more_vert, color: Colors.black),
+                          ),
+                        ),
+                        onSelected: (String result) {
+                          switch (result) {
+                            case 'edit':
+                            // 实现编辑功能的代码
+                              break;
+                            case 'delete':
+                              controller.showDeleteConfirmationDialog(context,item['id']);
+                              break;
+                            case 'markAsSold':
+                            // 实现标记为已售功能的代码
+                              break;
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                          const PopupMenuItem<String>(
+                            value: 'edit',
+                            child: Text('Edit'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: 'delete',
+                            child: Text('Delete'),
+                          ),
+                          const PopupMenuItem<String>(
+                            value: 'markAsSold',
+                            child: Text('Mark as Sold'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
-              }
-            },
-          ),
-        ),
+              },
+            );
+          }
+        }),
       ),
     );
   }

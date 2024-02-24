@@ -27,7 +27,7 @@ class MyLikedPostController extends GetxController{
       Map<String, dynamic> parsedJson = jsonDecode(responseBody);
       if (parsedJson['code']== 200) {
         // 这里可以根据需要进一步处理响应体
-        print(responseBody);
+        // print(responseBody);
         postedListings = parsedJson['data']['starredListings'];
       } else {
         print("Failed to fetch starred listings: ${response.reasonPhrase}");
@@ -40,10 +40,20 @@ class MyLikedPostController extends GetxController{
     return postedListings;
   }
 
+  Future<void> loadData() async {
+    state.customerId=   "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b" ;
+    state.postedListings = await fetchStarredListings(state.customerId, 0,6) ;//id,page,page size  返回第几页数据,一页四个帖子内容
+  }
+
+  void refreshUI() {
+    loadData();
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    loadData();
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所
