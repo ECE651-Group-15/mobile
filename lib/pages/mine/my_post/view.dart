@@ -38,10 +38,10 @@ class MyPostPage extends GetView<MyPostController> {
                     GestureDetector(
                       onTap: () {
                         Map<String, dynamic> newList = {
-                          'listingDetails' : {},
-                        'customerProfilesDetails' : {},
+                          'listingDetails': {},
+                          'customerProfilesDetails': {},
                         };
-                        newList['listingDetails']=item;
+                        newList['listingDetails'] = item;
                         Get.toNamed(AppRoutes.postDetails, arguments: newList);
                       },
                       child: GridTile(
@@ -54,11 +54,10 @@ class MyPostPage extends GetView<MyPostController> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        item['images'].isNotEmpty
-                                            ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
-                                            : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
-                                    ),
+                                    image: NetworkImage(item['images']
+                                            .isNotEmpty
+                                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
+                                        : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -66,9 +65,26 @@ class MyPostPage extends GetView<MyPostController> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child: Text(
-                                item['title'],
-                                overflow: TextOverflow.ellipsis,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '\$${item['price'].toString() ?? 'No Price'}',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    item['title'] ?? 'No title',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -93,19 +109,21 @@ class MyPostPage extends GetView<MyPostController> {
                         onSelected: (String result) {
                           switch (result) {
                             case 'edit':
-                              Get.toNamed(AppRoutes.editPost,arguments: item);
+                              Get.toNamed(AppRoutes.editPost, arguments: item);
                               // controller.editPost(context, item['id']);
                               // 实现编辑功能的代码
                               break;
                             case 'delete':
-                              controller.showDeleteConfirmationDialog(context,item['id']);
+                              controller.showDeleteConfirmationDialog(
+                                  context, item['id']);
                               break;
                             case 'markAsSold':
-                            // 实现标记为已售功能的代码
+                              // 实现标记为已售功能的代码
                               break;
                           }
                         },
-                        itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
                           const PopupMenuItem<String>(
                             value: 'edit',
                             child: Text('Edit'),
