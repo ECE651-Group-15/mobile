@@ -57,11 +57,9 @@ class LikedPage extends GetView<MyLikedPostController> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                      item['images'].isNotEmpty
-                                          ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
-                                          : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
-                                  ),
+                                  image: NetworkImage(item['images'].isNotEmpty
+                                      ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
+                                      : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -69,9 +67,27 @@ class LikedPage extends GetView<MyLikedPostController> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              item['title'],
-                              overflow: TextOverflow.ellipsis,
+                            child: Column(
+                              crossAxisAlignment:
+                                  CrossAxisAlignment.start, // 左对齐
+                              children: [
+                                Text(
+                                  '\$${item['price'].toString() ?? 'No Price'}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 20, // 更大的字体
+                                    fontWeight: FontWeight.bold, // 加粗
+                                  ),
+                                ),
+                                SizedBox(height: 4), // 添加一点空间
+                                Text(
+                                  item['title'] ?? 'No title',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 16, // 标题字体大小
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

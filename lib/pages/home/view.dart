@@ -110,9 +110,26 @@ class HomePage extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text(
-                          item['listingDetails']['title'] ?? 'No title',
-                          overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start, // 左对齐
+                          children: [
+                            Text(
+                              '\$${item['listingDetails']['price'].toString() ?? 'No Price'}',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 20, // 更大的字体
+                                fontWeight: FontWeight.bold, // 加粗
+                              ),
+                            ),
+                            SizedBox(height: 4), // 添加一点空间
+                            Text(
+                              item['title'] ?? 'No title',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 16, // 标题字体大小
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
