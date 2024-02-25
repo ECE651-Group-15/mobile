@@ -139,14 +139,6 @@ void showSuccessPost(BuildContext context) {
           TextButton(
             child: const Text('Return to my post page'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MinePage()),
-              // );
-              /// Navigator.pushReplacement(
-              ///   context,
-              ///   MaterialPageRoute(builder: (context) => MyPostPage()),
-              //  ); //
               Get.toNamed(AppRoutes.application);
 
 // 关闭对话框

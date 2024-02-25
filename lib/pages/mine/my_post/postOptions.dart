@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) async {
+
+Future<List<dynamic>> fetchCustomerPostedListings(
+    String customerId, int page) async {
   var headers = {
     'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
     'Content-Type': 'application/json'
@@ -12,7 +14,7 @@ Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) a
   var request = http.Request(
       'POST',
       Uri.parse(
-          'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-customer-posted-listings'));
+          'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-customer-posted-listings'));
 
   request.body = json.encode({"page": page, "customerId": customerId});
 
@@ -39,7 +41,8 @@ Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) a
   }
   return postedListings;
 }
-void showOptions(BuildContext context,String listingId) {
+
+void showOptions(BuildContext context, String listingId) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -51,16 +54,15 @@ void showOptions(BuildContext context,String listingId) {
             title: const Text('edit'),
             onTap: () {
               // 实现编辑功能的代码
-              Navigator.pop(context);// 关闭底部弹窗
-
+              Navigator.pop(context); // 关闭底部弹窗
             },
           ),
           ListTile(
             leading: const Icon(Icons.delete),
             title: const Text('delete'),
             onTap: () {
-              deleteListing(listingId);// 实现删除功能的代码
-              Navigator.pop(context);// 关闭底部弹窗
+              deleteListing(listingId); // 实现删除功能的代码
+              Navigator.pop(context); // 关闭底部弹窗
             },
           ),
           ListTile(
@@ -83,7 +85,8 @@ Future<bool> deleteListing(String listingId) async {
     'Content-Type': 'application/json', // 如果你的API需要
   };
 
-  var url = 'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listings/delete-listing/$listingId';
+  var url =
+      'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listings/delete-listing/$listingId';
   var request = http.Request('POST', Uri.parse(url));
 
   request.headers.addAll(headers);
