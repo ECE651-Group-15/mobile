@@ -12,7 +12,7 @@ class EmailCheckResult {
   EmailCheckResult({required this.isAvailable, this.errorMessage});
 }
 
-class SignUpController extends GetxController{
+class SignUpController extends GetxController {
   SignUpController();
 
   final state = SignUpControllerState();
@@ -22,7 +22,10 @@ class SignUpController extends GetxController{
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/profile/create-profile'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/create-profile'));
     request.body = json.encode({
       "email": state.email,
       "name": state.name,
@@ -59,7 +62,8 @@ class SignUpController extends GetxController{
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('registration success'),
-          content: const Text('Congratulations, you have successfully registered as a user'),
+          content: const Text(
+              'Congratulations, you have successfully registered as a user'),
           actions: <Widget>[
             TextButton(
               child: const Text('Return to login interface'),
@@ -79,7 +83,10 @@ class SignUpController extends GetxController{
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/profile/check-email'));
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/check-email'));
     request.body = json.encode({"email": email});
     request.headers.addAll(headers);
 
@@ -88,15 +95,20 @@ class SignUpController extends GetxController{
       String responseBody = await response.stream.bytesToString();
       // 如果状态码为200，解析响应体判断电子邮箱是否已被使用
       var decodedResponse = json.decode(responseBody);
-      if (decodedResponse['code'] == 4001) { // 假设代码 4001 表示电子邮件已存在
-        return EmailCheckResult(isAvailable: false, errorMessage: decodedResponse['message']);
+      if (decodedResponse['code'] == 4001) {
+        // 假设代码 4001 表示电子邮件已存在
+        return EmailCheckResult(
+            isAvailable: false, errorMessage: decodedResponse['message']);
       } else {
         return EmailCheckResult(isAvailable: true);
       }
     } catch (e) {
       // 捕获请求过程中的异常
       print(e.toString());
-      return EmailCheckResult(isAvailable: true, errorMessage: 'Failed to check email availability. Please try again later.');
+      return EmailCheckResult(
+          isAvailable: true,
+          errorMessage:
+              'Failed to check email availability. Please try again later.');
     }
   }
 

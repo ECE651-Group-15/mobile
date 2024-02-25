@@ -5,4 +5,8 @@ class ImagePostState {
   final _title = "".obs;
   set title(value) => _title.value = value;
   get title => _title.value;
+
+  // 不再使用 late final，而是直接声明 Rx<Map<String, dynamic>>
+  late final Rx<Map<String, dynamic>> detailedPost = Rx<Map<String, dynamic>>({});
+
 }

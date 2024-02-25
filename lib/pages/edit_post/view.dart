@@ -7,7 +7,7 @@ import 'index.dart';
 
 class EditPostPage extends GetView<EditPostController> {
   EditPostPage({Key? key}) : super(key: key);
-  final id = Get.arguments;
+
   final ImagePicker picker = ImagePicker();
 
   @override
@@ -20,7 +20,7 @@ class EditPostPage extends GetView<EditPostController> {
             actions: [
               FilledButton(
                 onPressed: () {
-                  controller.editPost(context,id);
+                  controller.editPost(context);
                 },
                 child: const Text("Edit"),
               ),

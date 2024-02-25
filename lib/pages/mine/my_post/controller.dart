@@ -7,12 +7,12 @@ import 'package:get/get.dart';
 import 'index.dart';
 
 
-class MyPostController extends GetxController{
-
+class MyPostController extends GetxController {
   MyPostController();
   final state = MyPostPostState();
 
-  Future<List<dynamic>> fetchCustomerPostedListings(String customerId, int page) async {
+  Future<List<dynamic>> fetchCustomerPostedListings(
+      String customerId, int page) async {
     var headers = {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ class MyPostController extends GetxController{
     var request = http.Request(
         'POST',
         Uri.parse(
-            'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-customer-posted-listings'));
+            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-customer-posted-listings'));
 
     request.body = json.encode({"page": page, "customerId": customerId});
 
@@ -50,7 +50,7 @@ class MyPostController extends GetxController{
     return postedListings;
   }
 
-  void showOptions(BuildContext context,String listingId) {
+  void showOptions(BuildContext context, String listingId) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -62,16 +62,15 @@ class MyPostController extends GetxController{
               title: const Text('edit'),
               onTap: () {
                 // 实现编辑功能的代码
-                Navigator.pop(context);// 关闭底部弹窗
-
+                Navigator.pop(context); // 关闭底部弹窗
               },
             ),
             ListTile(
               leading: const Icon(Icons.delete),
               title: const Text('delete'),
               onTap: () {
-                deleteListing(listingId);// 实现删除功能的代码
-                Navigator.pop(context);// 关闭底部弹窗
+                deleteListing(listingId); // 实现删除功能的代码
+                Navigator.pop(context); // 关闭底部弹窗
               },
             ),
             ListTile(
@@ -94,7 +93,8 @@ class MyPostController extends GetxController{
       'Content-Type': 'application/json', // 如果你的API需要
     };
 
-    var url = 'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listings/delete-listing/$listingId';
+    var url =
+        'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listings/delete-listing/$listingId';
     var request = http.Request('POST', Uri.parse(url));
 
     request.headers.addAll(headers);
@@ -122,14 +122,16 @@ class MyPostController extends GetxController{
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           title: const Text('Delete this listing?'),
           content: const Text('Are you sure you delete this listing?'),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: TextButton(
-                child: const Text('Yes, delete', style: TextStyle(color: Colors.green)),
+                child: const Text('Yes, delete',
+                    style: TextStyle(color: Colors.green)),
                 onPressed: () {
                   deleteListing(postID);
                   refreshUI();
@@ -142,16 +144,15 @@ class MyPostController extends GetxController{
                 Navigator.of(context).pop(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00008B), // Use backgroundColor instead of primary
+                backgroundColor: const Color(
+                    0xFF00008B), // Use backgroundColor instead of primary
               ),
               child: const Text(
                 'Cancel',
                 style: TextStyle(color: Colors.white),
               ),
             ),
-
           ],
-
         );
       },
     );
@@ -160,8 +161,9 @@ class MyPostController extends GetxController{
 
 
   Future<void> loadData() async {
-    state.customerId=   "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b" ;
-    state.postedListings = await fetchCustomerPostedListings(state.customerId, 0) ;
+    state.customerId = "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b";
+    state.postedListings =
+        await fetchCustomerPostedListings(state.customerId, 0);
   }
 
   void refreshUI() {

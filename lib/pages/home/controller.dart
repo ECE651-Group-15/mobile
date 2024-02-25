@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'index.dart';
 import 'dart:convert';
+
 class HomeController extends GetxController {
   HomeController();
 
@@ -17,10 +18,11 @@ class HomeController extends GetxController {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
-    var request = http.Request('POST', Uri.parse('http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-listing-page'));
-    request.body = json.encode({
-      "page": 0
-    });
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-listing-page'));
+    request.body = json.encode({"page": 0});
     request.headers.addAll(headers);
     // 初始化postedListings为空列表
     List<dynamic> postedListings = [];
@@ -36,7 +38,7 @@ class HomeController extends GetxController {
         print(response.reasonPhrase);
         // 可选: 抛出异常或返回错误信息
       }
-    }catch (e) {
+    } catch (e) {
       // 异常处理
       print('An error occurred: $e');
       // 可选: 抛出异常或返回错误信息
@@ -45,10 +47,9 @@ class HomeController extends GetxController {
   }
 
   Future<List<dynamic>> fetchUserStaredLists(String userId) async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'
-    };
-    var url = 'http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/profile/get-profile/$userId';
+    var headers = {'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'};
+    var url =
+        'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/get-profile/$userId';
     var request = http.Request('POST', Uri.parse(url));
 
     request.headers.addAll(headers);
@@ -58,12 +59,11 @@ class HomeController extends GetxController {
     try {
       var decodedResponse = json.decode(responseBody);
       if (decodedResponse['code'] == 200) {
-        if(decodedResponse['data']['starredListIds'] != null){
+        if (decodedResponse['data']['starredListIds'] != null) {
           staredListings.assignAll(decodedResponse['data']['starredListIds']);
         }
         print(responseBody);
-      }
-      else {
+      } else {
         print('Failed to load user profile: ${response.reasonPhrase}');
       }
     } catch (e) {
@@ -78,11 +78,12 @@ class HomeController extends GetxController {
       'Content-Type': 'application/json'
     };
 
-    var request = http.Request('POST', Uri.parse('http://ec2-3-145-145-71.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/star-listing'));
-    request.body = json.encode({
-      "customerId": state.userID.value,
-      "listingId": listingId
-    });
+    var request = http.Request(
+        'POST',
+        Uri.parse(
+            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/star-listing'));
+    request.body =
+        json.encode({"customerId": state.userID.value, "listingId": listingId});
     request.headers.addAll(headers);
 
     try {
@@ -101,11 +102,14 @@ class HomeController extends GetxController {
   }
 
   void loadData() async {
-    state.userID.value = 'b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b'; // Assign to `value`
-    var userStaredLists = await fetchUserStaredLists(state.userID.value); // Await the future
+    state.userID.value =
+        'b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b'; // Assign to `value`
+    var userStaredLists =
+        await fetchUserStaredLists(state.userID.value); // Await the future
     state.staredLists.assignAll(userStaredLists); // Assign the awaited data
 
-    var postedListings = await fetchCustomerPostedListings(); // Await the future
+    var postedListings =
+        await fetchCustomerPostedListings(); // Await the future
     state.listings.assignAll(postedListings); // Assign the awaited data
   }
 
@@ -119,6 +123,7 @@ class HomeController extends GetxController {
     super.onInit();
     loadData();
   }
+
   // 新增方法，处理收藏/取消收藏操作
   void toggleFavorite(String listingId) {
     if (state.favorites[listingId] == true) {
@@ -130,12 +135,11 @@ class HomeController extends GetxController {
     update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
   }
 
-  bool isStared(String postID){
+  bool isStared(String postID) {
     //登录之后根据用户数据进行查询
-    if (state.staredLists.contains(postID)){
+    if (state.staredLists.contains(postID)) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
   }

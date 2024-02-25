@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../home/controller.dart';
+import '../mine/my_post/controller.dart';
 import 'index.dart';
 
 class EditPostController extends GetxController {
@@ -41,7 +43,7 @@ class EditPostController extends GetxController {
     }
   }
 
-  void editPost(BuildContext context, String postID) async {
+  void editPost(BuildContext context) async {
     if (state.images.isEmpty) {
       EasyLoading.showInfo("Please select at least one image");
       return;
@@ -64,7 +66,7 @@ class EditPostController extends GetxController {
     }
 
     EditPostRequestEntity req = EditPostRequestEntity(
-      id: postID,
+      id: state.editPost['id'],
       title: titleController.text,
       description: descriptionController.text,
       price: double.parse(priceController.text),
@@ -74,7 +76,7 @@ class EditPostController extends GetxController {
       customerId:
       "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
       status: "ACTIVE",
-      images: state.images,
+      images: state.images.value.cast<String>(), // 使用.cast<String>()确保类型正确
     );
 
     EasyLoading.show(
@@ -85,8 +87,10 @@ class EditPostController extends GetxController {
     try {
       EditPostResponseEntity res = await PostApi.editPost(req);
       if (res.code == 200) {
-        EasyLoading.dismiss();
         EasyLoading.showSuccess('edit post success');
+        Get.find<MyPostController>().refreshUI(); // 刷新帖子列表
+        Get.find<HomeController>().refreshUI();
+        Get.back(); // 使用Get.back()来返回上一页 // Close the dialog
       } else {
         EasyLoading.showError('edit post failed, try later');
       }
@@ -95,6 +99,24 @@ class EditPostController extends GetxController {
     } catch (e) {
       EasyLoading.showError('edit post failed, try later');
     }
+  }
+
+  Future<void> loadData() async {
+    final Map<String, dynamic>  editPost = Get.arguments ??{};
+
+    if(editPost.isNotEmpty) {
+      state.editPost = editPost;
+      state.images = (editPost['images'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
+      titleController.text = editPost['title'] ?? '';
+      descriptionController.text = editPost['description'] ?? '';
+      priceController.text = editPost['price']?.toString() ?? '';
+      state.category = editPost['category'] ?? '';
+    }
+
+  }
+
+  void refreshUI() {
+    loadData();
   }
 
   /// 在 widget 内存中分配后立即调用。
@@ -107,6 +129,7 @@ class EditPostController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    loadData();
   }
 
   /// 在 [onDelete] 方法之前调用。
