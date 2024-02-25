@@ -9,10 +9,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'index.dart';
 
-class CreatePostController extends GetxController {
-  CreatePostController();
+class EditPostController extends GetxController {
+  EditPostController();
 
-  final state = CreatePostState();
+  final state = EditPostState();
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -41,7 +41,7 @@ class CreatePostController extends GetxController {
     }
   }
 
-  void createPost(BuildContext context) async {
+  void editPost(BuildContext context, String postID) async {
     if (state.images.isEmpty) {
       EasyLoading.showInfo("Please select at least one image");
       return;
@@ -63,17 +63,18 @@ class CreatePostController extends GetxController {
       return;
     }
 
-    CreatePostRequestEntity req = CreatePostRequestEntity(
+    EditPostRequestEntity req = EditPostRequestEntity(
+      id: postID,
       title: titleController.text,
       description: descriptionController.text,
       price: double.parse(priceController.text),
-      images: state.images,
       longitude: 0,
       latitude: 0,
       category: state.category,
       customerId:
-          "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
+      "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
       status: "ACTIVE",
+      images: state.images,
     );
 
     EasyLoading.show(
@@ -82,18 +83,17 @@ class CreatePostController extends GetxController {
       dismissOnTap: false,
     );
     try {
-      CreatePostResponseEntity res = await PostApi.createPost(req);
+      EditPostResponseEntity res = await PostApi.editPost(req);
       if (res.code == 200) {
         EasyLoading.dismiss();
-        //EasyLoading.showSuccess('create post success');
-        showSuccessPost(context);
+        EasyLoading.showSuccess('edit post success');
       } else {
-        EasyLoading.showError('create post failed, try later');
+        EasyLoading.showError('edit post failed, try later');
       }
       print(res.toJson());
       // TODO: navigate to post detail page
     } catch (e) {
-      EasyLoading.showError('create post failed, try later');
+      EasyLoading.showError('edit post failed, try later');
     }
   }
 

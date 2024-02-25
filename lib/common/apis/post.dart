@@ -12,4 +12,14 @@ class PostApi {
     print(response);
     return CreatePostResponseEntity.fromJson(response);
   }
+
+  static Future<EditPostResponseEntity> editPost(
+      EditPostRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '$serverApiEndpoint/v1/api/listings/update-listing',
+      data: req.toJson(),
+    );
+    print(response);
+    return EditPostResponseEntity.fromJson(response);
+  }
 }

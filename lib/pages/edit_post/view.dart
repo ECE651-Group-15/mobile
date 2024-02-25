@@ -5,24 +5,24 @@ import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'index.dart';
 
-class CreatePostPage extends GetView<CreatePostController> {
-  CreatePostPage({Key? key}) : super(key: key);
-
+class EditPostPage extends GetView<EditPostController> {
+  EditPostPage({Key? key}) : super(key: key);
+  final id = Get.arguments;
   final ImagePicker picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CreatePostController>(
+    return GetBuilder<EditPostController>(
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text("Create Post"),
+            title: const Text("Edit Post"),
             actions: [
               FilledButton(
                 onPressed: () {
-                  controller.createPost(context);
+                  controller.editPost(context,id);
                 },
-                child: const Text("Create"),
+                child: const Text("Edit"),
               ),
               const SizedBox(
                 width: 8,

@@ -93,7 +93,9 @@ class MyPostPage extends GetView<MyPostController> {
                         onSelected: (String result) {
                           switch (result) {
                             case 'edit':
-                            // 实现编辑功能的代码
+                              Get.toNamed(AppRoutes.createPost,arguments: item['id']);
+                              // controller.editPost(context, item['id']);
+                              // 实现编辑功能的代码
                               break;
                             case 'delete':
                               controller.showDeleteConfirmationDialog(context,item['id']);
