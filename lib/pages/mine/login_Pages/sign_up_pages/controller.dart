@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/common/values/server.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -22,10 +23,8 @@ class SignUpController extends GetxController {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/create-profile'));
+    var request =
+        http.Request('POST', Uri.parse(APIConstants.createProfileUrl));
     request.body = json.encode({
       "email": state.email,
       "name": state.name,
@@ -83,10 +82,7 @@ class SignUpController extends GetxController {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/check-email'));
+    var request = http.Request('POST', Uri.parse(APIConstants.checkEmail));
     request.body = json.encode({"email": email});
     request.headers.addAll(headers);
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:exchange/common/values/server.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -16,10 +17,8 @@ class MyPostController extends GetxController {
       'Content-Type': 'application/json'
     };
 
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-customer-posted-listings'));
+    var request =
+        http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
 
     request.body = json.encode({"page": page, "customerId": customerId});
 
@@ -91,8 +90,7 @@ class MyPostController extends GetxController {
       'Content-Type': 'application/json', // 如果你的API需要
     };
 
-    var url =
-        'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listings/delete-listing/$listingId';
+    var url = '${APIConstants.deleteListing}/$listingId';
     var request = http.Request('POST', Uri.parse(url));
 
     request.headers.addAll(headers);
