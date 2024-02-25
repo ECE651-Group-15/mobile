@@ -18,6 +18,9 @@ import 'package:exchange/pages/mine/my_post/index.dart';
 import 'package:exchange/pages/mine/My_Liked_Page/view.dart';
 import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_name.dart';
 import 'package:exchange/pages/mine/login_Pages/sign_up_pages/sign_up_password.dart';
+import 'package:exchange/pages/edit_post/bindings.dart';
+import 'package:exchange/pages/edit_post/view.dart';
+
 class AppPages {
   static const initial = AppRoutes.initial;
   static const application = AppRoutes.application;
@@ -110,6 +113,12 @@ class AppPages {
       page: ()=> SignUpPassword(),
       binding: SignupBinding(),
     ),
+
+    GetPage(
+        name: AppRoutes.editPost,
+        page: ()=>EditPostPage(),
+        binding: EditPostBinding(),
+    )
   ];
 
 // static final unknownRoute = GetPage(

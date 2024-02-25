@@ -15,10 +15,19 @@ class ImagePostController extends GetxController {
     );
   }
 
+  Future<void> loadData() async {
+    state.detailedPost.value = Get.arguments ??{};
+  }
+
+  void refreshUI() {
+    loadData();
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
+    loadData();
   }
 
   /// 在 onInit() 之后调用 1 帧。这是进入的理想场所

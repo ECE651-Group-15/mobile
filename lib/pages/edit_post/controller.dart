@@ -1,17 +1,20 @@
 import 'dart:typed_data';
 import 'package:exchange/common/apis/post.dart';
 import 'package:exchange/common/entities/post.dart';
+import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../home/controller.dart';
+import '../mine/my_post/controller.dart';
 import 'index.dart';
 
-class CreatePostController extends GetxController {
-  CreatePostController();
+class EditPostController extends GetxController {
+  EditPostController();
 
-  final state = CreatePostState();
+  final state = EditPostState();
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -40,7 +43,7 @@ class CreatePostController extends GetxController {
     }
   }
 
-  void createPost(BuildContext context) async {
+  void editPost(BuildContext context) async {
     if (state.images.isEmpty) {
       EasyLoading.showInfo("Please select at least one image");
       return;
@@ -62,17 +65,18 @@ class CreatePostController extends GetxController {
       return;
     }
 
-    CreatePostRequestEntity req = CreatePostRequestEntity(
+    EditPostRequestEntity req = EditPostRequestEntity(
+      id: state.editPost['id'],
       title: titleController.text,
       description: descriptionController.text,
       price: double.parse(priceController.text),
-      images: state.images,
       longitude: 0,
       latitude: 0,
       category: state.category,
       customerId:
-          "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
+      "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
       status: "ACTIVE",
+      images: state.images.value.cast<String>(), // 使用.cast<String>()确保类型正确
     );
 
     EasyLoading.show(
@@ -81,19 +85,38 @@ class CreatePostController extends GetxController {
       dismissOnTap: false,
     );
     try {
-      CreatePostResponseEntity res = await PostApi.createPost(req);
+      EditPostResponseEntity res = await PostApi.editPost(req);
       if (res.code == 200) {
-        EasyLoading.dismiss();
-        //EasyLoading.showSuccess('create post success');
-        showSuccessPost(context);
+        EasyLoading.showSuccess('edit post success');
+        Get.find<MyPostController>().refreshUI(); // 刷新帖子列表
+        Get.find<HomeController>().refreshUI();
+        Get.back(); // 使用Get.back()来返回上一页 // Close the dialog
       } else {
-        EasyLoading.showError('create post failed, try later');
+        EasyLoading.showError('edit post failed, try later');
       }
       print(res.toJson());
       // TODO: navigate to post detail page
     } catch (e) {
-      EasyLoading.showError('create post failed, try later');
+      EasyLoading.showError('edit post failed, try later');
     }
+  }
+
+  Future<void> loadData() async {
+    final Map<String, dynamic>  editPost = Get.arguments ??{};
+
+    if(editPost.isNotEmpty) {
+      state.editPost = editPost;
+      state.images = (editPost['images'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
+      titleController.text = editPost['title'] ?? '';
+      descriptionController.text = editPost['description'] ?? '';
+      priceController.text = editPost['price']?.toString() ?? '';
+      state.category = editPost['category'] ?? '';
+    }
+
+  }
+
+  void refreshUI() {
+    loadData();
   }
 
   /// 在 widget 内存中分配后立即调用。
@@ -106,6 +129,7 @@ class CreatePostController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+    loadData();
   }
 
   /// 在 [onDelete] 方法之前调用。
@@ -136,7 +160,17 @@ void showSuccessPost(BuildContext context) {
           TextButton(
             child: const Text('Return to my post page'),
             onPressed: () {
-              // Get.toNamed(AppRoutes.application);
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => MinePage()),
+              // );
+              /// Navigator.pushReplacement(
+              ///   context,
+              ///   MaterialPageRoute(builder: (context) => MyPostPage()),
+              //  ); //
+              Get.toNamed(AppRoutes.application);
+
+// 关闭对话框
             },
           ),
         ],

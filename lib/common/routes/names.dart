@@ -16,4 +16,5 @@ class AppRoutes {
   static const postDetails = '/post_details';//帖子的详情界面
   static const signUpName = '/sign_up_name'; //注册输入名字
   static const signUpPwd = '/sign_up_pwd';//注册输入密码
+  static const editPost = '/edit_post'; //修改post
 }

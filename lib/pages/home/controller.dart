@@ -52,12 +52,10 @@ class HomeController extends GetxController {
 
     request.headers.addAll(headers);
     List<dynamic> staredListings = [];
-
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
     try {
-      http.StreamedResponse response = await request.send();
-      String responseBody = await response.stream.bytesToString();
       var decodedResponse = json.decode(responseBody);
-
       if (decodedResponse['code'] == 200) {
         if (decodedResponse['data']['starredListIds'] != null) {
           staredListings.assignAll(decodedResponse['data']['starredListIds']);

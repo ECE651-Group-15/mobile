@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'controller.dart';
 
 class OutlinedTextBox extends StatelessWidget {
   final String text;
@@ -34,16 +35,18 @@ class OutlinedTextBox extends StatelessWidget {
   }
 }
 
-class PostDetailsPage extends StatelessWidget {
-  // final dynamic item;
-  final dynamic item = Get.arguments;
-  PostDetailsPage({Key? key}) : super(key: key);
+class PostDetailsPage extends GetView<ImagePostController> {
+  const PostDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String? title; // 可能为 null 的字符串
-    title=item['listingDetails']['title'];
-    title = title ?? 'default title'; // 如果为 null，使用默认字符串
+    // 直接使用controller.state.detailedPost.value获取帖子的详细信息
+    var  detailedPost = controller.state.detailedPost.value;
+    final title = detailedPost['listingDetails']?['title'] ?? 'Default Title';
+    final images = detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
+    final price = detailedPost['listingDetails']?['price'] ?? '';
+    final category = detailedPost['listingDetails']?['category'] ?? '';
+    final description = detailedPost['listingDetails']?['description'] ?? '';
 
     return Scaffold(
       appBar: AppBar(
@@ -51,23 +54,21 @@ class PostDetailsPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              if (images.isNotEmpty)
                 Container(
                   height: 200,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: item.length,
+                    itemCount: images.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: Image.network(
-                          item['listingDetails']['images']
-                              .isNotEmpty
-                              ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
-                              : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg',
+                          'https://ece-651.oss-us-east-1.aliyuncs.com/${images[index]}',
                           width: 200,
                           height: 200,
                           fit: BoxFit.cover,
@@ -76,11 +77,11 @@ class PostDetailsPage extends StatelessWidget {
                     },
                   ),
                 ),
-              SizedBox(height: 16),
-              OutlinedTextBox(text: 'Title: ${item['listingDetails']['title']}'),
-              OutlinedTextBox(text: 'Price: \$${item['listingDetails']['price']}'),
-              OutlinedTextBox(text: 'Category: ${item['listingDetails']['category']}'),
-              OutlinedTextBox(text: 'Description: ${item['listingDetails']['description']}'),
+              const SizedBox(height: 16),
+              OutlinedTextBox(text: 'Title: $title'),
+              OutlinedTextBox(text: 'Price: \$$price'),
+              OutlinedTextBox(text: 'Category: $category'),
+              OutlinedTextBox(text: 'Description: $description'),
             ],
           ),
         ),
@@ -88,6 +89,7 @@ class PostDetailsPage extends StatelessWidget {
     );
   }
 }
+
 
 // class ImagePostPage extends GetView<ImagePostController> {
 //   const ImagePostPage({Key? key}) : super(key: key);

@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:exchange/pages/mine/my_post/state.dart';
 import 'package:get/get.dart';
+import 'index.dart';
+
 
 class MyPostController extends GetxController {
   MyPostController();
@@ -153,6 +155,8 @@ class MyPostController extends GetxController {
       },
     );
   }
+
+
 
   Future<void> loadData() async {
     state.customerId = "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b";
