@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:exchange/common/values/server.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'index.dart';
@@ -15,10 +16,7 @@ class MyLikedPostController extends GetxController {
       'Content-Type': 'application/json'
     };
 
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/starred-listings'));
+    var request = http.Request('POST', Uri.parse(APIConstants.starredListing));
     request.body = json
         .encode({"customerId": customerId, "page": page, "pageSize": pageSize});
     request.headers.addAll(headers);

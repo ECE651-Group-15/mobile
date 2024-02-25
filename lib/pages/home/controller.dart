@@ -1,3 +1,4 @@
+import 'package:exchange/common/values/server.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'index.dart';
@@ -19,9 +20,7 @@ class HomeController extends GetxController {
       'Content-Type': 'application/json'
     };
     var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/get-listing-page'));
+        'POST', Uri.parse(APIConstants.fetchCustomerPostedListingsUrl));
     request.body = json.encode({"page": 0});
     request.headers.addAll(headers);
     // 初始化postedListings为空列表
@@ -48,8 +47,7 @@ class HomeController extends GetxController {
 
   Future<List<dynamic>> fetchUserStaredLists(String userId) async {
     var headers = {'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'};
-    var url =
-        'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/profile/get-profile/$userId';
+    var url = '${APIConstants.fetchUserStarredListsUrl}/$userId';
     var request = http.Request('POST', Uri.parse(url));
 
     request.headers.addAll(headers);
@@ -78,10 +76,7 @@ class HomeController extends GetxController {
       'Content-Type': 'application/json'
     };
 
-    var request = http.Request(
-        'POST',
-        Uri.parse(
-            'http://ec2-18-223-182-150.us-east-2.compute.amazonaws.com:8080/v1/api/listing-profile/star-listing'));
+    var request = http.Request('POST', Uri.parse(APIConstants.starListingUrl));
     request.body =
         json.encode({"customerId": state.userID.value, "listingId": listingId});
     request.headers.addAll(headers);

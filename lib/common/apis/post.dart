@@ -6,7 +6,7 @@ class PostApi {
   static Future<CreatePostResponseEntity> createPost(
       CreatePostRequestEntity req) async {
     var response = await HttpUtil().post(
-      '$serverApiEndpoint/v1/api/listings/create-listing',
+      '${APIConstants.baseUrl}/v1/api/listings/create-listing',
       data: req.toJson(),
     );
     print(response);

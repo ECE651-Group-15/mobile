@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:exchange/common/apis/post.dart';
 import 'package:exchange/common/entities/post.dart';
-import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/common/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
