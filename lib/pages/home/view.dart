@@ -42,18 +42,20 @@ class HomePage extends StatelessWidget {
                         child: Stack(
                           children: [
                             GestureDetector(
-                              onTap: (){
-                                Get.toNamed(AppRoutes.postDetails, arguments: item);
+                              onTap: () {
+                                Get.toNamed(AppRoutes.postDetails,
+                                    arguments: item);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(8.0),
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        item['listingDetails']['images']?.isNotEmpty == true
-                                            ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
-                                            : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'
-                                    ),
+                                    image: NetworkImage(item['listingDetails']
+                                                    ['images']
+                                                ?.isNotEmpty ==
+                                            true
+                                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
+                                        : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                     fit: BoxFit.cover,
                                   ),
                                 ),
@@ -64,38 +66,45 @@ class HomePage extends StatelessWidget {
                               right: 6, // 距离右侧8单位
                               child: Obx(() {
                                 // 将 isFavorite 的计算移动到 Obx 内部
-                                bool isStared = controller.isStared(item['listingDetails']['id']);
+                                bool isStared = controller
+                                    .isStared(item['listingDetails']['id']);
                                 //传入controller检查是否已经点赞过了
                                 return IconButton(
-                                icon: Container(
-                                  width: 36, // 设置圆圈大小
-                                  height: 36,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200], // 灰色背景
-                                    shape: BoxShape.circle, // 圆形
-                                  ),
-                                  child: Center( // 确保图标位于容器中心
-                                    child: Icon(
-                                      isStared ? Icons.star : Icons.star_border,
-                                      color: isStared ? Colors.red : Colors.grey,
+                                  icon: Container(
+                                    width: 36, // 设置圆圈大小
+                                    height: 36,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200], // 灰色背景
+                                      shape: BoxShape.circle, // 圆形
+                                    ),
+                                    child: Center(
+                                      // 确保图标位于容器中心
+                                      child: Icon(
+                                        isStared
+                                            ? Icons.star
+                                            : Icons.star_border,
+                                        color:
+                                            isStared ? Colors.red : Colors.grey,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  //点赞功能
-                                  // controller.toggleFavorite(listingId);
-                                  if(!isStared){
-                                    controller.starListing(listingId);
-                                    controller.state.staredLists.add(listingId);
-                                  }
-                                  else{
-                                    //取消点赞功能
-                                  }
-                                },
+                                  onPressed: () {
+                                    //点赞功能
+                                    // controller.toggleFavorite(listingId);
+                                    if (!isStared) {
+                                      controller.starListing(listingId);
+                                      controller.state.staredLists
+                                          .add(listingId);
+                                    } else {
+                                      //取消点赞功能
+                                      controller.unStarListing(listingId);
+                                      controller.state.staredLists
+                                          .remove(listingId);
+                                    }
+                                  },
                                 );
                               }),
                             ),
-
                           ],
                         ),
                       ),

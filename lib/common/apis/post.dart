@@ -16,10 +16,20 @@ class PostApi {
   static Future<EditPostResponseEntity> editPost(
       EditPostRequestEntity req) async {
     var response = await HttpUtil().post(
-      '$serverApiEndpoint/v1/api/listings/update-listing',
+      '${APIConstants.baseUrl}/v1/api/listings/update-listing',
       data: req.toJson(),
     );
     print(response);
     return EditPostResponseEntity.fromJson(response);
+  }
+
+  static Future<UnstarPostResponseEntity> unStarPost(
+      UnstarPostRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/unstar-listing',
+      data: req.toJson(),
+    );
+    print(response);
+    return UnstarPostResponseEntity.fromJson(response);
   }
 }

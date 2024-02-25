@@ -1,4 +1,7 @@
+import 'package:exchange/common/apis/post.dart';
+import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/values/server.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'index.dart';
@@ -106,6 +109,26 @@ class HomeController extends GetxController {
     var postedListings =
         await fetchCustomerPostedListings(); // Await the future
     state.listings.assignAll(postedListings); // Assign the awaited data
+  }
+
+  Future<void> unStarListing(String listingId) async {
+    UnstarPostRequestEntity req = UnstarPostRequestEntity(
+      customerId: "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b",
+      listingId: listingId,
+    );
+
+    try {
+      UnstarPostResponseEntity res = await PostApi.unStarPost(req);
+      if (res.code == 200) {
+        EasyLoading.showSuccess('unstar post success');
+      } else {
+        EasyLoading.showError('unstar post failed, try later');
+      }
+      print(res.toJson());
+    } catch (e) {
+      print(e.toString()); // 打印异常信息
+      EasyLoading.showError('unstar post failed, try later');
+    }
   }
 
   void refreshUI() {
