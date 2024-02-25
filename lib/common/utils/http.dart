@@ -22,7 +22,7 @@ class HttpUtil {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
-      baseUrl: serverApiEndpoint,
+      baseUrl: APIConstants.baseUrl,
 
       //连接服务器超时时间，单位是毫秒.
       connectTimeout: const Duration(milliseconds: 120000),
