@@ -4,7 +4,6 @@ import 'package:exchange/common/values/server.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../mine/controller.dart';
 import 'index.dart';
 import 'dart:convert';
 

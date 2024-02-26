@@ -2,7 +2,6 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:exchange/pages/home/index.dart';
-import '../mine/controller.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
