@@ -32,4 +32,21 @@ class PostApi {
     print(response);
     return UnstarPostResponseEntity.fromJson(response);
   }
+
+  static Future<GetProfileResponseEntity> getProfile(
+      GetProfileRequestEntity req) async {
+    // 确保req对象中有customerId属性，并且已经被赋值
+    String? customerId = req.customerId;
+
+    // 动态构造URL，插入customerId
+    String url = '${APIConstants.baseUrl}/v1/api/profile/get-profile/$customerId';
+
+    var response = await HttpUtil().post(
+      url,
+      data: req.toJson(),
+    );
+    // print(response);
+    return GetProfileResponseEntity.fromJson(response);
+  }
+
 }

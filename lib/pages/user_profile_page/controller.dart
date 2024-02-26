@@ -4,45 +4,52 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'index.dart';
 
-class MyLikedPostController extends GetxController {
-  MyLikedPostController();
+class UserProfileController extends GetxController{
+  UserProfileController();
 
-  final state = MyLikedPostPostState();
+  final state = UserProfileControllerState();
 
-  Future<List<dynamic>> fetchStarredListings(
-      String customerId, int page, int pageSize) async {
+  Future<List<dynamic>> fetchCustomerPostedListings(
+      String customerId, int page) async {
     var headers = {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
       'Content-Type': 'application/json'
     };
 
-    var request = http.Request('POST', Uri.parse(APIConstants.starredListing));
-    request.body = json
-        .encode({"customerId": customerId, "page": page, "pageSize": pageSize});
+    var request =
+    http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
+
+    request.body = json.encode({"page": page, "customerId": customerId});
+
     request.headers.addAll(headers);
+
+    // 初始化postedListings为空列表
     List<dynamic> postedListings = [];
     try {
       http.StreamedResponse response = await request.send();
       String responseBody = await response.stream.bytesToString();
-      Map<String, dynamic> parsedJson = jsonDecode(responseBody);
-      if (parsedJson['code'] == 200) {
-        // 这里可以根据需要进一步处理响应体
+      var decodedResponse = json.decode(responseBody);
+
+      if (decodedResponse['code'] == 200) {
         // print(responseBody);
-        postedListings = parsedJson['data']['starredListings'];
+        postedListings = decodedResponse['data']['postedListings'];
+        // state.postedListings=postedListings;
       } else {
-        print("Failed to fetch starred listings: ${response.reasonPhrase}");
+        print(response.reasonPhrase);
+        // 可选: 抛出异常或返回错误信息
       }
     } catch (e) {
-      print("Exception caught: $e");
-      // 这里可以处理异常情况
+      // 异常处理
+      print('An error occurred: $e');
+      // 可选: 抛出异常或返回错误信息
     }
     return postedListings;
   }
 
   Future<void> loadData() async {
     state.customerId = "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b";
-    state.postedListings = await fetchStarredListings(
-        state.customerId, 0, 6); //id,page,page size  返回第几页数据,一页四个帖子内容
+    state.postedListings =
+    await fetchCustomerPostedListings(state.customerId, 0);
   }
 
   void refreshUI() {

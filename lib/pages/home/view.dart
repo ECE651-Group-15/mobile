@@ -6,6 +6,7 @@ import 'controller.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.find<HomeController>();
+  // final MineController mineController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +115,7 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start, // 左对齐
                           children: [
                             Text(
-                              '\$${item['listingDetails']['price'].toString() ?? 'No Price'}',
+                              '\$${item['listingDetails']['price'].toString()}',
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 20, // 更大的字体
@@ -123,7 +124,7 @@ class HomePage extends StatelessWidget {
                             ),
                             SizedBox(height: 4), // 添加一点空间
                             Text(
-                              item['title'] ?? 'No title',
+                              item['listingDetails']['title'] ?? 'No title',
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 16, // 标题字体大小
