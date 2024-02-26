@@ -35,10 +35,11 @@ class MyPostPage extends GetView<MyPostController> {
                 return Stack(
                   children: [
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        Map<String, dynamic>? customerProfilesDetails =  await controller.getProfile(item['customerId']);
                         Map<String, dynamic> newList = {
                           'listingDetails': {},
-                          'customerProfilesDetails': {},
+                          'customerProfilesDetails': customerProfilesDetails,
                         };
                         newList['listingDetails'] = item;
                         Get.toNamed(AppRoutes.postDetails, arguments: newList);

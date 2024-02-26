@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../home/controller.dart';
+import 'controller.dart';
 
 
 class MyProfilePage extends StatelessWidget {
@@ -32,10 +33,10 @@ class MyProfilePage extends StatelessWidget {
 }
 
 class UserHeaderSection extends StatelessWidget {
-  final HomeController homeController = Get.find<HomeController>();
 
+   MyProfileController controller = MyProfileController();
   UserHeaderSection({Key? key}) : super(key: key);
-
+   final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,7 +47,7 @@ class UserHeaderSection extends StatelessWidget {
           CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(
-              homeController.state.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
+                homeController.state.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
             ),
           ),
           const SizedBox(width: 16), // Provide some spacing between the avatar and the text
@@ -88,6 +89,8 @@ class UserHeaderSection extends StatelessWidget {
 
 
 class QuickLinksSection extends StatelessWidget {
+  final HomeController homeController = Get.find<HomeController>();
+  final MyProfileController controller = MyProfileController();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -98,7 +101,7 @@ class QuickLinksSection extends StatelessWidget {
             leading: Icon(Icons.person),
             title: Text('My public page'),
             onTap: () {
-              Get.toNamed(AppRoutes.userProfile);
+              Get.toNamed(AppRoutes.userProfile,arguments:homeController.state.customerProfilesDetails );
             },
           ),
           // ...更多ListTile组件

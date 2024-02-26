@@ -1,3 +1,4 @@
+import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controller.dart';
@@ -25,9 +26,9 @@ class OutlinedTextBox extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
-            color: const Color.fromARGB(255, 0, 0, 0),
+            color: Color.fromARGB(255, 0, 0, 0),
           ),
         ),
       ),
@@ -55,7 +56,7 @@ class PostDetailsPage extends GetView<ImagePostController> {
     final customerPhone = detailedPost['customerProfilesDetails']?['phone'] ??
         'No Phone Provided';
     final customerAvatarUrl = detailedPost['customerProfilesDetails']
-            ?['avatarUrl'] ??
+            ?['avatar'] ??
         'https://example.com/default_avatar.png';
 
     return Scaffold(
@@ -96,9 +97,14 @@ class PostDetailsPage extends GetView<ImagePostController> {
                 padding: EdgeInsets.only(bottom: 12),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(customerAvatarUrl),
-                      radius: 40,
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.userProfile,arguments:detailedPost['customerProfilesDetails'] );
+                      },
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(customerAvatarUrl),
+                        radius: 40,
+                      ),
                     ),
                     SizedBox(width: 16),
                     Column(
@@ -106,10 +112,10 @@ class PostDetailsPage extends GetView<ImagePostController> {
                       children: [
                         Text('Name: $customerName',
                             style: TextStyle(fontSize: 18)),
-                        Text('Email: $customerEmail',
-                            style: TextStyle(fontSize: 18)),
-                        Text('Phone: $customerPhone',
-                            style: TextStyle(fontSize: 18)),
+                        // Text('Email: $customerEmail',
+                        //     style: TextStyle(fontSize: 18)),
+                        // Text('Phone: $customerPhone',
+                        //     style: TextStyle(fontSize: 18)),
                       ],
                     ),
                   ],

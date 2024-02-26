@@ -14,4 +14,6 @@ class UserProfileControllerState {
   set postedListings(List<dynamic> value) => _postedListings.value = value;
   List<dynamic> get postedListings => _postedListings;
 
+
+
 }

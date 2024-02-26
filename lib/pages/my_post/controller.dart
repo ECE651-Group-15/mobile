@@ -5,6 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:exchange/pages/my_post/state.dart';
 import 'package:get/get.dart';
+import '../../common/apis/post.dart';
+import '../../common/entities/post.dart';
+import '../login_Pages/controller.dart';
 import 'index.dart';
 
 
@@ -12,6 +15,7 @@ class MyPostController extends GetxController {
   MyPostController();
   final state = MyPostPostState();
 
+  LoginController loginController = Get.find<LoginController>();
   Future<List<dynamic>> fetchCustomerPostedListings(
       String customerId, int page) async {
     var headers = {
@@ -156,10 +160,29 @@ class MyPostController extends GetxController {
     );
   }
 
-
+  Future<Map<String, dynamic>?> getProfile(String userId) async {
+    GetProfileRequestEntity req = GetProfileRequestEntity(
+      customerId: userId,
+    );
+    Map<String, dynamic>? userProfile = {};
+    // EasyLoading.show(status: 'Loading...', maskType: EasyLoadingMaskType.black);
+    try {
+      GetProfileResponseEntity res = await PostApi.getProfile(req);
+      if (res.code == 200 && res.data != null) {
+        userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
+      } else {
+        print('Error: getProfile()');
+        userProfile = {};
+      }
+    } catch (e) {
+      print('Error : $e');
+      userProfile = {}; // 捕获异常时也确保返回一个空Map
+    }
+    return userProfile;
+  }
 
   Future<void> loadData() async {
-    state.customerId = "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b";
+    state.customerId = loginController.state.userId.value;
     state.postedListings =
         await fetchCustomerPostedListings(state.customerId, 0);
   }

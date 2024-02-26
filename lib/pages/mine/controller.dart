@@ -8,13 +8,6 @@ class MineController extends GetxController {
 
   final state = MineState();
 
-  // Future<void> loadData() async {
-  //   // state.userId = 'b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b';
-  //   // 确保使用await等待异步操作完成
-  //   // var profilesDetails = await getProfile();
-  //   // state.customerProfilesDetails.assignAll(profilesDetails!);
-  // }
-
 
   Future<Map<String, dynamic>?> getProfile() async {
     GetProfileRequestEntity req = GetProfileRequestEntity(

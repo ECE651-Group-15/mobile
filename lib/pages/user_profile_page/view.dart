@@ -5,7 +5,7 @@ import '../home/controller.dart';
 import 'controller.dart';
 
 class UserProfilePage extends StatelessWidget {
-  final HomeController homeController = Get.find<HomeController>();
+  // final HomeController homeController = Get.find<HomeController>();
   final UserProfileController controller =  Get.find<UserProfileController>();
    UserProfilePage({super.key});
 
@@ -34,7 +34,7 @@ class UserProfilePage extends StatelessWidget {
                   CircleAvatar(
                     radius: 40,
                     backgroundImage:  NetworkImage(
-                      homeController.state.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
+                      controller.profilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
                     ),
                   ),
                   SizedBox(width: 16),
@@ -42,14 +42,14 @@ class UserProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        homeController.state.customerProfilesDetails['name'] ?? 'No name',
+                        controller.profilesDetails['name'] ?? 'No name',
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        homeController.state.customerProfilesDetails['email'] ??'No email',
+                        controller.profilesDetails['email'] ??'No email',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,

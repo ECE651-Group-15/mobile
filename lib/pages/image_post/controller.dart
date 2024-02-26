@@ -1,11 +1,14 @@
 import 'package:get/get.dart';
 
+import '../../common/apis/post.dart';
+import '../../common/entities/post.dart';
 import 'index.dart';
 
 class ImagePostController extends GetxController {
   ImagePostController();
 
   final state = ImagePostState();
+
 
   // tap
   void handleTap(int index) {
