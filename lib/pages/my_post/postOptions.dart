@@ -27,7 +27,7 @@ Future<List<dynamic>> fetchCustomerPostedListings(
     var decodedResponse = json.decode(responseBody);
 
     if (decodedResponse['code'] == 200) {
-      print(responseBody);
+      // print(responseBody);
       postedListings = decodedResponse['data']['postedListings'];
     } else {
       print(response.reasonPhrase);
@@ -94,7 +94,7 @@ Future<bool> deleteListing(String listingId) async {
     String responseBody = await response.stream.bytesToString();
     var decodedResponse = json.decode(responseBody);
     if (decodedResponse['code'] == 200) {
-      print(responseBody);
+      // print(responseBody);
       // print(await response.stream.bytesToString());
       EasyLoading.showSuccess('delete post success');
       return true; // 返回 true 表示删除成功

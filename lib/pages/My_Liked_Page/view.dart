@@ -72,7 +72,7 @@ class LikedPage extends GetView<MyLikedPostController> {
                                   CrossAxisAlignment.start, // 左对齐
                               children: [
                                 Text(
-                                  '\$${item['price'].toString() ?? 'No Price'}',
+                                  '\$${item['price'].toString()}',
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 20, // 更大的字体

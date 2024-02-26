@@ -2,10 +2,12 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:exchange/pages/home/index.dart';
+import '../mine/controller.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
   final HomeController controller = Get.find<HomeController>();
+  // final MineController mineController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +116,7 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start, // 左对齐
                           children: [
                             Text(
-                              '\$${item['listingDetails']['price'].toString() ?? 'No Price'}',
+                              '\$${item['listingDetails']['price'].toString()}',
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 20, // 更大的字体

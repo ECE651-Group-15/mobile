@@ -49,13 +49,13 @@ class CreatePostRequestEntity {
 
 class CreatePostResponseEntity {
   int? code;
-  Data? data;
+  PostData? data;
 
   CreatePostResponseEntity({this.code, this.data});
 
   CreatePostResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -68,7 +68,7 @@ class CreatePostResponseEntity {
   }
 }
 
-class Data {
+class PostData {
   String? id;
   String? title;
   String? description;
@@ -83,7 +83,7 @@ class Data {
   String? updatedAt;
   List<String>? customersWhoStarred;
 
-  Data(
+  PostData(
       {this.id,
       this.title,
       this.description,
@@ -98,7 +98,7 @@ class Data {
       this.updatedAt,
       this.customersWhoStarred});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  PostData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
@@ -132,6 +132,57 @@ class Data {
     return data;
   }
 }
+
+class UserData {
+  String? id;
+  String? name;
+  String? email;
+  String? avatar;
+  String? phone;
+  double? longitude;
+  double? latitude;
+  List<String>? postedListingIds;
+  List<String>? starredListIds;
+
+  UserData({
+    this.id,
+    this.name,
+    this.email,
+    this.avatar,
+    this.phone,
+    this.longitude,
+    this.latitude,
+    this.postedListingIds,
+    this.starredListIds,
+  });
+
+  UserData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    avatar = json['avatar'];
+    phone = json['phone'];
+    longitude = json['longitude']?.toDouble();
+    latitude = json['latitude']?.toDouble();
+    postedListingIds = json['postedListingIds']?.cast<String>() ?? [];
+    starredListIds = json['starredListIds']?.cast<String>() ?? [];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['avatar'] = avatar;
+    data['phone'] = phone;
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
+    data['postedListingIds'] = postedListingIds;
+    data['starredListIds'] = starredListIds;
+    return data;
+  }
+}
+
 
 class EditPostRequestEntity {
   String? id;
@@ -188,13 +239,13 @@ class EditPostRequestEntity {
 
 class EditPostResponseEntity {
   int? code;
-  Data? data;
+  PostData? data;
 
   EditPostResponseEntity({this.code, this.data});
 
   EditPostResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -231,13 +282,52 @@ class UnstarPostRequestEntity {
 
 class UnstarPostResponseEntity {
   int? code;
-  Data? data;
+  PostData? data;
 
   UnstarPostResponseEntity({this.code, this.data});
 
   UnstarPostResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class GetProfileRequestEntity{
+  String? customerId;
+
+  GetProfileRequestEntity({
+    this.customerId,
+  });
+
+  GetProfileRequestEntity.fromJson(Map<String, dynamic> json) {
+    customerId = json['customerId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['customerId'] = customerId;
+    return data;
+  }
+}
+
+class GetProfileResponseEntity {
+  int? code;
+  UserData? data;
+
+  GetProfileResponseEntity({this.code, this.data});
+
+  GetProfileResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

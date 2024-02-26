@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../common/routes/names.dart';
+import '../home/controller.dart';
 import 'index.dart';
-import 'login_Pages/view.dart';
+import '../login_Pages/view.dart';
 
 class MinePage extends GetView<MineController> {
-  const MinePage({Key? key}) : super(key: key);
-
+   MinePage({Key? key}) : super(key: key);
+  // final MineController myController = Get.put(MineController());
+  final HomeController homeController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,9 +16,17 @@ class MinePage extends GetView<MineController> {
       body: SafeArea(
         child: Column(
           children: [
-            const CircleAvatar(
-              radius: 48,
-              backgroundImage: NetworkImage('https://picsum.photos/200'),
+            Obx(() {
+              return CircleAvatar(
+                radius: 48,
+                backgroundImage: NetworkImage(
+                  homeController.state.customerProfilesDetails['avatar'] != null && homeController.state.customerProfilesDetails['avatar'].isNotEmpty
+                      ? homeController.state.customerProfilesDetails['avatar']
+                      : 'https://gravatar.com/avatar/65bb0599e7c5db1d5ad407e43fac74cf?s=400&d=robohash&r=x',
+                ),
+              );
+
+            },
             ),
             ListTile(
               leading: const Icon(Icons.post_add_outlined),

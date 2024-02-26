@@ -27,7 +27,6 @@ class MyLikedPostController extends GetxController {
       Map<String, dynamic> parsedJson = jsonDecode(responseBody);
       if (parsedJson['code'] == 200) {
         // 这里可以根据需要进一步处理响应体
-        // print(responseBody);
         postedListings = parsedJson['data']['starredListings'];
       } else {
         print("Failed to fetch starred listings: ${response.reasonPhrase}");
