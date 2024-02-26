@@ -26,6 +26,7 @@ class AboutUsPage extends StatelessWidget {
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 16),
+            Image.asset('assets/team_image.png'),
             Text(
               "Team members",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
