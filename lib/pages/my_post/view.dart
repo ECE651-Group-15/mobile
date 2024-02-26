@@ -5,7 +5,6 @@ import 'index.dart';
 
 class MyPostPage extends GetView<MyPostController> {
   MyPostPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MyPostController>(); // 确保控制器被正确初始化和注入
@@ -69,7 +68,7 @@ class MyPostPage extends GetView<MyPostController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '\$${item['price'].toString() ?? 'No Price'}',
+                                    '\$${item['price'].toString()}',
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontSize: 20,

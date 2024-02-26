@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../home/controller.dart';
-import '../mine/my_post/controller.dart';
+import '../my_post/controller.dart';
 import 'index.dart';
 
 class EditPostController extends GetxController {

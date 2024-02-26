@@ -9,7 +9,7 @@ import 'dart:convert';
 
 class HomeController extends GetxController {
   HomeController();
-
+ // 获取控制器实例
   final state = HomeState();
   // tap
   // void handleTap(int index) {
@@ -34,7 +34,6 @@ class HomeController extends GetxController {
       var decodedResponse = json.decode(responseBody);
 
       if (decodedResponse['code'] == 200) {
-        // print(responseBody);
         postedListings = decodedResponse['data']['listingDetails'];
       } else {
         print(response.reasonPhrase);
@@ -60,9 +59,11 @@ class HomeController extends GetxController {
     try {
       var decodedResponse = json.decode(responseBody);
       if (decodedResponse['code'] == 200) {
+
         if (decodedResponse['data']['starredListIds'] != null) {
           staredListings.assignAll(decodedResponse['data']['starredListIds']);
         }
+        state.customerProfilesDetails.assignAll(decodedResponse['data']);
         print(responseBody);
       } else {
         print('Failed to load user profile: ${response.reasonPhrase}');
