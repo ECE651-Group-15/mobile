@@ -49,12 +49,13 @@ class PostDetailsPage extends GetView<ImagePostController> {
     final description = detailedPost['listingDetails']?['description'] ?? '';
 
     final customerName =
-        detailedPost['customerDetails']?['name'] ?? 'No Name Provided';
-    final customerEmail =
-        detailedPost['customerDetails']?['email'] ?? 'No Email Provided';
-    final customerPhone =
-        detailedPost['customerDetails']?['phone'] ?? 'No Phone Provided';
-    final customerAvatarUrl = detailedPost['customerDetails']?['avatarUrl'] ??
+        detailedPost['customerProfilesDetails']?['name'] ?? 'No Name Provided';
+    final customerEmail = detailedPost['customerProfilesDetails']?['email'] ??
+        'No Email Provided';
+    final customerPhone = detailedPost['customerProfilesDetails']?['phone'] ??
+        'No Phone Provided';
+    final customerAvatarUrl = detailedPost['customerProfilesDetails']
+            ?['avatarUrl'] ??
         'https://example.com/default_avatar.png';
 
     return Scaffold(
@@ -100,18 +101,16 @@ class PostDetailsPage extends GetView<ImagePostController> {
                       radius: 40,
                     ),
                     SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Name: $customerName',
-                              style: TextStyle(fontSize: 18)),
-                          Text('Email: $customerEmail',
-                              style: TextStyle(fontSize: 18)),
-                          Text('Phone: $customerPhone',
-                              style: TextStyle(fontSize: 18)),
-                        ],
-                      ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Name: $customerName',
+                            style: TextStyle(fontSize: 18)),
+                        Text('Email: $customerEmail',
+                            style: TextStyle(fontSize: 18)),
+                        Text('Phone: $customerPhone',
+                            style: TextStyle(fontSize: 18)),
+                      ],
                     ),
                   ],
                 ),
