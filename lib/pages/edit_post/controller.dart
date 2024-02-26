@@ -76,7 +76,7 @@ class EditPostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-      loginController.state.userId.value, // TODO: change to real logged user id
+      loginController.state.userId.value,
       status: "ACTIVE",
       images: state.images.value.cast<String>(), // 使用.cast<String>()确保类型正确
     );

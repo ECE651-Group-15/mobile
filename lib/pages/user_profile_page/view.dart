@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../common/routes/names.dart';
-import '../home/controller.dart';
 import 'controller.dart';
 
 class UserProfilePage extends StatelessWidget {

@@ -72,7 +72,7 @@ class CreatePostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-          loginController.state.userId.value, // TODO: change to real logged user id
+          loginController.state.userId.value, //
       status: "ACTIVE",
     );
 

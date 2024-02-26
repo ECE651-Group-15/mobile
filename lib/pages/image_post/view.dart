@@ -51,10 +51,10 @@ class PostDetailsPage extends GetView<ImagePostController> {
 
     final customerName =
         detailedPost['customerProfilesDetails']?['name'] ?? 'No Name Provided';
-    final customerEmail = detailedPost['customerProfilesDetails']?['email'] ??
-        'No Email Provided';
-    final customerPhone = detailedPost['customerProfilesDetails']?['phone'] ??
-        'No Phone Provided';
+    // final customerEmail = detailedPost['customerProfilesDetails']?['email'] ??
+    //     'No Email Provided';
+    // final customerPhone = detailedPost['customerProfilesDetails']?['phone'] ??
+    //     'No Phone Provided';
     final customerAvatarUrl = detailedPost['customerProfilesDetails']
             ?['avatar'] ??
         'https://example.com/default_avatar.png';

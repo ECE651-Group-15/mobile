@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import '../home/controller.dart';
 
 class MyProfileControllerState {
   // title

@@ -1,7 +1,4 @@
 import 'package:get/get.dart';
-
-import '../../common/apis/post.dart';
-import '../../common/entities/post.dart';
 import 'index.dart';
 
 class ImagePostController extends GetxController {
