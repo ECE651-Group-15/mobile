@@ -17,12 +17,17 @@ class MinePage extends GetView<MineController> {
         child: Column(
           children: [
             Obx(() {
-              return CircleAvatar(
-                radius: 48,
-                backgroundImage: NetworkImage(
-                  homeController.state.customerProfilesDetails['avatar'] != null && homeController.state.customerProfilesDetails['avatar'].isNotEmpty
-                      ? homeController.state.customerProfilesDetails['avatar']
-                      : 'https://gravatar.com/avatar/65bb0599e7c5db1d5ad407e43fac74cf?s=400&d=robohash&r=x',
+              return GestureDetector(
+                onTap: (){
+                  // Get.toNamed(AppRoutes.myProfile);
+                },
+                child: CircleAvatar(
+                  radius: 48,
+                  backgroundImage: NetworkImage(
+                    homeController.state.customerProfilesDetails['avatar'] != null && homeController.state.customerProfilesDetails['avatar'].isNotEmpty
+                        ? homeController.state.customerProfilesDetails['avatar']
+                        : 'https://gravatar.com/avatar/65bb0599e7c5db1d5ad407e43fac74cf?s=400&d=robohash&r=x',
+                  ),
                 ),
               );
 
@@ -42,6 +47,14 @@ class MinePage extends GetView<MineController> {
               trailing: const Icon(Icons.chevron_right),
               onTap: () {
                 Get.toNamed(AppRoutes.myLikedPost);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.account_circle),
+              title: const Text("My Profile"),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Get.toNamed(AppRoutes.myProfile);
               },
             ),
             ListTile(

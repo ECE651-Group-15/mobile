@@ -124,7 +124,7 @@ class HomePage extends StatelessWidget {
                             ),
                             SizedBox(height: 4), // 添加一点空间
                             Text(
-                              item['title'] ?? 'No title',
+                              item['listingDetails']['title'] ?? 'No title',
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
                                 fontSize: 16, // 标题字体大小
