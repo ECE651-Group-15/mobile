@@ -11,6 +11,7 @@ import 'global.dart';
 Future<void> main() async {
   await Global.init();
   await initializeClient();
+
   runApp(const MyApp());
 }
 

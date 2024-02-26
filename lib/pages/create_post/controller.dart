@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../login_Pages/controller.dart';
 import 'index.dart';
 
 class CreatePostController extends GetxController {
   CreatePostController();
 
   final state = CreatePostState();
-
+  LoginController loginController = Get.find<LoginController>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -71,7 +72,7 @@ class CreatePostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-          "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
+          loginController.state.userId.value, //
       status: "ACTIVE",
     );
 

@@ -39,14 +39,18 @@ class LikedPage extends GetView<MyLikedPostController> {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   var item = items[index];
+
                   return GestureDetector(
-                    onTap: () {
+                    onTap: ()  async {
+                      Map<String, dynamic>? customerProfilesDetails =  await controller.getProfile(item['customerId']);
                       Map<String, dynamic> newList = {
                         'listingDetails': item,
-                        'customerProfilesDetails': {}, // Placeholder for now
+                        'customerProfilesDetails': customerProfilesDetails, // 使用获取到的用户资料
                       };
+                      // 导航并传递参数
                       Get.toNamed(AppRoutes.postDetails, arguments: newList);
                     },
+
                     child: GridTile(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,

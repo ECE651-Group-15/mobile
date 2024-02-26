@@ -7,6 +7,7 @@ import 'index.dart';
 class UserProfileController extends GetxController{
   UserProfileController();
 
+  final Map<String,dynamic> profilesDetails = Get.arguments;
   final state = UserProfileControllerState();
 
   Future<List<dynamic>> fetchCustomerPostedListings(
@@ -47,9 +48,8 @@ class UserProfileController extends GetxController{
   }
 
   Future<void> loadData() async {
-    state.customerId = "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b";
     state.postedListings =
-    await fetchCustomerPostedListings(state.customerId, 0);
+    await fetchCustomerPostedListings(profilesDetails['id'], 0);
   }
 
   void refreshUI() {

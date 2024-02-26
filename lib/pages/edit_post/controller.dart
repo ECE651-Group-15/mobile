@@ -8,12 +8,14 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../home/controller.dart';
+import '../login_Pages/controller.dart';
 import '../my_post/controller.dart';
 import 'index.dart';
 
 class EditPostController extends GetxController {
   EditPostController();
 
+  LoginController loginController = Get.find<LoginController>();
   final state = EditPostState();
 
   TextEditingController titleController = TextEditingController();
@@ -74,7 +76,7 @@ class EditPostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-      "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b", // TODO: change to real logged user id
+      loginController.state.userId.value,
       status: "ACTIVE",
       images: state.images.value.cast<String>(), // 使用.cast<String>()确保类型正确
     );

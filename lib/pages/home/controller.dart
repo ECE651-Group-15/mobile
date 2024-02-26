@@ -4,10 +4,12 @@ import 'package:exchange/common/values/server.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../login_Pages/controller.dart';
 import 'index.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
+  LoginController loginController = Get.find<LoginController>();
   HomeController();
  // 获取控制器实例
   final state = HomeState();
@@ -64,7 +66,7 @@ class HomeController extends GetxController {
           staredListings.assignAll(decodedResponse['data']['starredListIds']);
         }
         state.customerProfilesDetails.assignAll(decodedResponse['data']);
-        print(responseBody);
+        // print(responseBody);
       } else {
         print('Failed to load user profile: ${response.reasonPhrase}');
       }
@@ -102,7 +104,7 @@ class HomeController extends GetxController {
 
   void loadData() async {
     state.userID.value =
-        'b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b'; // Assign to `value`
+        loginController.state.userId.value; // Assign to `value`
     var userStaredLists =
         await fetchUserStaredLists(state.userID.value); // Await the future
     state.staredLists.assignAll(userStaredLists); // Assign the awaited data
@@ -114,7 +116,7 @@ class HomeController extends GetxController {
 
   Future<void> unStarListing(String listingId) async {
     UnstarPostRequestEntity req = UnstarPostRequestEntity(
-      customerId: "b16f6fd7-fbe1-4665-8d03-ea8ec63ef78b",
+      customerId: loginController.state.userId.value,
       listingId: listingId,
     );
 
