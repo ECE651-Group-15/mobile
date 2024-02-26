@@ -35,19 +35,76 @@ class OutlinedTextBox extends StatelessWidget {
   }
 }
 
+class CustomerDetailsBox extends StatelessWidget {
+  final String name;
+  final String email;
+  final String phone;
+  final String avatarUrl;
+
+  const CustomerDetailsBox({
+    Key? key,
+    required this.name,
+    required this.email,
+    required this.phone,
+    required this.avatarUrl,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12),
+      child: Container(
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey.shade300, width: 1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(avatarUrl),
+              radius: 40,
+            ),
+            SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('SellerInfo: $name', style: TextStyle(fontSize: 18)),
+                  Text('EmailInfo: $email', style: TextStyle(fontSize: 18)),
+                  Text('PhoneInfo: $phone', style: TextStyle(fontSize: 18)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class PostDetailsPage extends GetView<ImagePostController> {
   const PostDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // 直接使用controller.state.detailedPost.value获取帖子的详细信息
-    var  detailedPost = controller.state.detailedPost.value;
+    var detailedPost = controller.state.detailedPost.value;
     final title = detailedPost['listingDetails']?['title'] ?? 'Default Title';
-    final images = detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
+    final images =
+        detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
     final price = detailedPost['listingDetails']?['price'] ?? '';
     final category = detailedPost['listingDetails']?['category'] ?? '';
     final description = detailedPost['listingDetails']?['description'] ?? '';
 
+    final customerName =
+        detailedPost['customerDetails']?['name'] ?? 'No Name Provided';
+    final customerEmail =
+        detailedPost['customerDetails']?['email'] ?? 'No Email Provided';
+    final customerPhone =
+        detailedPost['customerDetails']?['phone'] ?? 'No Phone Provided';
+    final customerAvatarUrl = detailedPost['customerDetails']?['avatarUrl'] ??
+        'https://example.com/default_avatar.png';
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -82,6 +139,12 @@ class PostDetailsPage extends GetView<ImagePostController> {
               OutlinedTextBox(text: 'Price: \$$price'),
               OutlinedTextBox(text: 'Category: $category'),
               OutlinedTextBox(text: 'Description: $description'),
+              CustomerDetailsBox(
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                avatarUrl: customerAvatarUrl,
+              ),
             ],
           ),
         ),
