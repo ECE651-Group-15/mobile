@@ -49,4 +49,14 @@ class PostApi {
     return GetProfileResponseEntity.fromJson(response);
   }
 
+  static Future<LoginResponseEntity> logInPost(
+      LoginRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/profile/login',
+      data: req.toJson(),
+    );
+    print(response);
+    return LoginResponseEntity.fromJson(response);
+  }
+
 }

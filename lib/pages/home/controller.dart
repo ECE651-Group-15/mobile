@@ -116,7 +116,7 @@ class HomeController extends GetxController {
 
   Future<void> unStarListing(String listingId) async {
     UnstarPostRequestEntity req = UnstarPostRequestEntity(
-      customerId: loginController.state.userId.value,
+      customerId: loginController.state.customerProfilesDetails['id'],
       listingId: listingId,
     );
 

@@ -1,8 +1,15 @@
 import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/pages/mine/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'controller.dart';
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final LoginController controller = LoginController();
+  // final mineController = Get.find<MineController>();
+   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +39,20 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // Email 输入框
-            const TextField(
-              decoration: InputDecoration(
+             TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 16),
-            // 密码输入框
             TextField(
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.visibility),
                   onPressed: () {
@@ -75,7 +83,9 @@ class LoginScreen extends StatelessWidget {
             ),
             Spacer(),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                 controller.logIn(context,_emailController.text,_passwordController.text);
+                 controller.state.userId.value = controller.state.customerProfilesDetails['id'] ?? '';
                 // 处理登录逻辑
               },
               style: ElevatedButton.styleFrom(

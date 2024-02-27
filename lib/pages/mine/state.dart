@@ -10,5 +10,10 @@ class MineState {
   set userId(value) => _userId.value = value;
   get userId => _userId.value;
 
-  final customerProfilesDetails = <String, dynamic>{}.obs;
+  var  customerProfilesDetails = <String, dynamic>{}.obs;
+
+  final _isLogin = true.obs;
+  set isLogin(value) => _isLogin.value = value;
+  get isLogin => _isLogin.value;
+
 }
