@@ -1,5 +1,4 @@
 import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/mine/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

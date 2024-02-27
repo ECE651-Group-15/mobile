@@ -37,11 +37,11 @@ class LoginControllerState {
   String get phone => _phone.value;
   set phone(String value) => _phone.value = value;
 
-  double? get longitude => _longitude?.value;
-  set longitude(double? value) => _longitude?.value = value ?? 0.0;
+  double? get longitude => _longitude.value;
+  set longitude(double? value) => _longitude.value = value ?? 0.0;
 
-  double? get latitude => _latitude?.value;
-  set latitude(double? value) => _latitude?.value = value ?? 0.0;
+  double? get latitude => _latitude.value;
+  set latitude(double? value) => _latitude.value = value ?? 0.0;
 
   List<String> get postedListingIds => _postedListingIds.toList();
   set postedListingIds(List<String> value) => _postedListingIds.assignAll(value);

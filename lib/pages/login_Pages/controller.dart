@@ -1,6 +1,4 @@
-import 'dart:ffi';
 
-import 'package:exchange/pages/mine/controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
