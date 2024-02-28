@@ -4,14 +4,14 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
-import '../login_Pages/controller.dart';
+import '../../common/store/user.dart';
 import 'index.dart';
 
 class MyLikedPostController extends GetxController {
   MyLikedPostController();
 
   final state = MyLikedPostPostState();
-  LoginController loginController = Get.find<LoginController>();
+  UserStore userStore = Get.find<UserStore>();
   Future<List<dynamic>> fetchStarredListings(
       String customerId, int page, int pageSize) async {
     var headers = {
@@ -63,7 +63,7 @@ class MyLikedPostController extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.customerId = loginController.state.userId.value;
+    state.customerId = userStore.customerProfilesDetails['id'];
     state.postedListings = await fetchStarredListings(
         state.customerId, 0, 6); //id,page,page size  返回第几页数据,一页四个帖子内容
     // state.customerProfilesDetails = (await getProfile())!;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/common/values/server.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -55,27 +54,6 @@ class SignUpController extends GetxController {
     return RegExp(r'^\S+@\S+\.\S+$').hasMatch(email);
   }
 
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('registration success'),
-          content: const Text(
-              'Congratulations, you have successfully registered as a user'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Return to login interface'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Get.toNamed(AppRoutes.application);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   Future<EmailCheckResult> checkEmailAvailable(String email) async {
     var headers = {
@@ -107,7 +85,24 @@ class SignUpController extends GetxController {
               'Failed to check email availability. Please try again later.');
     }
   }
-
+  void showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('registration success'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Return to login page'),
+              onPressed: () {
+                Get.close(4);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {

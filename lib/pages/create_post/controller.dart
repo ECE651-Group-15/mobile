@@ -6,18 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../login_Pages/controller.dart';
+import '../../common/store/user.dart';
+import '../my_post/controller.dart';
 import 'index.dart';
 
 class CreatePostController extends GetxController {
   CreatePostController();
-
+  final MyPostController minePostController = Get.find<MyPostController>();
   final state = CreatePostState();
-  LoginController loginController = Get.find<LoginController>();
+  UserStore userStore = Get.find<UserStore>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-
+  // final MyPostController controller = Get.find<MyPostController>();
   void uploadImage(XFile? file) async {
     if (file == null) {
       EasyLoading.showInfo("No image selected");
@@ -72,7 +73,7 @@ class CreatePostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-          loginController.state.userId.value, //
+          userStore.customerProfilesDetails['id'], //
       status: "ACTIVE",
     );
 
@@ -84,16 +85,17 @@ class CreatePostController extends GetxController {
     try {
       CreatePostResponseEntity res = await PostApi.createPost(req);
       if (res.code == 200) {
-        EasyLoading.dismiss();
-        //EasyLoading.showSuccess('create post success');
-        showSuccessPost(context);
+        EasyLoading.showSuccess('create post success');
+        minePostController.refreshUI();
+        Get.back();
       } else {
         EasyLoading.showError('create post failed, try later');
       }
-      print(res.toJson());
+      // print(res.toJson());
       // TODO: navigate to post detail page
     } catch (e) {
-      EasyLoading.showError('create post failed, try later');
+      EasyLoading.showError('create post failed: $e');
+      print('Error : $e');
     }
   }
 
@@ -125,23 +127,3 @@ class CreatePostController extends GetxController {
   }
 }
 
-void showSuccessPost(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Create post successfully'),
-        content:
-            const Text('Congratulations, you have successfully create a post'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Return to my post page'),
-            onPressed: () {
-              // Get.toNamed(AppRoutes.application);
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

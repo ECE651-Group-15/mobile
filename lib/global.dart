@@ -1,4 +1,6 @@
+import 'package:exchange/pages/home/controller.dart';
 import 'package:exchange/pages/mine/controller.dart';
+import 'package:exchange/pages/my_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -16,10 +18,9 @@ class Global {
     // Loading();
 
     await Get.putAsync<StorageService>(() => StorageService().init());
-    Get.lazyPut(()=>LoginController());
-    Get.lazyPut(()=>MineController());
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
+    // Get.put<HomeController>(HomeController());
   }
 
   static void setSystemUi() {

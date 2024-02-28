@@ -8,12 +8,12 @@ class HomeState {
   final RxList<dynamic> listings = <dynamic>[].obs;
   final RxMap<String, bool> favorites = <String, bool>{}.obs; // Use RxMap for observable map
 
-  final RxString userID = ''.obs; // No need for late keyword
+  // final RxString userID = ''.obs; // No need for late keyword
   final RxList<dynamic> staredLists = <dynamic>[].obs; // No need for late keyword
-
-  final _userId = "".obs;
-  set userId(value) => _userId.value = value;
-  get userId => _userId.value;
+  //
+  // final _userId = "".obs;
+  // set userId(value) => _userId.value = value;
+  // get userId => _userId.value;
 
   final customerProfilesDetails = <String, dynamic>{}.obs;
 }

@@ -2,12 +2,12 @@ import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'controller.dart';
+import '../../common/store/user.dart';
+
 class LoginScreen extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final LoginController controller = LoginController();
-  // final mineController = Get.find<MineController>();
+  UserStore userStore = Get.find<UserStore>();
    LoginScreen({super.key});
 
   @override
@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.of(context).pop();
+            Get.back();
            // Get.offAllNamed(AppRoutes.application);
           },
         ),
@@ -75,16 +75,13 @@ class LoginScreen extends StatelessWidget {
               child: const Text('Don\'t have an account? Sign up'),
               onPressed: () {
                 Get.toNamed(AppRoutes.signUpEmail);
-               // Navigator.push(context,
-               //     MaterialPageRoute(builder: (context)=>EmailInputScreen()),
-               // ); // 处理注册逻辑
+               // 处理注册逻辑
               },
             ),
             Spacer(),
             ElevatedButton(
               onPressed: () async {
-                 controller.logIn(context,_emailController.text,_passwordController.text);
-                 controller.state.userId.value = controller.state.customerProfilesDetails['id'] ?? '';
+                 userStore.logIn(_emailController.text,_passwordController.text);
                 // 处理登录逻辑
               },
               style: ElevatedButton.styleFrom(

@@ -1,19 +1,19 @@
-import 'package:exchange/pages/login_Pages/controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../common/routes/names.dart';
+import '../../common/store/user.dart';
 import 'index.dart';
 import '../login_Pages/view.dart';
 import '../mine/Aboutus.dart';
 
 class MinePage extends GetView<MineController> {
-  MinePage({Key? key}) : super(key: key);
+  const MinePage({Key? key}) : super(key: key);
   // final MineController myController = Get.put(MineController());
   @override
   Widget build(BuildContext context) {
-    // final HomeController homeController = Get.find();
-    final logInController = Get.find<LoginController>();
+    UserStore userStore = Get.find<UserStore>();
     return Scaffold(
       appBar: AppBar(title: const Text("Setting")),
       body: SafeArea(
@@ -23,17 +23,29 @@ class MinePage extends GetView<MineController> {
               CircleAvatar(
                 radius: 48,
                 backgroundImage: NetworkImage(
-                  logInController.state.isLogin
-                      ? logInController.state.avatar
+                  userStore.isLogin && userStore.customerProfilesDetails['avatar'] != null
+                      ? userStore.customerProfilesDetails['avatar']
                       : 'https://gravatar.com/avatar/36769e13dec8dd6619228ab1113427f8?s=400&d=mp&r=x',
                 ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.account_circle),
+                title: const Text("My Profile"),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () {
+                  if (userStore.isLogin) {
+                    Get.toNamed(AppRoutes.myProfile);
+                  } else {
+                    EasyLoading.showInfo('Please log in first');
+                  }
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.post_add_outlined),
                 title: const Text("My Post"),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  if (logInController.state.isLogin) {
+                  if (userStore.isLogin) {
                     Get.toNamed(AppRoutes.myPost);
                   } else {
                     EasyLoading.showInfo('Please log in first');
@@ -45,25 +57,14 @@ class MinePage extends GetView<MineController> {
                 title: const Text("My Stars"),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  if (logInController.state.isLogin) {
+                  if (userStore.isLogin) {
                     Get.toNamed(AppRoutes.myLikedPost);
                   } else {
                     EasyLoading.showInfo('Please log in first');
                   }
                 },
               ),
-              ListTile(
-                leading: const Icon(Icons.account_circle),
-                title: const Text("My Profile"),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  if (logInController.state.isLogin) {
-                    Get.toNamed(AppRoutes.myProfile);
-                  } else {
-                    EasyLoading.showInfo('Please log in first');
-                  }
-                },
-              ),
+
               ListTile(
                 leading: const Icon(Icons.shopping_bag_outlined),
                 title: const Text("Completed Orders"),
@@ -85,27 +86,24 @@ class MinePage extends GetView<MineController> {
               ListTile(
                 leading: Icon(
                   Icons.logout_outlined,
-                  color: logInController.state.isLogin
+                  color: userStore.isLogin
                       ? Colors.red
                       : Colors.purple,
                 ),
                 title: Text(
-                  logInController.state.isLogin ? "Logout" : "Login",
+                  userStore.isLogin ? "Logout" : "Login",
                   style: TextStyle(
-                    color: logInController.state.isLogin
+                    color: userStore.isLogin
                         ? Colors.red
                         : Colors.purple,
                   ),
                 ),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  if (logInController.state.isLogin) {
-                    logInController.state.isLogin = false;
+                  if (userStore.isLogin) {
+                    userStore.isLogin = false;
                   } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()),
-                    );
+                    Get.toNamed(AppRoutes.login);
                   }
                 },
               ),

@@ -22,6 +22,11 @@ class StorageService extends GetxService {
     return await _prefs.setStringList(key, value);
   }
 
+
+  // Future<bool> setMap(String key,Map<String,dynamic>value) async {
+  //   return await _prefs.setStringList(key, value);
+  // }
+
   String getString(String key) {
     return _prefs.getString(key) ?? '';
   }

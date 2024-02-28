@@ -1,18 +1,17 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
+import '../home/controller.dart';
 import 'index.dart';
 
 class LoginController extends GetxController{
   LoginController();
 
   final state = LoginControllerState();
-  // MineController mineController = Get.find<MineController>();
 
-  Future<void> logIn(BuildContext context,String email, String password) async {
+  Future<Map<String,dynamic>?> logIn(String email, String password) async {
     LoginRequestEntity req = LoginRequestEntity(
       email: email,
       password: password,
@@ -24,31 +23,21 @@ class LoginController extends GetxController{
       if (res.code == 200 && res.data != null) {
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
         state.isLogin = true;
-        state.id = userProfile['id'];
-        state.userId.value = userProfile['id'];
-        state.name = userProfile['name'];
-        state.email = userProfile['email'];
-        state.avatar = userProfile['avatar'];
-        state.phone = userProfile['phone'];
-        state.longitude = userProfile['longitude']?.toDouble();
-        state.latitude = userProfile['latitude']?.toDouble();
-        state.postedListingIds.assignAll(List<String>.from(userProfile['postedListingIds'] ?? []));
-        state.starredListIds.assignAll(List<String>.from(userProfile['starredListIds'] ?? []));
+        state.customerProfilesDetails.value = userProfile;
         EasyLoading.showSuccess('login success');
-        Get.find<LoginController>().update();
-        Navigator.pop(context);
+        final HomeController homeController = Get.find<HomeController>();
+        homeController.refreshUI();
+        Get.back();
       } else {
         print('Error: getProfile()');
-        // userProfile = {};
         state.isLogin = false;
         EasyLoading.showError('login failed');
       }
     } catch (e) {
       print('Error : $e');
       EasyLoading.showError('login failed : $e');
-      // userProfile = {}; // 捕获异常时也确保返回一个空Map
     }
-    // return userProfile;
+     return userProfile;
   }
 
   // void login(String newUserId) {
@@ -59,6 +48,7 @@ class LoginController extends GetxController{
   //   state.customerProfilesDetails =
   //   // login('ff8bc70f-bd42-4c5d-849f-498a70b3f095');
   // }
+
 
   /// 在 widget 内存中分配后立即调用。
   @override

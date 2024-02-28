@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../common/store/user.dart';
 import '../home/controller.dart';
-import '../login_Pages/controller.dart';
 import '../my_post/controller.dart';
 import 'index.dart';
 
 class EditPostController extends GetxController {
   EditPostController();
 
-  LoginController loginController = Get.find<LoginController>();
+  // LoginController loginController = Get.find<LoginController>();
   final state = EditPostState();
-
+  UserStore userStore = Get.find<UserStore>();
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -76,7 +76,7 @@ class EditPostController extends GetxController {
       latitude: 0,
       category: state.category,
       customerId:
-      loginController.state.userId.value,
+      userStore.customerProfilesDetails['id'],
       status: "ACTIVE",
       images: state.images.value.cast<String>(), // 使用.cast<String>()确保类型正确
     );
@@ -91,7 +91,7 @@ class EditPostController extends GetxController {
       if (res.code == 200) {
         EasyLoading.showSuccess('edit post success');
         Get.find<MyPostController>().refreshUI(); // 刷新帖子列表
-        Get.find<HomeController>().refreshUI();
+        Get.find<HomeController>().loadData();
         Get.back(); // 使用Get.back()来返回上一页 // Close the dialog
       } else {
         EasyLoading.showError('edit post failed, try later');
@@ -162,10 +162,6 @@ void showSuccessPost(BuildContext context) {
           TextButton(
             child: const Text('Return to my post page'),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => MinePage()),
-              // );
               /// Navigator.pushReplacement(
               ///   context,
               ///   MaterialPageRoute(builder: (context) => MyPostPage()),
