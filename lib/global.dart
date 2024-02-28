@@ -1,12 +1,10 @@
-import 'package:exchange/pages/home/controller.dart';
-import 'package:exchange/pages/mine/controller.dart';
-import 'package:exchange/pages/my_post/controller.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'common/services/storage.dart';
 import 'common/store/store.dart';
-import 'pages/login_Pages/controller.dart';
+
 /// 全局静态数据
 class Global {
   /// 初始化

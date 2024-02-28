@@ -27,7 +27,9 @@ class _EmailInputScreenState extends State<EmailInputScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
+          onPressed: (){
+            Get.back();
+          },
         ),
         backgroundColor: Colors.white,
         elevation: 0,

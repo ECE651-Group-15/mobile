@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../common/routes/names.dart';
 import '../../common/store/user.dart';
 import 'index.dart';
-import '../login_Pages/view.dart';
 import '../mine/Aboutus.dart';
 
 class MinePage extends GetView<MineController> {

@@ -1,6 +1,5 @@
 import 'package:exchange/common/services/services.dart';
 import 'package:exchange/common/values/values.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../apis/post.dart';

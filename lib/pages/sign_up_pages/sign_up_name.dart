@@ -27,7 +27,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
         ),
         backgroundColor: Colors.white,

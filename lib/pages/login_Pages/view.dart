@@ -18,7 +18,6 @@ class LoginScreen extends StatelessWidget {
           icon: const Icon(Icons.close),
           onPressed: () {
             Get.back();
-           // Get.offAllNamed(AppRoutes.application);
           },
         ),
       ),

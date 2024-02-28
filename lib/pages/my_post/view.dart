@@ -1,7 +1,6 @@
 import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../home/controller.dart';
 import 'index.dart';
 
 class MyPostPage extends GetView<MyPostController> {
