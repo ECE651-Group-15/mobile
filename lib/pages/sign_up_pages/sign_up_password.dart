@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'controller.dart';
 
@@ -30,8 +31,7 @@ class _SignUpScreenState extends State<SignUpPassword> {
         leading: IconButton(
           icon: Icon(Icons.close),
           onPressed: () {
-            // Navigator.of(context).pop();
-
+            Get.back();
           },
         ),
       ),
@@ -103,7 +103,7 @@ class _SignUpScreenState extends State<SignUpPassword> {
                 ),
                 Spacer(),
                 ElevatedButton(
-                  onPressed: () async { // 添加 async 关键字以处理异步操作
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       controller.state.pwd = _passwordController.text;
                       try {
@@ -111,22 +111,17 @@ class _SignUpScreenState extends State<SignUpPassword> {
                         bool isSuccess = await controller.registerUser();
                         if (isSuccess) {
                           // 注册成功，执行成功操作，例如显示成功对话框或导航到下一个页面
+                          // EasyLoading.showSuccess('sign up success');
                           controller.showSuccessDialog(context);
                         } else {
-                          // 注册失败，显示失败提示。这里不需要额外的操作，因为 isSuccess 已经是 false
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text('Registration failed. Please try again.'),
-                          ));
+                         EasyLoading.showError('sign up failed');
                         }
                       } catch (e) {
                         // 捕获异常并显示错误提示
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('An error occurred: $e'),
-                        ));
+                        EasyLoading.showError('sign up failed : $e');
                       }
                     }
                   },
-
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
                     backgroundColor : const Color(0xFF00008B), // match_parent width

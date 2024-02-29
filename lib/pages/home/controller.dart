@@ -4,12 +4,13 @@ import 'package:exchange/common/values/server.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import '../login_Pages/controller.dart';
+import '../../common/store/user.dart';
 import 'index.dart';
 import 'dart:convert';
 
 class HomeController extends GetxController {
-  LoginController loginController = Get.find<LoginController>();
+  UserStore userStore = Get.find<UserStore>();
+
   HomeController();
  // 获取控制器实例
   final state = HomeState();
@@ -84,7 +85,7 @@ class HomeController extends GetxController {
 
     var request = http.Request('POST', Uri.parse(APIConstants.starListingUrl));
     request.body =
-        json.encode({"customerId": state.userID.value, "listingId": listingId});
+        json.encode({"customerId": userStore.customerProfilesDetails['id'], "listingId": listingId});
     request.headers.addAll(headers);
 
     try {
@@ -102,21 +103,26 @@ class HomeController extends GetxController {
     }
   }
 
-  void loadData() async {
-    state.userID.value =
-        loginController.state.userId.value; // Assign to `value`
-    var userStaredLists =
-        await fetchUserStaredLists(state.userID.value); // Await the future
-    state.staredLists.assignAll(userStaredLists); // Assign the awaited data
+  // 处理下拉刷新逻辑的方法
+  Future<void> refreshUI() async {
+    loadData();
+  }
 
-    var postedListings =
-        await fetchCustomerPostedListings(); // Await the future
+  void loadData() async {
+    var userId = userStore.customerProfilesDetails['id'];
+    if (userId != null) {
+      var userStaredLists = await fetchUserStaredLists(userId);
+      state.staredLists.assignAll(userStaredLists);// 其他逻辑
+    } else {
+      // 处理 userId 为 null 的情况
+    }
+     var postedListings = await fetchCustomerPostedListings(); // Await the future
     state.listings.assignAll(postedListings); // Assign the awaited data
   }
 
   Future<void> unStarListing(String listingId) async {
     UnstarPostRequestEntity req = UnstarPostRequestEntity(
-      customerId: loginController.state.userId.value,
+      customerId: userStore.customerProfilesDetails['id'],
       listingId: listingId,
     );
 
@@ -127,16 +133,16 @@ class HomeController extends GetxController {
       } else {
         EasyLoading.showError('unstar post failed, try later');
       }
-      print(res.toJson());
+      // print(res.toJson());
     } catch (e) {
       print(e.toString()); // 打印异常信息
       EasyLoading.showError('unstar post failed, try later');
     }
   }
 
-  void refreshUI() {
-    loadData();
-  }
+  // void refreshUI() {
+  //   loadData();
+  // }
 
   /// 在 widget 内存中分配后立即调用。
   @override
@@ -145,16 +151,16 @@ class HomeController extends GetxController {
     loadData();
   }
 
-  // 新增方法，处理收藏/取消收藏操作
-  void toggleFavorite(String listingId) {
-    if (state.favorites[listingId] == true) {
-      state.favorites[listingId] = false;
-    } else {
-      state.favorites[listingId] = true;
-    }
-    state.favorites.refresh();
-    update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
-  }
+  // // 新增方法，处理收藏/取消收藏操作
+  // void toggleFavorite(String listingId) {
+  //   if (state.favorites[listingId] == true) {
+  //     state.favorites[listingId] = false;
+  //   } else {
+  //     state.favorites[listingId] = true;
+  //   }
+  //   state.favorites.refresh();
+  //   update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
+  // }
 
   bool isStared(String postID) {
     //登录之后根据用户数据进行查询

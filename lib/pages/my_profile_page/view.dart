@@ -1,11 +1,7 @@
-
 import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../home/controller.dart';
-import 'controller.dart';
-
+import '../../common/store/user.dart';
 
 class MyProfilePage extends StatelessWidget {
 
@@ -16,7 +12,9 @@ class MyProfilePage extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close),
-          onPressed: () => Navigator.pop(context),
+          onPressed: (){
+            Get.back();
+          },
         ),
         title: Text('User Profile'),
       ),
@@ -33,10 +31,8 @@ class MyProfilePage extends StatelessWidget {
 }
 
 class UserHeaderSection extends StatelessWidget {
-
-   MyProfileController controller = MyProfileController();
+  UserStore userStore = Get.find<UserStore>();
   UserHeaderSection({Key? key}) : super(key: key);
-   final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +43,7 @@ class UserHeaderSection extends StatelessWidget {
           CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(
-                homeController.state.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
+                userStore.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
             ),
           ),
           const SizedBox(width: 16), // Provide some spacing between the avatar and the text
@@ -56,7 +52,7 @@ class UserHeaderSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  homeController.state.customerProfilesDetails['name'] ?? 'No Name',
+                  userStore.customerProfilesDetails['name'] ?? 'No Name',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -65,14 +61,14 @@ class UserHeaderSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 4), // Provide some spacing between the texts
                 Text(
-                  homeController.state.customerProfilesDetails['email'] ?? 'No Email',
+                  userStore.customerProfilesDetails['email'] ?? 'No Email',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
                 ),
                 Text(
-                  homeController.state.customerProfilesDetails['phone'] ?? 'No Phone',
+                  userStore.customerProfilesDetails['phone'] ?? 'No Phone',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
@@ -89,8 +85,8 @@ class UserHeaderSection extends StatelessWidget {
 
 
 class QuickLinksSection extends StatelessWidget {
-  final HomeController homeController = Get.find<HomeController>();
-  final MyProfileController controller = MyProfileController();
+
+  UserStore userStore = Get.find<UserStore>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -101,7 +97,7 @@ class QuickLinksSection extends StatelessWidget {
             leading: Icon(Icons.person),
             title: Text('My public page'),
             onTap: () {
-              Get.toNamed(AppRoutes.userProfile,arguments:homeController.state.customerProfilesDetails );
+              Get.toNamed(AppRoutes.userProfile,arguments:userStore.customerProfilesDetails );
             },
           ),
           // ...更多ListTile组件

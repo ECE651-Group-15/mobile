@@ -7,15 +7,16 @@ import 'package:exchange/pages/my_post/state.dart';
 import 'package:get/get.dart';
 import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
-import '../login_Pages/controller.dart';
+import '../../common/store/user.dart';
+import '../home/controller.dart';
 import 'index.dart';
 
 
 class MyPostController extends GetxController {
-  MyPostController();
-  final state = MyPostPostState();
 
-  LoginController loginController = Get.find<LoginController>();
+  final state = MyPostPostState();
+  UserStore userStore = Get.find<UserStore>();
+  final HomeController homeController = Get.find<HomeController>();
   Future<List<dynamic>> fetchCustomerPostedListings(
       String customerId, int page) async {
     var headers = {
@@ -53,43 +54,6 @@ class MyPostController extends GetxController {
     return postedListings;
   }
 
-  void showOptions(BuildContext context, String listingId) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min, // 使内容尽可能紧凑
-          children: <Widget>[
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('edit'),
-              onTap: () {
-                // 实现编辑功能的代码
-                Navigator.pop(context); // 关闭底部弹窗
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.delete),
-              title: const Text('delete'),
-              onTap: () {
-                deleteListing(listingId); // 实现删除功能的代码
-                Navigator.pop(context); // 关闭底部弹窗
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.check),
-              title: const Text('maked as sold'),
-              onTap: () {
-                // 实现分享功能的代码
-                Navigator.pop(context); // 关闭底部弹窗
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future<bool> deleteListing(String listingId) async {
     var headers = {
       'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
@@ -106,8 +70,9 @@ class MyPostController extends GetxController {
       String responseBody = await response.stream.bytesToString();
       var decodedResponse = json.decode(responseBody);
       if (decodedResponse['code'] == 200) {
-        // print(responseBody);
         EasyLoading.showSuccess('delete post success');
+        homeController.loadData();
+        refreshUI();
         return true; // 返回 true 表示删除成功
       } else {
         print(response.reasonPhrase);
@@ -136,14 +101,13 @@ class MyPostController extends GetxController {
                     style: TextStyle(color: Colors.green)),
                 onPressed: () {
                   deleteListing(postID);
-                  refreshUI();
-                  Navigator.of(context).pop(); // Close the dialog
+                  Get.back();// Close the dialog
                 },
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+               Get.back();// Close the dialog
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(
@@ -182,12 +146,12 @@ class MyPostController extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.customerId = loginController.state.userId.value;
+    state.customerId = userStore.customerProfilesDetails['id'];
     state.postedListings =
         await fetchCustomerPostedListings(state.customerId, 0);
   }
 
-  void refreshUI() {
+  Future<void> refreshUI() async {
     loadData();
   }
 

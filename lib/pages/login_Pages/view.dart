@@ -1,8 +1,14 @@
 import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../common/store/user.dart';
+
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  UserStore userStore = Get.find<UserStore>();
+   LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +17,7 @@ class LoginScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.of(context).pop();
-           // Get.offAllNamed(AppRoutes.application);
+            Get.back();
           },
         ),
       ),
@@ -32,19 +37,20 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             // Email 输入框
-            const TextField(
-              decoration: InputDecoration(
+             TextField(
+              controller: _emailController,
+              decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
               ),
               keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 16),
-            // 密码输入框
             TextField(
+              controller: _passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: const OutlineInputBorder(),
                 suffixIcon: IconButton(
                   icon: Icon(Icons.visibility),
                   onPressed: () {
@@ -68,14 +74,13 @@ class LoginScreen extends StatelessWidget {
               child: const Text('Don\'t have an account? Sign up'),
               onPressed: () {
                 Get.toNamed(AppRoutes.signUpEmail);
-               // Navigator.push(context,
-               //     MaterialPageRoute(builder: (context)=>EmailInputScreen()),
-               // ); // 处理注册逻辑
+               // 处理注册逻辑
               },
             ),
             Spacer(),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                 userStore.logIn(_emailController.text,_passwordController.text);
                 // 处理登录逻辑
               },
               style: ElevatedButton.styleFrom(

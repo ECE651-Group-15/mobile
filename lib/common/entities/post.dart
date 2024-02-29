@@ -339,3 +339,46 @@ class GetProfileResponseEntity {
     return data;
   }
 }
+
+
+class LoginRequestEntity{
+  String? email;
+  String? password;
+  LoginRequestEntity({
+    this.email,
+    this.password,
+  });
+
+  LoginRequestEntity.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+    password=json['password'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['email'] = email;
+    data['password'] = password;
+    return data;
+  }
+}
+
+class LoginResponseEntity {
+  int? code;
+  UserData? data;
+
+  LoginResponseEntity({this.code, this.data});
+
+  LoginResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
