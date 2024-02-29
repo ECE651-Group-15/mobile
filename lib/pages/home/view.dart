@@ -15,16 +15,16 @@ class HomePage extends StatelessWidget {
     UserStore userStore = Get.find<UserStore>();
     return Scaffold(
       appBar: AppBar(title: const Text("Home Page")),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (userStore.isLogin) {
-            Get.toNamed(AppRoutes.createPost);
-          } else {
-            EasyLoading.showInfo('Please log in first');
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     if (userStore.isLogin) {
+      //       Get.toNamed(AppRoutes.createPost);
+      //     } else {
+      //       EasyLoading.showInfo('Please log in first');
+      //     }
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

@@ -1,4 +1,6 @@
 
+import 'package:exchange/pages/home/controller.dart';
+import 'package:exchange/pages/my_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,7 @@ class Global {
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
     // Get.put<HomeController>(HomeController());
+    // Get.put<MyPostController>(MyPostController());
   }
 
   static void setSystemUi() {

@@ -18,4 +18,5 @@ class AppRoutes {
   static const editPost = '/edit_post'; //修改post
   static const myProfile = '/my_profile'; //我的用户界面
   static const userProfile = '/user_profile'; //详细用户界面
+
 }

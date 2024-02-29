@@ -18,7 +18,6 @@ class CreatePostController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-  // final MyPostController controller = Get.find<MyPostController>();
   void uploadImage(XFile? file) async {
     if (file == null) {
       EasyLoading.showInfo("No image selected");
@@ -45,23 +44,23 @@ class CreatePostController extends GetxController {
   void createPost(BuildContext context) async {
     if (state.images.isEmpty) {
       EasyLoading.showInfo("Please select at least one image");
-      return;
+      return ;
     }
     if (titleController.text.isEmpty) {
       EasyLoading.showInfo("Please input title");
-      return;
+      return ;
     }
     if (descriptionController.text.isEmpty) {
       EasyLoading.showInfo("Please input description");
-      return;
+      return ;
     }
     if (priceController.text.isEmpty) {
       EasyLoading.showInfo("Please input price");
-      return;
+      return ;
     }
     if (state.category.isEmpty) {
       EasyLoading.showInfo("Please select category");
-      return;
+      return ;
     }
 
     CreatePostRequestEntity req = CreatePostRequestEntity(
