@@ -19,6 +19,7 @@ class Global {
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
     // Get.put<HomeController>(HomeController());
+    // Get.put<MyPostController>(MyPostController());
   }
 
   static void setSystemUi() {
