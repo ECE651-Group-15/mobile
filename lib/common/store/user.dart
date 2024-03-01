@@ -19,6 +19,10 @@ class UserStore extends GetxController {
   String get email => _email.value;
   set email(String value) => _email.value = value;
 
+  final RxString _password = ''.obs;
+  String get password => _password.value;
+  set password(String value) => _password.value = value;
+
   final _isLogin = false.obs;
   set isLogin(value) => _isLogin.value = value;
   get isLogin => _isLogin.value;
@@ -60,6 +64,7 @@ class UserStore extends GetxController {
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
         isLogin = true;
         _email.value=email;
+        _password.value = password;
         customerProfilesDetails.value = userProfile ;
         List<String> profile = userProfile.values.map((value) => value.toString()).toList();
         bool isSuccess = await StorageService.to.setList(email, profile);

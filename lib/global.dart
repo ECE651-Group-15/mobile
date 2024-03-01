@@ -1,6 +1,4 @@
 
-import 'package:exchange/pages/home/controller.dart';
-import 'package:exchange/pages/my_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
