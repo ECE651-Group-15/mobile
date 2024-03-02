@@ -3,6 +3,16 @@ import 'package:exchange/common/utils/utils.dart';
 import 'package:exchange/common/values/values.dart';
 
 class PostApi {
+  static Future<EditProfileResponseEntity> editProfile(
+      EditProfileRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/profile/update-profile',
+      data: req.toJson(),
+    );
+    print(response);
+    return EditProfileResponseEntity.fromJson(response);
+  }
+
   static Future<CreatePostResponseEntity> createPost(
       CreatePostRequestEntity req) async {
     var response = await HttpUtil().post(
@@ -39,7 +49,8 @@ class PostApi {
     String? customerId = req.customerId;
 
     // 动态构造URL，插入customerId
-    String url = '${APIConstants.baseUrl}/v1/api/profile/get-profile/$customerId';
+    String url =
+        '${APIConstants.baseUrl}/v1/api/profile/get-profile/$customerId';
 
     var response = await HttpUtil().post(
       url,
@@ -49,8 +60,7 @@ class PostApi {
     return GetProfileResponseEntity.fromJson(response);
   }
 
-  static Future<LoginResponseEntity> logInPost(
-      LoginRequestEntity req) async {
+  static Future<LoginResponseEntity> logInPost(LoginRequestEntity req) async {
     var response = await HttpUtil().post(
       '${APIConstants.baseUrl}/v1/api/profile/login',
       data: req.toJson(),
@@ -58,5 +68,4 @@ class PostApi {
     print(response);
     return LoginResponseEntity.fromJson(response);
   }
-
 }

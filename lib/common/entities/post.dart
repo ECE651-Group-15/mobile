@@ -183,7 +183,6 @@ class UserData {
   }
 }
 
-
 class EditPostRequestEntity {
   String? id;
   String? title;
@@ -301,7 +300,7 @@ class UnstarPostResponseEntity {
   }
 }
 
-class GetProfileRequestEntity{
+class GetProfileRequestEntity {
   String? customerId;
 
   GetProfileRequestEntity({
@@ -340,8 +339,45 @@ class GetProfileResponseEntity {
   }
 }
 
+class EditProfileRequestEntity {
+  String? customerId;
+  String? password;
+  EditProfileRequestEntity({
+    this.customerId,
+    this.password,
+  });
+  EditProfileRequestEntity.fromJson(Map<String, dynamic> json) {
+    customerId = json['customerId'];
+    password = json['password'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['customerId'] = customerId;
+    data['password'] = password;
+    return data;
+  }
+}
 
-class LoginRequestEntity{
+class EditProfileResponseEntity {
+  String? customerId;
+  String? password;
+  EditProfileResponseEntity({
+    this.customerId,
+    this.password,
+  });
+  EditProfileResponseEntity.fromJson(Map<String, dynamic> json) {
+    customerId = json['customerId'];
+    password = json['password'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['customerId'] = customerId;
+    data['password'] = password;
+    return data;
+  }
+}
+
+class LoginRequestEntity {
   String? email;
   String? password;
   LoginRequestEntity({
@@ -351,7 +387,7 @@ class LoginRequestEntity{
 
   LoginRequestEntity.fromJson(Map<String, dynamic> json) {
     email = json['email'];
-    password=json['password'];
+    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
