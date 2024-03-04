@@ -48,9 +48,17 @@ class EditProfileController extends GetxController {
     }
   }
 
+  void loadUserInfo() {
+    nameController.text = userStore.customerProfilesDetails['name'];
+    emailController.text = userStore.customerProfilesDetails['email'];
+    phoneController.text = userStore.customerProfilesDetails['phone'];
+  }
+
   @override
   void onInit() {
     super.onInit();
+    loadUserInfo(); // Call this method to load user info and prefill the text fields
+
     // Initialize text controllers if you want to prefill them, for example:
     // nameController.text = userStore.customerProfilesDetails['name'];
     // emailController.text = userStore.customerProfilesDetails['email'];
