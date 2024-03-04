@@ -340,7 +340,7 @@ class GetProfileResponseEntity {
 }
 
 class EditProfileRequestEntity {
-  String? customerId;
+  String? id;
   String? password;
   String? name;
   String? email;
@@ -350,7 +350,7 @@ class EditProfileRequestEntity {
   double? latitude;
 
   EditProfileRequestEntity({
-    this.customerId,
+    this.id,
     this.password,
     this.name,
     this.email,
@@ -361,7 +361,7 @@ class EditProfileRequestEntity {
   });
 
   EditProfileRequestEntity.fromJson(Map<String, dynamic> json) {
-    customerId = json['customerId'];
+    id = json['id'];
     password = json['password'];
     name = json['name'];
     email = json['email'];
@@ -373,7 +373,7 @@ class EditProfileRequestEntity {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['customerId'] = customerId;
+    data['id'] = id;
     data['password'] = password;
     data['name'] = name;
     data['email'] = email;

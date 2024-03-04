@@ -21,7 +21,7 @@ class EditProfileController extends GetxController {
 
     // Construct the request entity with updated fields
     EditProfileRequestEntity req = EditProfileRequestEntity(
-        customerId: userStore.customerProfilesDetails['id'],
+        id: userStore.customerProfilesDetails['id'],
         password: userStore.password,
         name: state.name,
         email: state.email,
