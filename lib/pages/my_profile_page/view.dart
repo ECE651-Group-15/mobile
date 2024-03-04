@@ -4,15 +4,14 @@ import 'package:get/get.dart';
 import '../../common/store/user.dart';
 
 class MyProfilePage extends StatelessWidget {
-
-   MyProfilePage({super.key});
+  MyProfilePage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.close),
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
         ),
@@ -43,10 +42,13 @@ class UserHeaderSection extends StatelessWidget {
           CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(
-                userStore.customerProfilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
+              userStore.customerProfilesDetails['avatar'] ??
+                  'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
             ),
           ),
-          const SizedBox(width: 16), // Provide some spacing between the avatar and the text
+          const SizedBox(
+              width:
+                  16), // Provide some spacing between the avatar and the text
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +61,8 @@ class UserHeaderSection extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 4), // Provide some spacing between the texts
+                const SizedBox(
+                    height: 4), // Provide some spacing between the texts
                 Text(
                   userStore.customerProfilesDetails['email'] ?? 'No Email',
                   style: const TextStyle(
@@ -83,9 +86,7 @@ class UserHeaderSection extends StatelessWidget {
   }
 }
 
-
 class QuickLinksSection extends StatelessWidget {
-
   UserStore userStore = Get.find<UserStore>();
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,8 @@ class QuickLinksSection extends StatelessWidget {
             leading: Icon(Icons.person),
             title: Text('My public page'),
             onTap: () {
-              Get.toNamed(AppRoutes.userProfile,arguments:userStore.customerProfilesDetails );
+              Get.toNamed(AppRoutes.userProfile,
+                  arguments: userStore.customerProfilesDetails);
             },
           ),
           // ...更多ListTile组件
@@ -117,7 +119,9 @@ class ProfileDetailsSection extends StatelessWidget {
           ListTile(
             title: Text('Personal details'),
             trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoutes.editProfile);
+            },
           ),
           // ...更多ListTile组件
         ],
@@ -130,23 +134,22 @@ class AccountSettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.symmetric(vertical: 10),
-    child: Column(
-    children: [
-      ListTile(
-        title: Text('Manage account'),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () {},
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        children: [
+          ListTile(
+            title: Text('Manage account'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Notification preferences'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {},
+          ),
+          // ...更多ListTile组件
+        ],
       ),
-      ListTile(
-        title: Text('Notification preferences'),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () {},
-      ),
-      // ...更多ListTile组件
-    ],
-    ),
     );
   }
 }
-

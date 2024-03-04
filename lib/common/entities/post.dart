@@ -183,7 +183,6 @@ class UserData {
   }
 }
 
-
 class EditPostRequestEntity {
   String? id;
   String? title;
@@ -301,7 +300,7 @@ class UnstarPostResponseEntity {
   }
 }
 
-class GetProfileRequestEntity{
+class GetProfileRequestEntity {
   String? customerId;
 
   GetProfileRequestEntity({
@@ -340,8 +339,74 @@ class GetProfileResponseEntity {
   }
 }
 
+class EditProfileRequestEntity {
+  String? id;
+  String? password;
+  String? name;
+  String? email;
+  String? avatar;
+  String? phone;
+  double? longitude;
+  double? latitude;
 
-class LoginRequestEntity{
+  EditProfileRequestEntity({
+    this.id,
+    this.password,
+    this.name,
+    this.email,
+    this.avatar,
+    this.phone,
+    this.longitude,
+    this.latitude,
+  });
+
+  EditProfileRequestEntity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    password = json['password'];
+    name = json['name'];
+    email = json['email'];
+    avatar = json['avatar'];
+    phone = json['phone'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] = id;
+    data['password'] = password;
+    data['name'] = name;
+    data['email'] = email;
+    data['avatar'] = avatar;
+    data['phone'] = phone;
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
+    return data;
+  }
+}
+
+class EditProfileResponseEntity {
+  int? code;
+  UserData? data;
+
+  EditProfileResponseEntity({this.code, this.data});
+
+  EditProfileResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class LoginRequestEntity {
   String? email;
   String? password;
   LoginRequestEntity({
@@ -351,7 +416,7 @@ class LoginRequestEntity{
 
   LoginRequestEntity.fromJson(Map<String, dynamic> json) {
     email = json['email'];
-    password=json['password'];
+    password = json['password'];
   }
 
   Map<String, dynamic> toJson() {
