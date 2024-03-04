@@ -2,6 +2,7 @@ import 'package:exchange/pages/application/bindings.dart';
 import 'package:exchange/pages/application/view.dart';
 import 'package:exchange/pages/create_post/bindings.dart';
 import 'package:exchange/pages/create_post/view.dart';
+import 'package:exchange/pages/edit_profile/view.dart';
 import 'package:exchange/pages/home/index.dart';
 import 'package:exchange/pages/image_post/bindings.dart';
 import 'package:exchange/pages/image_post/view.dart';
@@ -16,6 +17,7 @@ import 'routes.dart';
 import 'package:exchange/pages/my_post/index.dart';
 import 'package:exchange/pages/My_Liked_Page/index.dart';
 import 'package:exchange/pages/sign_up_pages/index.dart';
+import 'package:exchange/pages/edit_post/index.dart';
 import 'package:exchange/pages/edit_post/index.dart';
 
 class AppPages {
@@ -53,7 +55,7 @@ class AppPages {
     // 首页
     GetPage(
       name: AppRoutes.home,
-      page: () =>  HomePage(),
+      page: () => HomePage(),
       binding: HomeBinding(),
     ),
     // 聊天页面
@@ -65,7 +67,7 @@ class AppPages {
     // 我的页面
     GetPage(
       name: AppRoutes.mine,
-      page: () =>  MinePage(),
+      page: () => MinePage(),
       binding: MineBinding(),
     ),
 
@@ -79,8 +81,9 @@ class AppPages {
       page: () => PostDetailsPage(),
       binding: ImagePostBinding(),
     ),
-    GetPage(name: AppRoutes.login,
-        page: ()=>  LoginScreen(),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => LoginScreen(),
     ),
     GetPage(
       name: AppRoutes.myPost,
@@ -89,47 +92,50 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.myLikedPost,
-      page: () =>  LikedPage(),
+      page: () => LikedPage(),
       binding: MyLikedPostBinding(),
     ),
 
     GetPage(
-        name: AppRoutes.signUpEmail,
-        page: ()=> EmailInputScreen(),
-        binding: SignupBinding(),
+      name: AppRoutes.signUpEmail,
+      page: () => EmailInputScreen(),
+      binding: SignupBinding(),
     ),
 
     GetPage(
       name: AppRoutes.signUpName,
-      page: ()=> NameInputScreen(),
+      page: () => NameInputScreen(),
       binding: SignupBinding(),
     ),
 
     GetPage(
       name: AppRoutes.signUpPwd,
-      page: ()=> SignUpPassword(),
+      page: () => SignUpPassword(),
       binding: SignupBinding(),
     ),
 
     GetPage(
-        name: AppRoutes.editPost,
-        page: ()=>EditPostPage(),
-        binding: EditPostBinding(),
+      name: AppRoutes.editPost,
+      page: () => EditPostPage(),
+      binding: EditPostBinding(),
     ),
 
     GetPage(
       name: AppRoutes.myProfile,
-      page: ()=> MyProfilePage(),
+      page: () => MyProfilePage(),
       binding: MyProfileBinding(),
     ),
 
     GetPage(
       name: AppRoutes.userProfile,
-      page: ()=> UserProfilePage(),
+      page: () => UserProfilePage(),
       binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.editProfile,
+      page: () => EditProfileScreen(),
+      binding: EditPostBinding(),
     )
-
-
   ];
 
 // static final unknownRoute = GetPage(

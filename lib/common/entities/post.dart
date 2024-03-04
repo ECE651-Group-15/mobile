@@ -342,37 +342,66 @@ class GetProfileResponseEntity {
 class EditProfileRequestEntity {
   String? customerId;
   String? password;
+  String? name;
+  String? email;
+  String? avatar;
+  String? phone;
+  double? longitude;
+  double? latitude;
+
   EditProfileRequestEntity({
     this.customerId,
     this.password,
+    this.name,
+    this.email,
+    this.avatar,
+    this.phone,
+    this.longitude,
+    this.latitude,
   });
+
   EditProfileRequestEntity.fromJson(Map<String, dynamic> json) {
     customerId = json['customerId'];
     password = json['password'];
+    name = json['name'];
+    email = json['email'];
+    avatar = json['avatar'];
+    phone = json['phone'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['customerId'] = customerId;
     data['password'] = password;
+    data['name'] = name;
+    data['email'] = email;
+    data['avatar'] = avatar;
+    data['phone'] = phone;
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
     return data;
   }
 }
 
 class EditProfileResponseEntity {
-  String? customerId;
-  String? password;
-  EditProfileResponseEntity({
-    this.customerId,
-    this.password,
-  });
+  int? code;
+  UserData? data;
+
+  EditProfileResponseEntity({this.code, this.data});
+
   EditProfileResponseEntity.fromJson(Map<String, dynamic> json) {
-    customerId = json['customerId'];
-    password = json['password'];
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
-    data['customerId'] = customerId;
-    data['password'] = password;
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
     return data;
   }
 }
