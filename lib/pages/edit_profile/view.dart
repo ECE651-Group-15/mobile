@@ -1,15 +1,17 @@
+import 'dart:io'; // Add this line to import dart:io
 import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:exchange/pages/edit_profile/controller.dart';
+import 'package:image_picker/image_picker.dart'; // Import for picking images
 
 class EditProfileScreen extends StatelessWidget {
   final EditProfileController controller = Get.put(EditProfileController());
-
-  EditProfileScreen({super.key});
+  final ImagePicker picker = ImagePicker();
+  EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
 
   @override
   Widget build(BuildContext context) {
+    // Using Obx here to listen to changes in controller state
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,6 +26,28 @@ class EditProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // Avatar display and picker button
+            Obx(() => Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(controller.state.avatar),
+                      radius: 60,
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        // Ensure the onPressed method is marked as async
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          // Only upload the image if it's not null
+                          controller.uploadImage(image);
+                        }
+                      },
+                      child: const Text('Change Avatar'),
+                    ),
+                  ],
+                )),
+            const SizedBox(height: 16),
             // Name input field
             TextField(
               controller: controller.nameController,
@@ -60,9 +84,9 @@ class EditProfileScreen extends StatelessWidget {
                 controller.state.name = controller.nameController.text;
                 controller.state.email = controller.emailController.text;
                 controller.state.phone = controller.phoneController.text;
+
                 bool success = await controller.editProfile();
                 if (success) {
-                  // Optionally, show a success message or perform other actions upon successful profile update
                   Get.back(); // Go back to the previous screen or navigate as needed
                 }
               },
