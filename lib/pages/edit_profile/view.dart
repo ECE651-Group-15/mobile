@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart'; // Import for picking images
 
 class EditProfileScreen extends StatelessWidget {
   final EditProfileController controller = Get.put(EditProfileController());
-
+  final ImagePicker picker = ImagePicker();
   EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
 
   @override
@@ -30,14 +30,19 @@ class EditProfileScreen extends StatelessWidget {
             Obx(() => Column(
                   children: [
                     CircleAvatar(
-                      backgroundImage: controller.state.avatar.isNotEmpty
-                          ? FileImage(
-                              File(controller.state.avatar)) // This now works
-                          : null,
+                      backgroundImage: NetworkImage(controller.state.avatar),
                       radius: 60,
                     ),
                     TextButton(
-                      onPressed: () => controller.pickAvatarImage(),
+                      onPressed: () async {
+                        // Ensure the onPressed method is marked as async
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          // Only upload the image if it's not null
+                          controller.uploadImage(image);
+                        }
+                      },
                       child: const Text('Change Avatar'),
                     ),
                   ],
@@ -79,6 +84,7 @@ class EditProfileScreen extends StatelessWidget {
                 controller.state.name = controller.nameController.text;
                 controller.state.email = controller.emailController.text;
                 controller.state.phone = controller.phoneController.text;
+
                 bool success = await controller.editProfile();
                 if (success) {
                   Get.back(); // Go back to the previous screen or navigate as needed

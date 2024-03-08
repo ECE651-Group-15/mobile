@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:exchange/common/entities/post.dart';
+import 'package:exchange/common/utils/oss.dart';
 import 'package:exchange/pages/edit_profile/state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,17 +15,38 @@ class EditProfileController extends GetxController {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-
   UserStore userStore = Get.find<UserStore>();
-
   final ImagePicker _picker = ImagePicker(); // For picking images
-
-  // Method to pick an image
+// Method to pick an image
   Future<void> pickAvatarImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       state.avatar = image.path; // Update avatar in the state
-      // Optionally, if you want to show the picked image immediately in your UI, you can update the UI here
+// Optionally, if you want to show the picked image immediately in your UI, you can update the UI here
+    }
+  }
+
+  void uploadImage(XFile? file) async {
+    if (file == null) {
+      EasyLoading.showInfo("No image selected");
+      return;
+    }
+    EasyLoading.show(
+      status: 'uploading...',
+      maskType: EasyLoadingMaskType.black,
+      dismissOnTap: false,
+    );
+    try {
+      Uint8List fileBytes = await file.readAsBytes();
+      await client.putObject(
+        fileBytes,
+        file.name,
+      );
+      state.avatar =
+          'https://ece-651.oss-us-east-1.aliyuncs.com/${file.name}'; // store image name in state array
+      EasyLoading.showSuccess('upload image success');
+    } catch (e) {
+      EasyLoading.showError('upload image failed, try later');
     }
   }
 
@@ -30,8 +54,7 @@ class EditProfileController extends GetxController {
     String name = nameController.text.trim();
     String email = emailController.text.trim();
     String phone = phoneController.text.trim();
-
-    // Update request entity to include the selected avatar
+// Update request entity to include the selected avatar
     EditProfileRequestEntity req = EditProfileRequestEntity(
         id: userStore.customerProfilesDetails['id'],
         password: userStore.password,
@@ -41,13 +64,12 @@ class EditProfileController extends GetxController {
         phone: state.phone,
         longitude: userStore.customerProfilesDetails['longitude'],
         latitude: userStore.customerProfilesDetails['latitude']);
-
     try {
       EasyLoading.show(status: 'Updating profile...');
       EditProfileResponseEntity res = await PostApi.editProfile(req);
       if (res.code == 200 && res.data != null) {
         EasyLoading.showSuccess('Profile updated successfully');
-        // Update local user profile data if necessary
+// Update local user profile data if necessary
         return true;
       } else {
         EasyLoading.showError('Update failed: ');
@@ -70,7 +92,7 @@ class EditProfileController extends GetxController {
     nameController.text = userStore.customerProfilesDetails['name'];
     emailController.text = userStore.customerProfilesDetails['email'];
     phoneController.text = userStore.customerProfilesDetails['phone'];
-    // Optionally, load the avatar into the state if you have a URL or path
+// Optionally, load the avatar into the state if you have a URL or path
     state.avatar = userStore.customerProfilesDetails['avatar'];
   }
 
