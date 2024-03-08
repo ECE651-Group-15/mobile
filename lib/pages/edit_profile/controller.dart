@@ -68,6 +68,7 @@ class EditProfileController extends GetxController {
       EasyLoading.show(status: 'Updating profile...');
       EditProfileResponseEntity res = await PostApi.editProfile(req);
       if (res.code == 200 && res.data != null) {
+        userStore.customerProfilesDetails.value = res.data!.toJson();
         EasyLoading.showSuccess('Profile updated successfully');
 // Update local user profile data if necessary
         return true;
