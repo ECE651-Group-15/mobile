@@ -1,15 +1,17 @@
+import 'dart:io'; // Add this line to import dart:io
 import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:exchange/pages/edit_profile/controller.dart';
+import 'package:image_picker/image_picker.dart'; // Import for picking images
 
 class EditProfileScreen extends StatelessWidget {
   final EditProfileController controller = Get.put(EditProfileController());
 
-  EditProfileScreen({super.key});
+  EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
 
   @override
   Widget build(BuildContext context) {
+    // Using Obx here to listen to changes in controller state
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -24,6 +26,23 @@ class EditProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // Avatar display and picker button
+            Obx(() => Column(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: controller.state.avatar.isNotEmpty
+                          ? FileImage(
+                              File(controller.state.avatar)) // This now works
+                          : null,
+                      radius: 60,
+                    ),
+                    TextButton(
+                      onPressed: () => controller.pickAvatarImage(),
+                      child: const Text('Change Avatar'),
+                    ),
+                  ],
+                )),
+            const SizedBox(height: 16),
             // Name input field
             TextField(
               controller: controller.nameController,
@@ -62,7 +81,6 @@ class EditProfileScreen extends StatelessWidget {
                 controller.state.phone = controller.phoneController.text;
                 bool success = await controller.editProfile();
                 if (success) {
-                  // Optionally, show a success message or perform other actions upon successful profile update
                   Get.back(); // Go back to the previous screen or navigate as needed
                 }
               },

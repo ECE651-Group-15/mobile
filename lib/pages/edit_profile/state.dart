@@ -12,4 +12,9 @@ class EditProfileControllerState {
   final RxString _phone = "".obs;
   set phone(String value) => _phone.value = value;
   String get phone => _phone.value;
+
+  // Added for avatar
+  final RxString _avatar = "".obs;
+  set avatar(String value) => _avatar.value = value;
+  String get avatar => _avatar.value;
 }
