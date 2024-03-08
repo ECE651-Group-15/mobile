@@ -117,7 +117,7 @@ class ProfileDetailsSection extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: Text('Personal details'),
+            title: Text('Edit Profile'),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Get.toNamed(AppRoutes.editProfile);
