@@ -90,11 +90,11 @@ class EditProfileController extends GetxController {
   }
 
   void loadUserInfo() {
-    nameController.text = userStore.customerProfilesDetails['name'];
-    emailController.text = userStore.customerProfilesDetails['email'];
-    phoneController.text = userStore.customerProfilesDetails['phone'];
-// Optionally, load the avatar into the state if you have a URL or path
-    state.avatar = userStore.customerProfilesDetails['avatar'];
+    nameController.text = userStore.customerProfilesDetails['name'] ?? '';
+    emailController.text = userStore.customerProfilesDetails['email'] ?? '';
+    phoneController.text = userStore.customerProfilesDetails['phone'] ?? '';
+    // Assuming avatar handling is ignored for now
+    // If there are other fields to load, ensure they also safely handle potential nulls
   }
 
   @override
