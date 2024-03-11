@@ -236,6 +236,44 @@ class EditPostRequestEntity {
   }
 }
 
+class SearchMainRequestEntity {
+  String? title;
+
+  // Main constructor
+  SearchMainRequestEntity(this.title);
+
+  // Named constructor for initializing from JSON
+  SearchMainRequestEntity.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['title'] = title;
+    return data;
+  }
+}
+
+class SearchMainResponseEntity {
+  int? code;
+  PostData? data;
+
+  SearchMainResponseEntity({this.code, this.data});
+
+  SearchMainResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
 class EditPostResponseEntity {
   int? code;
   PostData? data;
