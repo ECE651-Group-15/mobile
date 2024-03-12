@@ -25,9 +25,10 @@ class SearchMainController extends GetxController {
     SearchMainRequestEntity request = SearchMainRequestEntity(title: query);
     try {
       SearchMainResponseEntity response = await PostApi.SearchMain(request);
+      print(response);
       if (response.code == 200 && response.data != null) {
         // Assuming `data` is a List of your items
-        state.listings.value = response.data! as List;
+        state.listings.value = response.data!;
         EasyLoading.dismiss();
       } else {
         EasyLoading.showError('Failed to fetch listings');

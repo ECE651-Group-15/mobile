@@ -255,21 +255,91 @@ class SearchMainRequestEntity {
 
 class SearchMainResponseEntity {
   int? code;
-  PostData? data;
+  List<Data>? data;
 
   SearchMainResponseEntity({this.code, this.data});
 
   SearchMainResponseEntity.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = {};
-    data['code'] = code;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class Data {
+  String? id;
+  String? title;
+  String? description;
+  double? price;
+  double? longitude;
+  double? latitude;
+  String? category;
+  String? customerId;
+  String? status;
+  List<String>? images;
+  String? createdAt;
+  String? updatedAt;
+  List<String>? customersWhoStarred;
+
+  Data(
+      {this.id,
+      this.title,
+      this.description,
+      this.price,
+      this.longitude,
+      this.latitude,
+      this.category,
+      this.customerId,
+      this.status,
+      this.images,
+      this.createdAt,
+      this.updatedAt,
+      this.customersWhoStarred});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    description = json['description'];
+    price = json['price'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
+    category = json['category'];
+    customerId = json['customerId'];
+    status = json['status'];
+    images = json['images'].cast<String>();
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    customersWhoStarred = json['customersWhoStarred'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['longitude'] = this.longitude;
+    data['latitude'] = this.latitude;
+    data['category'] = this.category;
+    data['customerId'] = this.customerId;
+    data['status'] = this.status;
+    data['images'] = this.images;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['customersWhoStarred'] = this.customersWhoStarred;
     return data;
   }
 }
