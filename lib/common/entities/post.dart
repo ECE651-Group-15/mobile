@@ -240,7 +240,7 @@ class SearchMainRequestEntity {
   String? title;
 
   // Main constructor
-  SearchMainRequestEntity(this.title);
+  SearchMainRequestEntity({this.title});
 
   // Named constructor for initializing from JSON
   SearchMainRequestEntity.fromJson(Map<String, dynamic> json) {

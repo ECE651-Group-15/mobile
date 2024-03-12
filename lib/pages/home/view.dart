@@ -7,14 +7,24 @@ import 'package:exchange/pages/home/index.dart';
 import 'controller.dart';
 
 class HomePage extends StatelessWidget {
-
   final HomeController controller = Get.put<HomeController>(HomeController());
   @override
   Widget build(BuildContext context) {
-
     UserStore userStore = Get.find<UserStore>();
     return Scaffold(
-      appBar: AppBar(title: const Text("Home Page")),
+      appBar: AppBar(
+        title: const Text("Home Page"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              // Assuming SearchMain is the route name for your search screen
+              Get.toNamed(AppRoutes.SearchMain);
+            },
+          ),
+        ],
+      ),
+
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
       //     if (userStore.isLogin) {
@@ -76,11 +86,10 @@ class HomePage extends StatelessWidget {
                                 child: Obx(() {
                                   bool isStared;
                                   if (userStore.isLogin) {
-                                     isStared = controller
+                                    isStared = controller
                                         .isStared(item['listingDetails']['id']);
-                                  }
-                                  else{
-                                     isStared = false;
+                                  } else {
+                                    isStared = false;
                                   }
                                   // bool isStared = controller.state.staredLists.contains(item['id']);
                                   //传入controller检查是否已经点赞过了
@@ -98,8 +107,9 @@ class HomePage extends StatelessWidget {
                                           isStared
                                               ? Icons.star
                                               : Icons.star_border,
-                                          color:
-                                              isStared ? Colors.red : Colors.grey,
+                                          color: isStared
+                                              ? Colors.red
+                                              : Colors.grey,
                                         ),
                                       ),
                                     ),
@@ -107,14 +117,17 @@ class HomePage extends StatelessWidget {
                                       if (userStore.isLogin) {
                                         if (!isStared) {
                                           controller.starListing(listingId);
-                                          controller.state.staredLists.add(listingId);
+                                          controller.state.staredLists
+                                              .add(listingId);
                                         } else {
                                           //取消点赞功能
                                           controller.unStarListing(listingId);
-                                          controller.state.staredLists.remove(listingId);
+                                          controller.state.staredLists
+                                              .remove(listingId);
                                         }
                                       } else {
-                                        EasyLoading.showInfo('Please log in first');
+                                        EasyLoading.showInfo(
+                                            'Please log in first');
                                       }
                                     },
                                   );

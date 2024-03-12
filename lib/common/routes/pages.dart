@@ -9,6 +9,8 @@ import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/message/index.dart';
 import 'package:exchange/pages/mine/index.dart';
 import 'package:exchange/pages/login_Pages/index.dart';
+import 'package:exchange/pages/searched_post/bindings.dart';
+import 'package:exchange/pages/searched_post/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../pages/my_profile_page/index.dart';
@@ -135,6 +137,11 @@ class AppPages {
       name: AppRoutes.editProfile,
       page: () => EditProfileScreen(),
       binding: EditPostBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.SearchMain,
+      page: () => SearchMainScreen(),
+      binding: SearchMainBinding(),
     )
   ];
 
