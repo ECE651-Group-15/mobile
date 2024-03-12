@@ -1,10 +1,9 @@
+import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/common/store/store.dart';
 import 'package:exchange/pages/searched_post/controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import '../searched_post/controller.dart';
 
 class SearchMainScreen extends StatelessWidget {
   final SearchMainController controller = Get.put(SearchMainController());
@@ -57,7 +56,7 @@ class SearchMainScreen extends StatelessWidget {
     );
   }
 
-  Widget buildItemTile(dynamic item) {
+  Widget buildItemTile(Data item) {
     return GridTile(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -72,8 +71,8 @@ class SearchMainScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   image: DecorationImage(
-                    image: NetworkImage(item['images']?.isNotEmpty == true
-                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
+                    image: NetworkImage(item.images?.isNotEmpty == true
+                        ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item.images![0]}'
                         : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                     fit: BoxFit.cover,
                   ),
@@ -84,7 +83,7 @@ class SearchMainScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              item['title'] ?? 'No title',
+              item.title ?? 'No title',
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 16,

@@ -1,9 +1,8 @@
+import 'package:exchange/common/services/storage.dart';
+import 'package:exchange/common/store/user.dart';
+import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:exchange/common/services/storage.dart';
-import 'package:exchange/pages/edit_profile/controller.dart';
-import 'package:exchange/common/store/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   setUpAll(() async {
@@ -11,11 +10,11 @@ void main() {
     Get.testMode = true;
 
     // Mock SharedPreferences with initial values
-    SharedPreferences.setMockInitialValues({
-      // Assuming these keys match those used within your UserStore and StorageService
-      'email': 'test@uwaterloo.ca',
-      // Add other keys and values as necessary for initialization
-    });
+    // SharedPreferences.setMockInitialValues({
+    //   // Assuming these keys match those used within your UserStore and StorageService
+    //   'email': 'test@uwaterloo.ca',
+    //   // Add other keys and values as necessary for initialization
+    // });
 
     // Step 1: Initialize StorageService with mocked SharedPreferences
     await Get.putAsync(() async => StorageService().init());

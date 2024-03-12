@@ -1,6 +1,7 @@
 import 'package:exchange/pages/searched_post/state.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+
 import '../../common/apis/post.dart'; // Adjust import based on your project structure
 import '../../common/entities/post.dart'; // Adjust import based on your project structure
 
@@ -24,8 +25,8 @@ class SearchMainController extends GetxController {
     // Assuming you have a method in your API class to fetch data based on a search query
     SearchMainRequestEntity request = SearchMainRequestEntity(title: query);
     try {
-      SearchMainResponseEntity response = await PostApi.SearchMain(request);
-      print(response);
+      SearchMainResponseEntity response = await PostApi.searchMain(request);
+      print(response.toJson());
       if (response.code == 200 && response.data != null) {
         // Assuming `data` is a List of your items
         state.listings.value = response.data!;
@@ -34,6 +35,7 @@ class SearchMainController extends GetxController {
         EasyLoading.showError('Failed to fetch listings');
       }
     } catch (e) {
+      print(e);
       EasyLoading.showError('Error: $e');
     }
   }

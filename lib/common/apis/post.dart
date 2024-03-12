@@ -3,7 +3,7 @@ import 'package:exchange/common/utils/utils.dart';
 import 'package:exchange/common/values/values.dart';
 
 class PostApi {
-  static Future<SearchMainResponseEntity> SearchMain(
+  static Future<SearchMainResponseEntity> searchMain(
       SearchMainRequestEntity req) async {
     var response = await HttpUtil().post(
       '${APIConstants.baseUrl}/v1/api/listings/search-listing',

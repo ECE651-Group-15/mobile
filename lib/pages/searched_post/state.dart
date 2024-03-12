@@ -6,7 +6,7 @@ class SearchMainState {
   set title(String value) => _title.value = value;
   String get title => _title.value;
 
-  final RxList<dynamic> listings = <dynamic>[].obs;
+  final RxList<Data> listings = <Data>[].obs;
   //final RxMap<String, bool> favorites = <String, bool>{}.obs; // Use RxMap for observable map
 
   // final RxString userID = ''.obs; // No need for late keyword

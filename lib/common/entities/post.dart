@@ -255,6 +255,7 @@ class SearchMainRequestEntity {
 
 class SearchMainResponseEntity {
   int? code;
+  String? message;
   List<Data>? data;
 
   SearchMainResponseEntity({this.code, this.data});
