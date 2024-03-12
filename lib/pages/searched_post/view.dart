@@ -1,4 +1,6 @@
 import 'package:exchange/common/entities/post.dart';
+import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/searched_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,7 +78,7 @@ class SearchMainScreen extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                // Implement navigation to the details of the item
+                Get.toNamed(AppRoutes.postDetails, arguments: item);
               },
               child: Container(
                 decoration: BoxDecoration(
