@@ -19,4 +19,5 @@ class AppRoutes {
   static const myProfile = '/my_profile'; //我的用户界面
   static const userProfile = '/user_profile'; //详细用户界面
   static const editProfile = '/edit_profile';
+  static const SearchMain = '/searched_post';
 }
