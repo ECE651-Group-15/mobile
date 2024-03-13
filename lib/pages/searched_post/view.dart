@@ -1,6 +1,5 @@
 import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/image_post/view.dart';
 import 'package:exchange/pages/searched_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,8 +76,13 @@ class SearchMainScreen extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                Get.toNamed(AppRoutes.postDetails, arguments: item);
+              onTap: () async {
+                Map<String, dynamic>? customerProfilesDetails =  await controller.getProfile(item.customerId??'');
+                Map<String, dynamic> newList = {
+                  'listingDetails': item.toJson(),
+                  'customerProfilesDetails': customerProfilesDetails, // 使用获取到的用户资料
+                };
+                Get.toNamed(AppRoutes.postDetails, arguments: newList);
               },
               child: Container(
                 decoration: BoxDecoration(

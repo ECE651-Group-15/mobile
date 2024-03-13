@@ -26,7 +26,7 @@ class SearchMainController extends GetxController {
     SearchMainRequestEntity request = SearchMainRequestEntity(title: query);
     try {
       SearchMainResponseEntity response = await PostApi.searchMain(request);
-      print(response.toJson());
+      // print(response.toJson());
       if (response.code == 200 && response.data != null) {
         // Assuming `data` is a List of your items
         state.listings.value = response.data!;
@@ -38,6 +38,27 @@ class SearchMainController extends GetxController {
       print(e);
       EasyLoading.showError('Error: $e');
     }
+  }
+
+  Future<Map<String, dynamic>?> getProfile(String userId) async {
+    GetProfileRequestEntity req = GetProfileRequestEntity(
+      customerId: userId,
+    );
+    Map<String, dynamic>? userProfile = {};
+    // EasyLoading.show(status: 'Loading...', maskType: EasyLoadingMaskType.black);
+    try {
+      GetProfileResponseEntity res = await PostApi.getProfile(req);
+      if (res.code == 200 && res.data != null) {
+        userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
+      } else {
+        print('Error: getProfile()');
+        userProfile = {};
+      }
+    } catch (e) {
+      print('Error : $e');
+      userProfile = {}; // 捕获异常时也确保返回一个空Map
+    }
+    return userProfile;
   }
 
   Future<void> refreshUI() async {

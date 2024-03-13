@@ -9,7 +9,7 @@ class PostApi {
       '${APIConstants.baseUrl}/v1/api/listings/search-listing',
       data: req.toJson(),
     );
-    print(response);
+    // print(response);
     return SearchMainResponseEntity.fromJson(response);
   }
 

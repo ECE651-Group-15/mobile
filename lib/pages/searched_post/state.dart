@@ -9,6 +9,10 @@ class SearchMainState {
   final RxList<Data> listings = <Data>[].obs;
   //final RxMap<String, bool> favorites = <String, bool>{}.obs; // Use RxMap for observable map
 
+  final RxList<dynamic> _postedListings = <dynamic>[].obs;
+  set postedListings(List<dynamic> value) => _postedListings.value = value;
+  List<dynamic> get postedListings => _postedListings;
+
   // final RxString userID = ''.obs; // No need for late keyword
   final RxList<dynamic> staredLists =
       <dynamic>[].obs; // No need for late keyword
