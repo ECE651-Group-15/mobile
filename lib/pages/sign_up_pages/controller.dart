@@ -54,37 +54,20 @@ class SignUpController extends GetxController {
     return RegExp(r'^\S+@\S+\.\S+$').hasMatch(email);
   }
 
-
-  Future<EmailCheckResult> checkEmailAvailable(String email) async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-      'Content-Type': 'application/json'
-    };
+  Future<bool> checkEmailAvailable(String email) async {
     var request = http.Request('POST', Uri.parse(APIConstants.checkEmail));
     request.body = json.encode({"email": email});
-    request.headers.addAll(headers);
-
-    try {
-      http.StreamedResponse response = await request.send();
-      String responseBody = await response.stream.bytesToString();
-      // 如果状态码为200，解析响应体判断电子邮箱是否已被使用
-      var decodedResponse = json.decode(responseBody);
-      if (decodedResponse['code'] == 4001) {
-        // 假设代码 4001 表示电子邮件已存在
-        return EmailCheckResult(
-            isAvailable: false, errorMessage: decodedResponse['message']);
-      } else {
-        return EmailCheckResult(isAvailable: true);
-      }
-    } catch (e) {
-      // 捕获请求过程中的异常
-      print(e.toString());
-      return EmailCheckResult(
-          isAvailable: true,
-          errorMessage:
-              'Failed to check email availability. Please try again later.');
+    http.StreamedResponse response = await request.send();
+    String responseBody = await response.stream.bytesToString();
+    var decodedResponse = json.decode(responseBody);
+    if (decodedResponse['code'] == 200) {
+      return false;
+    } else {
+      return true;
     }
   }
+
+
   void showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
