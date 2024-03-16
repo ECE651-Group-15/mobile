@@ -46,7 +46,6 @@ void main() {
     test('Update profile with dynamically generated data', () async {
       if (sharedId == null) throw Exception("Profile ID is not available");
 
-      // Generate new dynamic values for name and phone only
       String newName = randomGenerator.generateString(10);
       String newPhone = randomGenerator.generateString(10);
 
@@ -60,7 +59,11 @@ void main() {
           "phone": newPhone, // Update with new phone
         },
       );
-      expect(updateResponse["code"], 200); // Add more assertions as necessary
+      expect(updateResponse["code"], 200);
+      expect(updateResponse["data"]["email"], initialEmail);
+      expect(updateResponse["data"]["name"], newName);
+      expect(updateResponse["data"]["phone"], newPhone);
+      // Add more assertions as necessary
     });
 
     // Add further tests for different operations on the profile
