@@ -9,19 +9,16 @@ void main() {
   final RandomGenerator randomGenerator = RandomGenerator();
 
   Get.testMode = true;
-  String? sharedId; // Variable to store the shared profile ID
-  // Variables to store the initial password and email for reuse
+  String? sharedId;
   late String initialPassword;
   late String initialEmail;
 
   setUpAll(() async {
-    // Generate dynamic values for each field using RandomGenerator
     String name = randomGenerator.generateString(10);
     initialEmail = randomGenerator.generateEmail(); // Store initial email
     initialPassword = randomGenerator.generateString(10); // Store initial password
     String phone = randomGenerator.generateString(10);
 
-    // Use HttpUtil to create a profile with dynamically generated data and store its ID
     var response = await HttpUtil().post(
       APIConstants.createProfileUrl,
       data: {
@@ -50,18 +47,16 @@ void main() {
       String newPhone = randomGenerator.generateString(10);
 
       var updateResponse = await HttpUtil().post(
-        APIConstants.login, // Ensure this is the correct endpoint
+        APIConstants.login,
         data: {
-          "email": initialEmail, // Keep initial email
+          "email": initialEmail,
           "password": initialPassword
         },
       );
       expect(updateResponse["code"], 200);
       expect(updateResponse["data"]["email"], initialEmail);
 
-      // Add more assertions as necessary
     });
 
-    // Add further tests for different operations on the profile
   });
 }
