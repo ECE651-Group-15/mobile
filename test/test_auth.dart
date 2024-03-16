@@ -42,7 +42,6 @@ void main() {
         },
       );
 
-      // check if the response is expected
       expect(response["code"], 200);
       expect(response["data"]["email"], email);
       expect(response["data"]["name"], name);
