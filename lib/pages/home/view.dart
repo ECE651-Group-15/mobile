@@ -24,17 +24,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     if (userStore.isLogin) {
-      //       Get.toNamed(AppRoutes.createPost);
-      //     } else {
-      //       EasyLoading.showInfo('Please log in first');
-      //     }
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

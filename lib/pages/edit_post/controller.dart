@@ -91,7 +91,7 @@ class EditPostController extends GetxController {
       if (res.code == 200) {
         EasyLoading.showSuccess('edit post success');
         Get.find<MyPostController>().refreshUI(); // 刷新帖子列表
-        Get.find<HomeController>().loadData();
+        Get.find<HomeController>().loadData(0);
         Get.back(); // 使用Get.back()来返回上一页 // Close the dialog
       } else {
         EasyLoading.showError('edit post failed, try later');

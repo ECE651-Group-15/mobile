@@ -35,8 +35,8 @@ class UserStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _email.value = StorageService.to.getString('email') ?? 'test@gmail.com';
-    _password.value = StorageService.to.getString('password') ?? '123456';
+    _email.value = 'test@gmail.com';
+    _password.value ='123456';
     token = StorageService.to.getString(email);
     // getProfile('fd1dc3fc-d9ea-4d97-984c-dfa4b0fe8fc2');
     // logIn(email, password);
