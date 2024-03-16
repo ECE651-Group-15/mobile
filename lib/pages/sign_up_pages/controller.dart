@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:exchange/common/apis/post.dart';
+import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/values/server.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'index.dart';
@@ -55,16 +58,33 @@ class SignUpController extends GetxController {
   }
 
   Future<bool> checkEmailAvailable(String email) async {
-    var request = http.Request('POST', Uri.parse(APIConstants.checkEmail));
-    request.body = json.encode({"email": email});
-    http.StreamedResponse response = await request.send();
-    String responseBody = await response.stream.bytesToString();
-    var decodedResponse = json.decode(responseBody);
-    if (decodedResponse['code'] == 200) {
-      return false;
-    } else {
-      return true;
+    CheckEmailRequestEntity req = CheckEmailRequestEntity(
+      email: email,
+    );
+    try{
+      CheckEmailResponseEntity res = await PostApi.checkEmail(req);
+      if(res.code==200){
+        return false;
+      }
+      else{
+        return true;
+      }
     }
+    catch(e){
+      EasyLoading.showError('create post failed: $e');
+      print('Error : $e');
+      return false;
+    }
+    // var request = http.Request('POST', Uri.parse(APIConstants.checkEmail));
+    // request.body = json.encode({"email": email});
+    // http.StreamedResponse response = await request.send();
+    // String responseBody = await response.stream.bytesToString();
+    // var decodedResponse = json.decode(responseBody);
+    // if (decodedResponse['code'] == 200) {
+    //   return false;
+    // } else {
+    //   return true;
+    // }
   }
 
 

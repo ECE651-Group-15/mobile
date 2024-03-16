@@ -78,4 +78,13 @@ class PostApi {
     print(response);
     return LoginResponseEntity.fromJson(response);
   }
+
+  static Future<CheckEmailResponseEntity> checkEmail(CheckEmailRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/profile/check-email',
+      data: req.toJson(),
+    );
+    // print(response);
+    return CheckEmailResponseEntity.fromJson(response);
+  }
 }

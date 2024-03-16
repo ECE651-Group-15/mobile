@@ -556,3 +556,43 @@ class LoginResponseEntity {
     return data;
   }
 }
+
+class CheckEmailRequestEntity {
+  String? email;
+
+  CheckEmailRequestEntity({this.email});
+
+  CheckEmailRequestEntity.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['email'] = this.email;
+    return data;
+  }
+}
+
+class CheckEmailResponseEntity {
+  int? code;
+  UserData? data;
+
+  CheckEmailResponseEntity({this.code, this.data});
+
+  CheckEmailResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+
+

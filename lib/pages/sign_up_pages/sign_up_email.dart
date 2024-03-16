@@ -1,5 +1,6 @@
 import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'controller.dart';
 
@@ -61,10 +62,14 @@ class _EmailInputScreenState extends State<EmailInputScreen> {
               ElevatedButton(
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
-                    if (await controller.checkEmailAvailable(
-                    _emailController.text)) {controller.state.email = _emailController.text;
-                  Get.toNamed(AppRoutes.signUpName); // 验证通过，执行后续操作，比如导航到下一个页面
+                    if (await controller.checkEmailAvailable(_emailController.text))
+                    {
+                      controller.state.email = _emailController.text;
+                      Get.toNamed(AppRoutes.signUpName); // 验证通过，执行后续操作，比如导航到下一个页面
                   }
+                    else{
+                      EasyLoading.showError('This email has been used');
+                    }
                 }
                 },
                 style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(50), backgroundColor: const Color(0xFF00008B)),
