@@ -71,7 +71,7 @@ class MyPostController extends GetxController {
       var decodedResponse = json.decode(responseBody);
       if (decodedResponse['code'] == 200) {
         EasyLoading.showSuccess('delete post success');
-        homeController.loadData(0);
+        homeController.loadData();
         refreshUI();
         return true; // 返回 true 表示删除成功
       } else {

@@ -12,19 +12,30 @@ class HomeController extends GetxController {
   UserStore userStore = Get.find<UserStore>();
 
   HomeController();
- // 获取控制器实例
+  // 获取控制器实例
   final state = HomeState();
-
-  Future<List<dynamic>> fetchCustomerPostedListings(int n) async {
+  // tap
+  // void handleTap(int index) {
+  //   Get.snackbar(
+  //     "var      "消息",
+  //   );
+  // }
+  Future<List<dynamic>> fetchCustomerPostedListings() async {
+    var headers = {
+      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
+      'Content-Type': 'application/json'
+    };
     var request = http.Request(
         'POST', Uri.parse(APIConstants.fetchCustomerPostedListingsUrl));
-    request.body = json.encode({"page": n});
+    request.body = json.encode({"page": 0});
+    request.headers.addAll(headers);
     // 初始化postedListings为空列表
     List<dynamic> postedListings = [];
     try {
       http.StreamedResponse response = await request.send();
       String responseBody = await response.stream.bytesToString();
       var decodedResponse = json.decode(responseBody);
+
       if (decodedResponse['code'] == 200) {
         postedListings = decodedResponse['data']['listingDetails'];
       } else {
@@ -40,9 +51,11 @@ class HomeController extends GetxController {
   }
 
   Future<List<dynamic>> fetchUserStaredLists(String userId) async {
-
+    var headers = {'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'};
     var url = '${APIConstants.fetchUserStarredListsUrl}/$userId';
     var request = http.Request('POST', Uri.parse(url));
+
+    request.headers.addAll(headers);
     List<dynamic> staredListings = [];
     http.StreamedResponse response = await request.send();
     String responseBody = await response.stream.bytesToString();
@@ -92,10 +105,10 @@ class HomeController extends GetxController {
 
   // 处理下拉刷新逻辑的方法
   Future<void> refreshUI() async {
-    loadData(0);
+    loadData();
   }
 
-  void loadData(int n) async {
+  void loadData() async {
     var userId = userStore.customerProfilesDetails['id'];
     if (userId != null) {
       var userStaredLists = await fetchUserStaredLists(userId);
@@ -103,7 +116,7 @@ class HomeController extends GetxController {
     } else {
       // 处理 userId 为 null 的情况
     }
-     var postedListings = await fetchCustomerPostedListings(n); // Await the future
+    var postedListings = await fetchCustomerPostedListings(); // Await the future
     state.listings.assignAll(postedListings); // Assign the awaited data
   }
 
@@ -127,12 +140,27 @@ class HomeController extends GetxController {
     }
   }
 
+  // void refreshUI() {
+  //   loadData();
+  // }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    loadData(0);
+    loadData();
   }
+
+  // // 新增方法，处理收藏/取消收藏操作
+  // void toggleFavorite(String listingId) {
+  //   if (state.favorites[listingId] == true) {
+  //     state.favorites[listingId] = false;
+  //   } else {
+  //     state.favorites[listingId] = true;
+  //   }
+  //   state.favorites.refresh();
+  //   update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
+  // }
 
   bool isStared(String postID) {
     //登录之后根据用户数据进行查询

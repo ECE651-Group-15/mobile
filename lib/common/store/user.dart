@@ -35,15 +35,20 @@ class UserStore extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _email.value = 'test@gmail.com';
-    _password.value ='123456';
     token = StorageService.to.getString(email);
-    // getProfile('fd1dc3fc-d9ea-4d97-984c-dfa4b0fe8fc2');
-    // logIn(email, password);
     if (token.isNotEmpty) {
       _isLogin.value = true;
       customerProfilesDetails.value = StorageService.to.getList(email) as Map<String, dynamic>;
     }
+    // _email.value = 'test@gmail.com';
+    // _password.value ='123456';
+    // token = StorageService.to.getString(email);
+    // // getProfile('fd1dc3fc-d9ea-4d97-984c-dfa4b0fe8fc2');
+    // // logIn(email, password);
+    // if (token.isNotEmpty) {
+    //   _isLogin.value = true;
+    //   customerProfilesDetails.value = StorageService.to.getList(email) as Map<String, dynamic>;
+    // }
   }
 
   // 保存 token
