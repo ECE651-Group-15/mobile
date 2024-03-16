@@ -40,9 +40,14 @@ class UserStore extends GetxController {
       _isLogin.value = true;
       customerProfilesDetails.value = StorageService.to.getList(email) as Map<String, dynamic>;
     }
-    // var profileOffline = StorageService.to.getString(storageUserProfileKey);
-    // if (profileOffline.isNotEmpty) {
-    //   // _profile(UserLoginResponseEntity.fromJson(jsonDecode(profileOffline)));
+    // _email.value = 'test@gmail.com';
+    // _password.value ='123456';
+    // token = StorageService.to.getString(email);
+    // // getProfile('fd1dc3fc-d9ea-4d97-984c-dfa4b0fe8fc2');
+    // // logIn(email, password);
+    // if (token.isNotEmpty) {
+    //   _isLogin.value = true;
+    //   customerProfilesDetails.value = StorageService.to.getList(email) as Map<String, dynamic>;
     // }
   }
 
@@ -89,6 +94,29 @@ class UserStore extends GetxController {
     await StorageService.to.remove(email);
     _isLogin.value = false;
     token = '';
+  }
+
+  Future<void> getProfile(String id) async {
+    GetProfileRequestEntity req = GetProfileRequestEntity(
+        customerId: id,
+    );
+    Map<String, dynamic>? userProfile = {};
+    try {
+      GetProfileResponseEntity res = await PostApi.getProfile(req);
+      if (res.code == 200 && res.data != null) {
+        userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
+        customerProfilesDetails.value = userProfile ;
+        List<String> profile = userProfile.values.map((value) => value.toString()).toList();
+        bool isSuccess = await StorageService.to.setList(email, profile);
+        if(isSuccess){
+          _isLogin.value =true;
+        }
+      } else {
+        print('Error: getProfile()');
+      }
+    } catch (e) {
+      print('Error : $e');
+    }
   }
 }
 

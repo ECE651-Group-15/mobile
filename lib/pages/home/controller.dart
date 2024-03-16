@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   UserStore userStore = Get.find<UserStore>();
 
   HomeController();
- // 获取控制器实例
+  // 获取控制器实例
   final state = HomeState();
   // tap
   // void handleTap(int index) {
@@ -116,7 +116,7 @@ class HomeController extends GetxController {
     } else {
       // 处理 userId 为 null 的情况
     }
-     var postedListings = await fetchCustomerPostedListings(); // Await the future
+    var postedListings = await fetchCustomerPostedListings(); // Await the future
     state.listings.assignAll(postedListings); // Assign the awaited data
   }
 
