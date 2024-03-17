@@ -3,6 +3,19 @@ import 'package:exchange/common/utils/utils.dart';
 import 'package:exchange/common/values/values.dart';
 
 class PostApi {
+  static Future<DeleteUserResponseEntity> deleteUser(
+      DeleteUserRequestEntity req) async {
+    String? profileId = req.profileId;
+    String url =
+        '${APIConstants.baseUrl}/v1/api/profile/delete-profile/$profileId';
+    var response = await HttpUtil().post(
+      url,
+      data: req.toJson(),
+    );
+    // print(response);
+    return DeleteUserResponseEntity.fromJson(response);
+  }
+
   static Future<SearchMainResponseEntity> searchMain(
       SearchMainRequestEntity req) async {
     var response = await HttpUtil().post(
@@ -79,7 +92,8 @@ class PostApi {
     return LoginResponseEntity.fromJson(response);
   }
 
-  static Future<CheckEmailResponseEntity> checkEmail(CheckEmailRequestEntity req) async {
+  static Future<CheckEmailResponseEntity> checkEmail(
+      CheckEmailRequestEntity req) async {
     var response = await HttpUtil().post(
       '${APIConstants.baseUrl}/v1/api/profile/check-email',
       data: req.toJson(),
