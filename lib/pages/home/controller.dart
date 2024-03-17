@@ -1,6 +1,7 @@
 import 'package:exchange/common/apis/post.dart';
 import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/values/server.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -10,52 +11,41 @@ import 'dart:convert';
 
 class HomeController extends GetxController {
   UserStore userStore = Get.find<UserStore>();
-
+  var scrollController = ScrollController();
+  var currentPage = 0.obs;
   HomeController();
-  // 获取控制器实例
   final state = HomeState();
-  // tap
-  // void handleTap(int index) {
-  //   Get.snackbar(
-  //     "var      "消息",
-  //   );
-  // }
-  Future<List<dynamic>> fetchCustomerPostedListings() async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-      'Content-Type': 'application/json'
-    };
-    var request = http.Request(
-        'POST', Uri.parse(APIConstants.fetchCustomerPostedListingsUrl));
-    request.body = json.encode({"page": 0});
-    request.headers.addAll(headers);
-    // 初始化postedListings为空列表
-    List<dynamic> postedListings = [];
-    try {
-      http.StreamedResponse response = await request.send();
-      String responseBody = await response.stream.bytesToString();
-      var decodedResponse = json.decode(responseBody);
 
-      if (decodedResponse['code'] == 200) {
-        postedListings = decodedResponse['data']['listingDetails'];
+  Future<void> fetchPostedListings(int n) async {
+    FetchPostedListingsRequestEntity req = FetchPostedListingsRequestEntity(
+      page: n,
+    );
+    try {
+      FetchPostedListingsResponseEntity response = await PostApi.fetchListings(req);
+      if (response.code == 200 && response.data != null && response.data!.listingDetails != null) {
+        // 当n不等于0时，将新的列表项添加到现有的列表中
+        if (n != 0) {
+          state.listings.addAll(response.data!.listingDetails!);
+        } else {
+          // 当n等于0时，先清空列表，再添加新的列表项
+          state.listings.clear();
+          state.listings.addAll(response.data!.listingDetails!);
+        }
+        EasyLoading.dismiss();
       } else {
-        print(response.reasonPhrase);
-        // 可选: 抛出异常或返回错误信息
+        EasyLoading.showError('Failed to fetch listings');
       }
     } catch (e) {
-      // 异常处理
-      print('An error occurred: $e');
-      // 可选: 抛出异常或返回错误信息
+      print(e);
+      EasyLoading.showError('Error: $e');
     }
-    return postedListings;
   }
 
+
+
   Future<List<dynamic>> fetchUserStaredLists(String userId) async {
-    var headers = {'User-Agent': 'Apifox/1.0.0 (https://apifox.com)'};
     var url = '${APIConstants.fetchUserStarredListsUrl}/$userId';
     var request = http.Request('POST', Uri.parse(url));
-
-    request.headers.addAll(headers);
     List<dynamic> staredListings = [];
     http.StreamedResponse response = await request.send();
     String responseBody = await response.stream.bytesToString();
@@ -78,15 +68,9 @@ class HomeController extends GetxController {
   }
 
   Future<void> starListing(String listingId) async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-      'Content-Type': 'application/json'
-    };
-
     var request = http.Request('POST', Uri.parse(APIConstants.starListingUrl));
     request.body =
         json.encode({"customerId": userStore.customerProfilesDetails['id'], "listingId": listingId});
-    request.headers.addAll(headers);
 
     try {
       http.StreamedResponse response = await request.send();
@@ -116,8 +100,8 @@ class HomeController extends GetxController {
     } else {
       // 处理 userId 为 null 的情况
     }
-    var postedListings = await fetchCustomerPostedListings(); // Await the future
-    state.listings.assignAll(postedListings); // Assign the awaited data
+    currentPage.value=0;
+    fetchPostedListings(currentPage.value);
   }
 
   Future<void> unStarListing(String listingId) async {
@@ -140,27 +124,21 @@ class HomeController extends GetxController {
     }
   }
 
-  // void refreshUI() {
-  //   loadData();
-  // }
+  void _scrollListener() {
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      currentPage.value++;
+      fetchPostedListings(currentPage.value);
+    }
+  }
 
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
     super.onInit();
-    loadData();
+    // loadData();
+    scrollController.addListener(_scrollListener);
+    fetchPostedListings(currentPage.value);
   }
-
-  // // 新增方法，处理收藏/取消收藏操作
-  // void toggleFavorite(String listingId) {
-  //   if (state.favorites[listingId] == true) {
-  //     state.favorites[listingId] = false;
-  //   } else {
-  //     state.favorites[listingId] = true;
-  //   }
-  //   state.favorites.refresh();
-  //   update(); // 可以调用 update() 以触发使用 GetX 的 widget 重建。// 通知监听者更新
-  // }
 
   bool isStared(String postID) {
     //登录之后根据用户数据进行查询
@@ -180,6 +158,7 @@ class HomeController extends GetxController {
   /// 在 [onDelete] 方法之前调用。
   @override
   void onClose() {
+    scrollController.dispose();
     super.onClose();
   }
 

@@ -101,4 +101,13 @@ class PostApi {
     // print(response);
     return CheckEmailResponseEntity.fromJson(response);
   }
+
+  static Future<FetchPostedListingsResponseEntity> fetchListings(
+      FetchPostedListingsRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/get-listing-page',
+      data: req.toJson(),
+    );
+    return FetchPostedListingsResponseEntity.fromJson(response);
+  }
 }
