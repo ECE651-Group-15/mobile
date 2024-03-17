@@ -56,13 +56,23 @@ class PostApi {
     return EditPostResponseEntity.fromJson(response);
   }
 
+  static Future<StarListingResponseEntity> starPost(
+      StarListingRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/star-listing',
+      data: req.toJson(),
+    );
+    // print(response);
+    return StarListingResponseEntity.fromJson(response);
+  }
+
   static Future<UnstarPostResponseEntity> unStarPost(
       UnstarPostRequestEntity req) async {
     var response = await HttpUtil().post(
       '${APIConstants.baseUrl}/v1/api/listing-profile/unstar-listing',
       data: req.toJson(),
     );
-    print(response);
+    // print(response);
     return UnstarPostResponseEntity.fromJson(response);
   }
 

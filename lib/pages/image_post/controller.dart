@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import '../../common/store/user.dart';
 import 'index.dart';
 
 class ImagePostController extends GetxController {
   ImagePostController();
 
   final state = ImagePostState();
-
+  UserStore userStore = Get.find<UserStore>();
 
   // tap
   void handleTap(int index) {
@@ -15,8 +16,17 @@ class ImagePostController extends GetxController {
     );
   }
 
+  void checkIfStared(String listingId) {
+    if (userStore.isLogin) {
+      state.isStared.value = userStore.customerProfilesDetails['starredListIds'].contains(listingId);
+    } else {
+      state.isStared.value = false;
+    }
+  }
+
   Future<void> loadData() async {
     state.detailedPost.value = Get.arguments ??{};
+    checkIfStared(state.detailedPost.value['listingDetails']?['id']??"");
   }
 
   void refreshUI() {
