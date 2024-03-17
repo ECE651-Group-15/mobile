@@ -6,6 +6,7 @@ import '../../common/store/user.dart';
 
 class MyProfilePage extends StatelessWidget {
   MyProfilePage({super.key});
+  final MyProfileController controller = Get.put(MyProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +32,10 @@ class MyProfilePage extends StatelessWidget {
 }
 
 class UserHeaderSection extends StatelessWidget {
-  UserStore userStore = Get.find<UserStore>();
+  final MyProfileController controller = Get.find<MyProfileController>();
+
   UserHeaderSection({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,44 +43,42 @@ class UserHeaderSection extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircleAvatar(
+          Obx(() => CircleAvatar(
             radius: 50,
             backgroundImage: NetworkImage(
-              userStore.customerProfilesDetails['avatar'] ??
+              controller.state.customerProfilesDetails['avatar'] ??
                   'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
             ),
-          ),
-          const SizedBox(
-              width:
-                  16), // Provide some spacing between the avatar and the text
+          )),
+          const SizedBox(width: 16), // 为头像和文本提供间距
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  userStore.customerProfilesDetails['name'] ?? 'No Name',
+                // 对每个文本使用Obx来监听变化
+                Obx(() => Text(
+                  controller.state.customerProfilesDetails['name'] ?? 'No Name',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
-                ),
-                const SizedBox(
-                    height: 4), // Provide some spacing between the texts
-                Text(
-                  userStore.customerProfilesDetails['email'] ?? 'No Email',
+                )),
+                const SizedBox(height: 4), // 文本间距
+                Obx(() => Text(
+                  controller.state.customerProfilesDetails['email'] ?? 'No Email',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
-                ),
-                Text(
-                  userStore.customerProfilesDetails['phone'] ?? 'No Phone',
+                )),
+                Obx(() => Text(
+                  controller.state.customerProfilesDetails['phone'] ?? 'No Phone',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
                   ),
-                ),
+                )),
               ],
             ),
           ),
@@ -86,6 +87,7 @@ class UserHeaderSection extends StatelessWidget {
     );
   }
 }
+
 
 class QuickLinksSection extends StatelessWidget {
   UserStore userStore = Get.find<UserStore>();
@@ -167,20 +169,22 @@ Future<void> _showDeleteAccountConfirmation(BuildContext context) async {
 }
 
 class AccountSettingsSection extends StatelessWidget {
+  const AccountSettingsSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         children: [
           ListTile(
-            title: Text('Manage account'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Manage account'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => _showDeleteAccountConfirmation(context),
           ),
           ListTile(
-            title: Text('Notification preferences'),
-            trailing: Icon(Icons.arrow_forward_ios),
+            title: const Text('Notification preferences'),
+            trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {},
           ),
           // ...更多ListTile组件

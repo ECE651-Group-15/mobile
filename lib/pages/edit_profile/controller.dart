@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/utils/oss.dart';
 import 'package:exchange/pages/edit_profile/state.dart';
@@ -16,15 +15,6 @@ class EditProfileController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   UserStore userStore = Get.find<UserStore>();
-  final ImagePicker _picker = ImagePicker(); // For picking images
-// Method to pick an image
-  Future<void> pickAvatarImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      state.avatar = image.path; // Update avatar in the state
-// Optionally, if you want to show the picked image immediately in your UI, you can update the UI here
-    }
-  }
 
   void uploadImage(XFile? file) async {
     if (file == null) {
@@ -93,8 +83,7 @@ class EditProfileController extends GetxController {
     nameController.text = userStore.customerProfilesDetails['name'] ?? '';
     emailController.text = userStore.customerProfilesDetails['email'] ?? '';
     phoneController.text = userStore.customerProfilesDetails['phone'] ?? '';
-    // Assuming avatar handling is ignored for now
-    // If there are other fields to load, ensure they also safely handle potential nulls
+    state.avatar = userStore.customerProfilesDetails['avatar'] ?? '';
   }
 
   @override

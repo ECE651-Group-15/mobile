@@ -3,14 +3,11 @@ import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/store/user.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import '../home/controller.dart';
 import 'index.dart';
 
 class MyProfileController extends GetxController {
-  MyProfileController();
 
   final state = MyProfileControllerState();
-  final HomeController homeController = Get.find<HomeController>();
   UserStore userStore = Get.find<UserStore>();
 
   Future<bool> deleteAccount() async {
@@ -38,7 +35,7 @@ class MyProfileController extends GetxController {
 
   void loadData() {
     state.customerProfilesDetails =
-        homeController.state.customerProfilesDetails;
+        userStore.customerProfilesDetails;
   }
 
   /// 在 widget 内存中分配后立即调用。
