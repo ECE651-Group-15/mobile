@@ -2,13 +2,17 @@ import 'dart:io'; // Add this line to import dart:io
 import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart'; // Import for picking images
+import 'package:image_picker/image_picker.dart';
+
+import '../../common/store/user.dart';
+import '../my_profile_page/controller.dart'; // Import for picking images
 
 class EditProfileScreen extends StatelessWidget {
-  final EditProfileController controller = Get.put(EditProfileController());
+  EditProfileController controller = Get.put(EditProfileController());
+  final myController = Get.find<MyProfileController>();
   final ImagePicker picker = ImagePicker();
   EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
-
+  UserStore userStore = Get.find<UserStore>();
   @override
   Widget build(BuildContext context) {
     // Using Obx here to listen to changes in controller state
@@ -58,16 +62,6 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Email input field
-            TextField(
-              controller: controller.emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                hintText: 'Enter your email',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
             // Phone input field
             TextField(
               controller: controller.phoneController,
@@ -82,10 +76,9 @@ class EditProfileScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 controller.state.name = controller.nameController.text;
-                controller.state.email = controller.emailController.text;
                 controller.state.phone = controller.phoneController.text;
-
                 bool success = await controller.editProfile();
+                myController.loadData();
                 if (success) {
                   Get.back(); // Go back to the previous screen or navigate as needed
                 }

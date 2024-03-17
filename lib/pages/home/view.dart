@@ -30,17 +30,16 @@ class HomePage extends StatelessWidget {
           child: RefreshIndicator(
             onRefresh: () => controller.refreshUI(),
             child: Obx(() {
-              var items = controller.state.listings;
               return GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
                 ),
-                itemCount: items.length,
+                itemCount: controller.state.listings.length,
                 itemBuilder: (context, index) {
-                  var item = items[index];
-                  String listingId = item['listingDetails']['id'].toString();
+                  var item = controller.state.listings[index];
+                  String? listingId = item.listingDetails?.id;
                   return GridTile(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -52,17 +51,16 @@ class HomePage extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.postDetails,
-                                      arguments: item);
+                                      arguments: item.toJson());
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8.0),
                                     image: DecorationImage(
-                                      image: NetworkImage(item['listingDetails']
-                                                      ['images']
+                                      image: NetworkImage(item.listingDetails?.images
                                                   ?.isNotEmpty ==
                                               true
-                                          ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['listingDetails']['images'][0]}'
+                                          ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item.listingDetails!.images?[0]}'
                                           : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                       fit: BoxFit.cover,
                                     ),
@@ -76,7 +74,7 @@ class HomePage extends StatelessWidget {
                                   bool isStared;
                                   if (userStore.isLogin) {
                                     isStared = controller
-                                        .isStared(item['listingDetails']['id']);
+                                        .isStared(listingId!);
                                   } else {
                                     isStared = false;
                                   }
@@ -105,12 +103,12 @@ class HomePage extends StatelessWidget {
                                     onPressed: () {
                                       if (userStore.isLogin) {
                                         if (!isStared) {
-                                          controller.starListing(listingId);
+                                          controller.starListing(listingId!);
                                           controller.state.staredLists
                                               .add(listingId);
                                         } else {
                                           //取消点赞功能
-                                          controller.unStarListing(listingId);
+                                          controller.unStarListing(listingId!);
                                           controller.state.staredLists
                                               .remove(listingId);
                                         }
@@ -131,16 +129,16 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start, // 左对齐
                             children: [
                               Text(
-                                '\$${item['listingDetails']['price'].toString()}',
+                                '\$${item.listingDetails?.price}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 20, // 更大的字体
                                   fontWeight: FontWeight.bold, // 加粗
                                 ),
                               ),
-                              SizedBox(height: 4), // 添加一点空间
+                              const SizedBox(height: 4), // 添加一点空间
                               Text(
-                                item['listingDetails']['title'] ?? 'No title',
+                                item.listingDetails?.title ?? 'No title',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
                                   fontSize: 16, // 标题字体大小
@@ -153,6 +151,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
+                controller: controller.scrollController,
               );
             }),
           ),

@@ -14,12 +14,7 @@ class SearchMainState {
   List<dynamic> get postedListings => _postedListings;
 
   // final RxString userID = ''.obs; // No need for late keyword
-  final RxList<dynamic> staredLists =
-      <dynamic>[].obs; // No need for late keyword
-  //
-  // final _userId = "".obs;
-  // set userId(value) => _userId.value = value;
-  // get userId => _userId.value;
+  final RxList<dynamic> staredLists = <dynamic>[].obs; // No need for late keyword
 
   final customerProfilesDetails = <String, dynamic>{}.obs;
 }

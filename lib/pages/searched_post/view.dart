@@ -26,7 +26,7 @@ class SearchMainScreen extends StatelessWidget {
               onChanged: (value) {
                 controller.searchListings(value);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Search",
                 hintText: "Search for a post",
                 prefixIcon: Icon(Icons.search),
@@ -39,12 +39,12 @@ class SearchMainScreen extends StatelessWidget {
           Expanded(
             child: Obx(() {
               if (controller.state.listings.isEmpty) {
-                return Center(
+                return const Center(
                   child: Text('No listings found.'),
                 );
               } else {
                 return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 8.0,
                     crossAxisSpacing: 8.0,

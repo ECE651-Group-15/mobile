@@ -86,7 +86,7 @@ class EditPostPage extends GetView<EditPostController> {
                                       children: [
                                         Container(
                                           width: 100, // 图片宽度
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Stack(
                                             alignment: Alignment.topRight,
