@@ -1,4 +1,5 @@
 import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/pages/my_profile_page/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../common/store/user.dart';
@@ -130,6 +131,41 @@ class ProfileDetailsSection extends StatelessWidget {
   }
 }
 
+Future<void> _showDeleteAccountConfirmation(BuildContext context) async {
+  final bool? confirmed = await showDialog<bool>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Delete Account'),
+      content: const Text(
+          'Are you sure you want to delete your account? This action cannot be undone.'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () =>
+              Navigator.of(context).pop(false), // User presses "No"
+          child: const Text('No'),
+        ),
+        TextButton(
+          onPressed: () =>
+              Navigator.of(context).pop(true), // User presses "Yes"
+          child: const Text('Yes'),
+        ),
+      ],
+    ),
+  );
+
+  if (confirmed ?? false) {
+    // User confirmed deletion
+    final MyProfileController controller = Get.find<MyProfileController>();
+
+    // If deleteAccount is asynchronous, use await
+    await controller
+        .deleteAccount(); // Assuming 'deleteAccount' is the method name
+
+    // Navigate to another page after account deletion
+    Get.back(); // Replace '/someRoute' with the actual route you want to navigate to
+  }
+}
+
 class AccountSettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -140,7 +176,7 @@ class AccountSettingsSection extends StatelessWidget {
           ListTile(
             title: Text('Manage account'),
             trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {},
+            onTap: () => _showDeleteAccountConfirmation(context),
           ),
           ListTile(
             title: Text('Notification preferences'),

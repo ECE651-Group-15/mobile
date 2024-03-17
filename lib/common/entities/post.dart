@@ -183,6 +183,39 @@ class UserData {
   }
 }
 
+class DeleteUserRequestEntity {
+  String? profileId;
+  DeleteUserRequestEntity({this.profileId});
+  DeleteUserRequestEntity.fromJson(Map<String, dynamic> json) {
+    profileId = json['profileId'];
+  }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['profileId'] = profileId;
+    return data;
+  }
+}
+
+class DeleteUserResponseEntity {
+  int? code;
+  UserData? data;
+
+  DeleteUserResponseEntity({this.code, this.data});
+  DeleteUserResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
 class EditPostRequestEntity {
   String? id;
   String? title;
@@ -593,6 +626,3 @@ class CheckEmailResponseEntity {
     return data;
   }
 }
-
-
-
