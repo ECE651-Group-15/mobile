@@ -1,17 +1,46 @@
-
+import 'package:exchange/common/apis/post.dart';
+import 'package:exchange/common/entities/post.dart';
+import 'package:exchange/common/store/user.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../home/controller.dart';
 import 'index.dart';
 
-class MyProfileController extends GetxController{
+class MyProfileController extends GetxController {
   MyProfileController();
 
   final state = MyProfileControllerState();
   final HomeController homeController = Get.find<HomeController>();
+  UserStore userStore = Get.find<UserStore>();
 
-  void loadData(){
-    state.customerProfilesDetails = homeController.state.customerProfilesDetails;
+  Future<bool> deleteAccount() async {
+// Update request entity to include the selected avatar
+    DeleteUserRequestEntity req = DeleteUserRequestEntity(
+        profileId: userStore.customerProfilesDetails['id']);
+    try {
+      EasyLoading.show(status: 'Updating profile...');
+      DeleteUserResponseEntity res = await PostApi.deleteUser(req);
+      if (res.code == 200 && res.data != null) {
+        EasyLoading.showSuccess('Profile updated successfully');
+// Update local user profile data if necessary
+        userStore.isLogin = false;
+        return true;
+      } else {
+        EasyLoading.showError('Update failed: ');
+        return false;
+      }
+    } catch (e) {
+      print('Error : $e');
+      EasyLoading.showError('Update failed: $e');
+      return false;
+    }
   }
+
+  void loadData() {
+    state.customerProfilesDetails =
+        homeController.state.customerProfilesDetails;
+  }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
