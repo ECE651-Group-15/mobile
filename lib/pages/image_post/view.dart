@@ -1,8 +1,11 @@
 import 'package:exchange/common/routes/names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import '../../common/store/user.dart';
 import 'controller.dart';
 import 'package:exchange/common/style/color.dart';
+
 class OutlinedTextBox extends StatelessWidget {
   final String text;
 
@@ -45,11 +48,15 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   final ImagePostController controller = Get.find<ImagePostController>();
   final PageController _pageController = PageController();
   int _currentPage = 0; // 用于追踪当前页面索引
+  UserStore userStore = Get.find<UserStore>();
 
   @override
   Widget build(BuildContext context) {
     var detailedPost = controller.state.detailedPost.value;
-    final images = detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
+    controller.checkIfStared();
+
+    final images =
+        detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
     final title = detailedPost['listingDetails']?['title'] ?? 'Default Title';
     final price = detailedPost['listingDetails']?['price'] ?? '';
     final category = detailedPost['listingDetails']?['category'] ?? '';
@@ -58,18 +65,33 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     final customerName =
         detailedPost['customerProfilesDetails']?['name'] ?? 'No Name Provided';
     final customerAvatarUrl = detailedPost['customerProfilesDetails']
-    ?['avatar'] ??
+            ?['avatar'] ??
         'https://example.com/default_avatar.png';
     return Scaffold(
       appBar: AppBar(
         title: Text('Post Details'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        child: const Icon(Icons.star),
-      ),
+      floatingActionButton: Obx(() {
+        bool isStared = controller.state.isStared.value;
+        return FloatingActionButton(
+          onPressed: () {
+            if (userStore.isLogin) {
+              if (isStared) {
+                controller.unStarListing(controller.state.listingId);
+              } else {
+                controller.starListing(controller.state.listingId);
+              }
+            } else {
+              EasyLoading.showInfo('Please log in first');
+            }
+          },
+          backgroundColor: Colors.grey[200], // 设置按钮背景颜色
+          child: Icon(
+            isStared ? Icons.star : Icons.star_border,
+            color: isStared ? Colors.red : Colors.grey, // 根据isStared变量调整图标颜色
+          ),
+        );
+      }),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -106,7 +128,9 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: _currentPage == index ? AppColor.myColor : Colors.grey,
+                              color: _currentPage == index
+                                  ? AppColor.myColor
+                                  : Colors.grey,
                             ),
                           );
                         }),
@@ -126,8 +150,9 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      Get.toNamed(AppRoutes.userProfile, arguments: detailedPost['customerProfilesDetails']);
+                    onTap: () {
+                      Get.toNamed(AppRoutes.userProfile,
+                          arguments: detailedPost['customerProfilesDetails']);
                     },
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(customerAvatarUrl),
@@ -138,14 +163,14 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Name: $customerName', style: TextStyle(fontSize: 18)),
+                      Text('Name: $customerName',
+                          style: TextStyle(fontSize: 18)),
                       // 其他个人信息
                     ],
                   ),
                 ],
               ),
             ),
-
           ],
         ),
       ),
@@ -153,13 +178,15 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 按钮之间均匀分布
           children: <Widget>[
-            Expanded( // 使用Expanded让按钮填充可用空间
+            Expanded(
+              // 使用Expanded让按钮填充可用空间
               child: TextButton(
                 onPressed: () {
                   // Send offer 的逻辑
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColor.myColor, backgroundColor: Colors.white, // 设置文字颜色
+                  foregroundColor: AppColor.myColor,
+                  backgroundColor: Colors.white, // 设置文字颜色
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // 设置圆角大小
                   ),
@@ -168,13 +195,15 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
                 child: const Text('Send Offer'),
               ),
             ),
-            Expanded( // 使用Expanded让按钮填充可用空间
+            Expanded(
+              // 使用Expanded让按钮填充可用空间
               child: TextButton(
                 onPressed: () {
                   // Chat 的逻辑
                 },
                 style: TextButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: AppColor.myColor, // 设置文字颜色
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColor.myColor, // 设置文字颜色
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10), // 设置圆角大小
                   ),
@@ -189,4 +218,3 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
     );
   }
 }
-
