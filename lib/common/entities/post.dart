@@ -715,3 +715,46 @@ class FetchPostedListingsResponseEntity {
   }
 }
 
+class StarListingRequestEntity {
+  String? customerId;
+  String? listingId;
+
+  StarListingRequestEntity({this.customerId, this.listingId});
+
+  StarListingRequestEntity.fromJson(Map<String, dynamic> json) {
+    customerId = json['customerId'];
+    listingId = json['listingId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['customerId'] = this.customerId;
+    data['listingId'] = this.listingId;
+    return data;
+  }
+}
+
+class StarListingResponseEntity{
+  int? code;
+  PostData? data;
+
+  StarListingResponseEntity({this.code, this.data});
+
+  StarListingResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+
+
+

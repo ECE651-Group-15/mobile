@@ -29,8 +29,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: RefreshIndicator(
             onRefresh: () => controller.refreshUI(),
-            child: Obx(() {
-              return GridView.builder(
+              child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 8.0,
@@ -40,6 +39,7 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var item = controller.state.listings[index];
                   String? listingId = item.listingDetails?.id;
+                  // controller.checkIfStared(listingId!);
                   return GridTile(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -68,33 +68,24 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Positioned(
-                                top: 6, // 距离顶部8单位
-                                right: 6, // 距离右侧8单位
+                                top: 6,
+                                right: 6,
                                 child: Obx(() {
-                                  bool isStared;
-                                  if (userStore.isLogin) {
-                                    isStared = controller
-                                        .isStared(listingId!);
-                                  } else {
-                                    isStared = false;
-                                  }
-                                  // bool isStared = controller.state.staredLists.contains(item['id']);
-                                  //传入controller检查是否已经点赞过了
+                                  bool isStared = controller.state.staredLists.contains(listingId);
                                   return IconButton(
                                     icon: Container(
-                                      width: 36, // 设置圆圈大小
+                                      width: 36,
                                       height: 36,
                                       decoration: BoxDecoration(
-                                        color: Colors.grey[200], // 灰色背景
-                                        shape: BoxShape.circle, // 圆形
+                                        color: Colors.grey[200],
+                                        shape: BoxShape.circle,
                                       ),
                                       child: Center(
-                                        // 确保图标位于容器中心
                                         child: Icon(
                                           isStared
                                               ? Icons.star
                                               : Icons.star_border,
-                                          color: isStared
+                                          color:isStared
                                               ? Colors.red
                                               : Colors.grey,
                                         ),
@@ -102,16 +93,9 @@ class HomePage extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                       if (userStore.isLogin) {
-                                        if (!isStared) {
-                                          controller.starListing(listingId!);
-                                          controller.state.staredLists
-                                              .add(listingId);
-                                        } else {
-                                          //取消点赞功能
-                                          controller.unStarListing(listingId!);
-                                          controller.state.staredLists
-                                              .remove(listingId);
-                                        }
+                                             isStared
+                                            ? controller.unStarListing(listingId!)
+                                            : controller.starListing(listingId!);
                                       } else {
                                         EasyLoading.showInfo(
                                             'Please log in first');
@@ -120,6 +104,7 @@ class HomePage extends StatelessWidget {
                                   );
                                 }),
                               ),
+
                             ],
                           ),
                         ),
@@ -152,8 +137,7 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 controller: controller.scrollController,
-              );
-            }),
+              )
           ),
         ),
       ),
