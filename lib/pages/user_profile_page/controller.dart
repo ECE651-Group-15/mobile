@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:exchange/common/routes/routes.dart';
+import 'package:exchange/common/store/store.dart';
 import 'package:exchange/common/values/server.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,10 +16,10 @@ class UserProfileController extends GetxController {
   final state = UserProfileControllerState();
 
   void startConversation() {
-    // if (UserStore.to.customerProfilesDetails.isEmpty) {
-    //   EasyLoading.showInfo('Please login first');
-    //   return;
-    // }
+    if (UserStore.to.customerProfilesDetails.isEmpty) {
+      EasyLoading.showInfo('Please login first');
+      return;
+    }
 
     Get.toNamed(AppRoutes.chat, arguments: profilesDetails);
   }
