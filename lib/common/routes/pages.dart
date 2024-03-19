@@ -1,26 +1,27 @@
+import 'package:exchange/pages/My_Liked_Page/index.dart';
 import 'package:exchange/pages/application/bindings.dart';
 import 'package:exchange/pages/application/view.dart';
+import 'package:exchange/pages/chat/index.dart';
 import 'package:exchange/pages/create_post/bindings.dart';
 import 'package:exchange/pages/create_post/view.dart';
+import 'package:exchange/pages/edit_post/index.dart';
 import 'package:exchange/pages/edit_profile/view.dart';
 import 'package:exchange/pages/home/index.dart';
 import 'package:exchange/pages/image_post/bindings.dart';
 import 'package:exchange/pages/image_post/view.dart';
+import 'package:exchange/pages/login_Pages/index.dart';
 import 'package:exchange/pages/message/index.dart';
 import 'package:exchange/pages/mine/index.dart';
-import 'package:exchange/pages/login_Pages/index.dart';
+import 'package:exchange/pages/my_post/index.dart';
 import 'package:exchange/pages/searched_post/bindings.dart';
 import 'package:exchange/pages/searched_post/view.dart';
+import 'package:exchange/pages/sign_up_pages/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../pages/my_profile_page/index.dart';
 import '../../pages/user_profile_page/index.dart';
 import 'routes.dart';
-import 'package:exchange/pages/my_post/index.dart';
-import 'package:exchange/pages/My_Liked_Page/index.dart';
-import 'package:exchange/pages/sign_up_pages/index.dart';
-import 'package:exchange/pages/edit_post/index.dart';
-import 'package:exchange/pages/edit_post/index.dart';
 
 class AppPages {
   static const initial = AppRoutes.initial;
@@ -142,7 +143,12 @@ class AppPages {
       name: AppRoutes.SearchMain,
       page: () => SearchMainScreen(),
       binding: SearchMainBinding(),
-    )
+    ),
+    GetPage(
+      name: AppRoutes.chat,
+      page: () => ChatPage(),
+      binding: ChatBinding(),
+    ),
   ];
 
 // static final unknownRoute = GetPage(
