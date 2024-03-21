@@ -53,24 +53,22 @@ class SignUpController extends GetxController {
   }
 
   bool isValidEmail(String email) {
-    // 使用正则表达式来验证电子邮件地址的有效性
-    return RegExp(r'^\S+@\S+\.\S+$').hasMatch(email);
+    // 更新正则表达式来验证电子邮件地址必须以 @uwaterloo.ca 结尾
+    return RegExp(r'^\S+@uwaterloo\.ca$').hasMatch(email);
   }
 
   Future<bool> checkEmailAvailable(String email) async {
     CheckEmailRequestEntity req = CheckEmailRequestEntity(
       email: email,
     );
-    try{
+    try {
       CheckEmailResponseEntity res = await PostApi.checkEmail(req);
-      if(res.code==200){
+      if (res.code == 200) {
         return false;
-      }
-      else{
+      } else {
         return true;
       }
-    }
-    catch(e){
+    } catch (e) {
       EasyLoading.showError('create post failed: $e');
       print('Error : $e');
       return false;
@@ -86,7 +84,6 @@ class SignUpController extends GetxController {
     //   return true;
     // }
   }
-
 
   void showSuccessDialog(BuildContext context) {
     showDialog(
@@ -106,6 +103,7 @@ class SignUpController extends GetxController {
       },
     );
   }
+
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {

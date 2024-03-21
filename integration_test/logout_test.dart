@@ -11,35 +11,33 @@ void main() {
 
   group(
     'end to end test',
-        () {
-      testWidgets(
-        'logout and verify Logout at the bottom of the page',
-            (tester) async {
-              app.main();
-              await tester.pumpAndSettle();
-              Get.toNamed(AppRoutes.mine);
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              await tester.tap(find.text('Login'));
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              // 以下是登录测试，与你之前的代码相同
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.enterText(
-                  find.byType(TextField).at(0), 'z39yu@uwaterloo.ca');
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.enterText(find.byType(TextField).at(1), '123456');
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.tap(find.byType(ElevatedButton));
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.pumpAndSettle();
+    () {
+      testWidgets('logout and verify Logout at the bottom of the page',
+          (tester) async {
+        app.main();
+        await tester.pumpAndSettle();
+        Get.toNamed(AppRoutes.mine);
+        await tester.pumpAndSettle(); // 等待导航动画完成
+        await tester.tap(find.text('Login'));
+        await tester.pumpAndSettle(); // 等待导航动画完成
+        // 以下是登录测试，与你之前的代码相同
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.enterText(
+            find.byType(TextField).at(0), 'z39yu@uwaterloo.ca');
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.enterText(find.byType(TextField).at(1), '123456');
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.tap(find.byType(ElevatedButton));
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle();
 
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.tap(find.text(
-                  'Logout')); // Replace with the actual widget used for logout
-              await tester.pumpAndSettle();
-              await Future.delayed(const Duration(seconds: 2));
-              expect(find.text('Login'), findsOneWidget);
-            }
-      );
+        await Future.delayed(const Duration(seconds: 2));
+        await tester.tap(find
+            .text('Logout')); // Replace with the actual widget used for logout
+        await tester.pumpAndSettle();
+        await Future.delayed(const Duration(seconds: 2));
+        expect(find.text('Login'), findsOneWidget);
+      });
 
       // 对于登录失败的测试，可以采用类似的逻辑进行导航和验证
     },
