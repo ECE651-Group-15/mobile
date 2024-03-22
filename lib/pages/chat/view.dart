@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_message.dart';
 
 import 'index.dart';
 
@@ -20,27 +21,24 @@ class ChatPage extends GetView<ChatController> {
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 print("index: $index");
-                var isSelfMessage = controller.state.messages[index]
-                        ['sender'] ==
-                    controller.selfId;
+                V2TimMessage message = controller.state.messages[index];
+                String avatar = message.faceUrl ?? "https://picsum.photos/200";
+                String name = message.nickName ?? message.userID ?? '';
 
-                String avatar;
-                String name;
-                if (isSelfMessage) {
-                  avatar = controller.selfAvatar;
-                  name = controller.selfName;
-                } else {
-                  avatar = controller.profilesDetails['avatar'];
-                  name = controller.profilesDetails['name'];
-                }
-
-                String time = DateFormat('yyyy-MM-dd – kk:mm')
-                    .format(controller.state.messages[index]['date']);
-                String content = controller.state.messages[index]['content'];
+                String time = DateFormat('yyyy-MM-dd – kk:mm').format(
+                    DateTime.fromMillisecondsSinceEpoch(
+                        message.timestamp! * 1000));
+                String content = message.textElem!.text ?? "Unknown";
 
                 return ListTile(
-                  leading: CircleAvatar(
-                    child: Image.network(avatar),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      avatar,
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   title: Row(
                     children: [

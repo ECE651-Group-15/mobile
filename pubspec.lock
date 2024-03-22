@@ -555,10 +555,10 @@ packages:
     dependency: transitive
     description:
       name: js
-      sha256: c1b2e9b5ea78c45e1a0788d29606ba27dc5f71f019f32ca5140f61ef071838cf
+      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.1"
+    version: "0.6.7"
   json_annotation:
     dependency: transitive
     description:
@@ -647,6 +647,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  mime_type:
+    dependency: transitive
+    description:
+      name: mime_type
+      sha256: "2ad6e67d3d2de9ac0f8ef5352d998fd103cb21351ae8c02fb0c78b079b37d275"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   mockito:
     dependency: "direct dev"
     description:
@@ -1016,18 +1024,10 @@ packages:
     dependency: "direct main"
     description:
       name: tencent_cloud_chat_sdk
-      sha256: "39a19d993575ed2e682d85945f88cdb8f6a3cd123989138fea7b905cfd87160b"
+      sha256: "43bfc98f6e8d66e5385bac2594320de16b5b508024d36171583bcec9610540fd"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.33"
-  tencent_im_sdk_plugin_platform_interface:
-    dependency: transitive
-    description:
-      name: tencent_im_sdk_plugin_platform_interface
-      sha256: e6120d09fbc0dedc0f5a4143809598ae56f2ab56176b4d2646414a59d6b64371
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.16"
+    version: "7.7.5317"
   term_glyph:
     dependency: transitive
     description:

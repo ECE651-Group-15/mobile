@@ -21,7 +21,7 @@ class UserProfileController extends GetxController {
       return;
     }
 
-    Get.toNamed(AppRoutes.chat, arguments: profilesDetails);
+    Get.toNamed(AppRoutes.chat, arguments: profilesDetails["id"]);
   }
 
   Future<List<dynamic>> fetchCustomerPostedListings(

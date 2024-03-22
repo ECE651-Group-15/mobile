@@ -15,14 +15,6 @@ Future<void> main() async {
   await Global.init();
   await initializeClient();
 
-  // initialize supabase server
-  var supabase = await Supabase.initialize(
-    url: "https://ggyuylxzdyxjnasajohd.supabase.co",
-    anonKey:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdneXV5bHh6ZHl4am5hc2Fqb2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA3MDkzOTcsImV4cCI6MjAyNjI4NTM5N30.T86dumPMQGv7OamV4SOpzDdpHXJU8KNKo1ja5nPjfK0",
-  );
-  client = supabase.client;
-
   runApp(const MyApp());
 }
 

@@ -1,12 +1,8 @@
 import 'package:get/get.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_conversation.dart';
 
 class MessageState {
-  // title
-  final _title = "".obs;
-  set title(value) => _title.value = value;
-  get title => _title.value;
-
-  final _conversationList = [].obs;
+  final _conversationList = <V2TimConversation?>[].obs;
   set conversationList(value) => _conversationList.value = value;
   get conversationList => _conversationList;
 }
