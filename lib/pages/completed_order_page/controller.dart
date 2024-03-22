@@ -1,15 +1,11 @@
-import 'dart:convert';
 
 import 'package:exchange/common/store/store.dart';
 import 'package:exchange/pages/completed_order_page/state.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 import '../../common/apis/post.dart'; // Adjust import based on your project structure
 import '../../common/entities/post.dart';
-import '../../common/values/server.dart'; // Adjust import based on your project structure
 
 class CompletedOrderController extends GetxController {
   final state = CompletedOrderState();
