@@ -23,7 +23,7 @@ void main() {
             await tester.pumpAndSettle(); // 等待导航动画完成
             // 以下是登录测试，与你之前的代码相同
             await Future.delayed(const Duration(seconds: 2));
-            await tester.enterText(find.byType(TextField).at(0), 'z39yu@uwaterloo.ca');
+            await tester.enterText(find.byType(TextField).at(0), 'test@uwaterloo.ca');
             await Future.delayed(const Duration(seconds: 2));
             await tester.enterText(find.byType(TextField).at(1), '123456');
             await Future.delayed(const Duration(seconds: 2));
@@ -40,13 +40,14 @@ void main() {
             await tester.tap(find.text('Edit Profile'));
             await tester.pumpAndSettle(); // 等待导航动画完成
             await Future.delayed(const Duration(seconds: 2));
-            await tester.tap(find.text('Change Avatar'));
-            await tester.pumpAndSettle(); // Wait for the photo selection screen to appear
             await Future.delayed(const Duration(seconds: 2));
-            final Finder image = find.byType(Image).at(0); // Adjust the 'at(0)' to select the correct image if necessary
-            await tester.tap(image);
-            await tester.pumpAndSettle();
-            await Future.delayed(const Duration(seconds: 4));
+            await tester.enterText(find.byType(TextField).at(0), 'l');
+            await Future.delayed(const Duration(seconds: 2));
+            await tester.enterText(find.byType(TextField).at(1), '1');
+            await Future.delayed(const Duration(seconds: 2));
+            await tester.tap(find.text('Save Changes'));
+            await tester.pumpAndSettle(); // Wait for save to complete and navigate back
+            await Future.delayed(const Duration(seconds: 2));
 
             expect(find.text('Edit Profile'), findsOneWidget);
 
