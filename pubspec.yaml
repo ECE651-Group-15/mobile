@@ -64,6 +64,7 @@ dependencies:
 
   supabase_flutter: ^2.3.4
   intl: ^0.19.0
+  tencent_cloud_chat_sdk: ^6.1.33
 
 dev_dependencies:
   flutter_test:
