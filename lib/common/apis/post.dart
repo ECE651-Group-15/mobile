@@ -120,4 +120,22 @@ class PostApi {
     );
     return FetchPostedListingsResponseEntity.fromJson(response);
   }
+
+  static Future<MarkAsSoldResponseEntity> markAsSold(
+      MarkAsSoldRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listings/update-listing',
+      data: req.toJson(),
+    );
+    return MarkAsSoldResponseEntity.fromJson(response);
+  }
+
+  static Future<GetCompletedOrderResponseEntity> getCompletedOrder(
+      GetCompletedOrderRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/get-customer-completed-listings',
+      data: req.toJson(),
+    );
+    return GetCompletedOrderResponseEntity.fromJson(response);
+  }
 }
