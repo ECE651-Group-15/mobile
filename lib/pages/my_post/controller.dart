@@ -25,7 +25,7 @@ class MyPostController extends GetxController {
     };
 
     var request =
-        http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
+    http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
 
     request.body = json.encode({"page": page, "customerId": customerId});
 
@@ -43,27 +43,18 @@ class MyPostController extends GetxController {
         postedListings = decodedResponse['data']['postedListings'];
         // state.postedListings=postedListings;
       } else {
-        print(response.reasonPhrase);
         // 可选: 抛出异常或返回错误信息
       }
     } catch (e) {
       // 异常处理
-      print('An error occurred: $e');
       // 可选: 抛出异常或返回错误信息
     }
     return postedListings;
   }
 
   Future<bool> deleteListing(String listingId) async {
-    var headers = {
-      'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
-      'Content-Type': 'application/json', // 如果你的API需要
-    };
-
     var url = '${APIConstants.deleteListing}/$listingId';
     var request = http.Request('POST', Uri.parse(url));
-
-    request.headers.addAll(headers);
 
     try {
       http.StreamedResponse response = await request.send();
@@ -75,11 +66,9 @@ class MyPostController extends GetxController {
         refreshUI();
         return true; // 返回 true 表示删除成功
       } else {
-        print(response.reasonPhrase);
         return false; // 返回 false 表示删除失败
       }
     } catch (e) {
-      print(e.toString());
       return false; // 捕获异常，返回 false
     }
   }
@@ -135,14 +124,41 @@ class MyPostController extends GetxController {
       if (res.code == 200 && res.data != null) {
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
       } else {
-        print('Error: getProfile()');
         userProfile = {};
       }
     } catch (e) {
-      print('Error : $e');
       userProfile = {}; // 捕获异常时也确保返回一个空Map
     }
     return userProfile;
+  }
+
+  Future<void> markAsSold (var item) async {
+    MarkAsSoldRequestEntity req = MarkAsSoldRequestEntity(
+      id: item['id'],
+      title: item['title'],
+      description: item['description'],
+      price: item['price'],
+      longitude: item['longitude'],
+      latitude: item['latitude'],
+      category: item['category'],
+      customerId:item['customerId'],
+      status: "INACTIVE",
+      images: item['images']?.cast<String>()
+    );
+
+    try {
+      MarkAsSoldResponseEntity res = await PostApi.markAsSold(req);
+      if (res.code == 200) {
+        EasyLoading.showSuccess('mark post success');
+        Get.find<MyPostController>().refreshUI(); // 刷新帖子列表
+        Get.find<HomeController>().loadData();
+      } else {
+        print(res);
+        EasyLoading.showError('mark post failed, try later');
+      }
+    } catch (e) {
+      EasyLoading.showError('mark post failed, try later');
+    }
   }
 
   Future<void> loadData() async {

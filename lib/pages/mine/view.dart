@@ -67,7 +67,9 @@ class MinePage extends GetView<MineController> {
                 leading: const Icon(Icons.shopping_bag_outlined),
                 title: const Text("Completed Orders"),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(AppRoutes.completedOrder);
+                },
               ),
               const Divider(),
               ListTile(
