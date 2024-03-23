@@ -160,20 +160,20 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['longitude'] = this.longitude;
-    data['latitude'] = this.latitude;
-    data['category'] = this.category;
-    data['customerId'] = this.customerId;
-    data['status'] = this.status;
-    data['images'] = this.images;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['customersWhoStarred'] = this.customersWhoStarred;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['title'] = title;
+    data['description'] = description;
+    data['price'] = price;
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
+    data['category'] = category;
+    data['customerId'] = customerId;
+    data['status'] = status;
+    data['images'] = images;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['customersWhoStarred'] = customersWhoStarred;
     return data;
   }
 }
@@ -224,6 +224,30 @@ class ListingDetails {
     }
     if (customerProfilesDetails != null) {
       data['customerProfilesDetails'] = customerProfilesDetails!.toJson();
+    }
+    return data;
+  }
+}
+
+class OrderData {
+  List<Data>? completedListings;
+
+  OrderData({this.completedListings});
+
+  OrderData.fromJson(Map<String, dynamic> json) {
+    if (json['completedListings'] != null) {
+      completedListings = <Data>[];
+      json['completedListings'].forEach((v) {
+        completedListings!.add(Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (completedListings != null) {
+      data['completedListings'] =
+          completedListings!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -651,8 +675,8 @@ class CheckEmailRequestEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['email'] = email;
     return data;
   }
 }
@@ -727,9 +751,9 @@ class StarListingRequestEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['customerId'] = this.customerId;
-    data['listingId'] = this.listingId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['customerId'] = customerId;
+    data['listingId'] = listingId;
     return data;
   }
 }
@@ -755,6 +779,119 @@ class StarListingResponseEntity{
   }
 }
 
+class MarkAsSoldRequestEntity  {
+  String? id;
+  String? title;
+  String? description;
+  double? price;
+  double? longitude;
+  double? latitude;
+  String? category;
+  String? customerId;
+  String? status;
+  List<String>? images;
 
+  MarkAsSoldRequestEntity(
+      { this.id,
+        this.title,
+        this.description,
+        this.price,
+        this.longitude,
+        this.latitude,
+        this.category,
+        this.customerId,
+        this.status,
+        this.images, });
 
+  MarkAsSoldRequestEntity.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    title = json['title'];
+    description = json['description'];
+    price = json['price'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
+    category = json['category'];
+    customerId = json['customerId'];
+    status = json['status'];
+    images = json['images'].cast<String>();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['id'] =id;
+    data['title'] = title;
+    data['description'] = description;
+    data['price'] = price;
+    data['longitude'] = longitude;
+    data['latitude'] = latitude;
+    data['category'] = category;
+    data['customerId'] = customerId;
+    data['status'] = status;
+    data['images'] = images;
+    return data;
+  }
+}
+
+class MarkAsSoldResponseEntity {
+  int? code;
+  String? message;
+  PostData? data;
+
+  MarkAsSoldResponseEntity({this.code, this.data});
+
+  MarkAsSoldResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = json['data'] != null ? PostData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class GetCompletedOrderRequestEntity {
+  int? page;
+  String? customerId;
+
+  GetCompletedOrderRequestEntity({this.page, this.customerId});
+
+  GetCompletedOrderRequestEntity.fromJson(Map<String, dynamic> json) {
+    page = json['page'];
+    customerId = json['customerId'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['page'] = page;
+    data['customerId'] =customerId;
+    return data;
+  }
+}
+
+class GetCompletedOrderResponseEntity {
+  int? code;
+  String? message;
+  OrderData? data;
+
+  GetCompletedOrderResponseEntity({this.code, this.data});
+
+  GetCompletedOrderResponseEntity.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    data = (json['data'] != null ? OrderData.fromJson(json['data']) : null);
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['code'] = code;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
 
