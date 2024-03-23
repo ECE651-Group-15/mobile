@@ -1,9 +1,7 @@
-import 'dart:io'; // Add this line to import dart:io
 import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../common/store/user.dart';
 import '../my_profile_page/controller.dart'; // Import for picking images
 

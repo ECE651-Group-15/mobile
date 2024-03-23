@@ -1,13 +1,10 @@
 import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/mine/view.dart';
-import 'package:exchange/pages/login_pages/view.dart';
-import 'package:exchange/pages/my_profile_page/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:exchange/main.dart' as app;
-import 'package:exchange/pages/user_profile_page/view.dart';
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -30,7 +27,6 @@ void main() {
             await tester.tap(find.byType(ElevatedButton));
             await Future.delayed(const Duration(seconds: 2));
             await tester.pumpAndSettle();
-
             await Future.delayed(const Duration(seconds: 2));
 
         //expect(find.byType(MinePage), findsOneWidget);
