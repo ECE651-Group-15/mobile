@@ -24,7 +24,7 @@ class LoginController extends GetxController{
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
         state.isLogin = true;
         state.customerProfilesDetails.value = userProfile;
-        EasyLoading.showSuccess('login success');
+        //EasyLoading.showSuccess('login success');
         final HomeController homeController = Get.find<HomeController>();
         homeController.refreshUI();
         Get.back();
