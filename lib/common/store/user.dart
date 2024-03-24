@@ -132,10 +132,9 @@ class UserStore extends GetxController {
         List<String> profile =
             userProfile.values.map((value) => value.toString()).toList();
         bool isSuccess = await StorageService.to.setList(email, profile);
-        if (isSuccess) {
-          EasyLoading.showSuccess('login success');
 
-          timLogin(userProfile['id']);
+        if(isSuccess){
+         // EasyLoading.showSuccess('login success');
 
           Get.back();
         }

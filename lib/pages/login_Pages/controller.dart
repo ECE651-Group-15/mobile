@@ -17,14 +17,14 @@ class LoginController extends GetxController {
       password: password,
     );
     Map<String, dynamic>? userProfile = {};
-    // EasyLoading.show(status: 'Loading...', maskType: EasyLoadingMaskType.black);
+
     try {
       LoginResponseEntity res = await PostApi.logInPost(req);
       if (res.code == 200 && res.data != null) {
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
         state.isLogin = true;
         state.customerProfilesDetails.value = userProfile;
-        EasyLoading.showSuccess('login success');
+        // EasyLoading.showSuccess('login success');
         final HomeController homeController = Get.find<HomeController>();
         homeController.refreshUI();
         Get.back();
