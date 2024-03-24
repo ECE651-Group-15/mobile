@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
+import '../../common/routes/names.dart';
 import '../../common/store/user.dart';
 import 'index.dart';
 
@@ -18,6 +19,17 @@ class ImagePostController extends GetxController {
       "标题",
       "消息",
     );
+  }
+
+  // final Map<String, dynamic> profilesDetails = Get.arguments;
+
+  void startConversation(String id) {
+    if (UserStore.to.customerProfilesDetails.isEmpty) {
+      EasyLoading.showInfo('Please login first');
+      return;
+    }
+
+    Get.toNamed(AppRoutes.chat, arguments: id);
   }
 
   Future<void> starListing(String listingId) async {

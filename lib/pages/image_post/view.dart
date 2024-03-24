@@ -199,7 +199,7 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               // 使用Expanded让按钮填充可用空间
               child: TextButton(
                 onPressed: () {
-                  // Chat 的逻辑
+                  controller.startConversation(detailedPost['customerProfilesDetails']?['id']);// Chat 的逻辑
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,

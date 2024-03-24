@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 import 'common/routes/routes.dart';
 import 'common/utils/utils.dart';
 import 'global.dart';
