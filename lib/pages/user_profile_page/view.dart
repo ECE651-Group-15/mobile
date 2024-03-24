@@ -15,14 +15,14 @@ class UserProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("User's page"),
         centerTitle: false,
-        actions: [
-          FilledButton.icon(
-            onPressed: controller.startConversation,
-            icon: const Icon(Icons.chat),
-            label: const Text("Chat with seller"),
-          ),
-          const SizedBox(width: 10),
-        ],
+        // actions: [
+        //   FilledButton.icon(
+        //     onPressed: controller.startConversation,
+        //     icon: const Icon(Icons.chat),
+        //     label: const Text("Chat with seller"),
+        //   ),
+        //   const SizedBox(width: 10),
+        // ],
       ),
       body: SingleChildScrollView(
         child: Column(
