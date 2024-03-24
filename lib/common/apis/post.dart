@@ -56,13 +56,23 @@ class PostApi {
     return EditPostResponseEntity.fromJson(response);
   }
 
+  static Future<StarListingResponseEntity> starPost(
+      StarListingRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/star-listing',
+      data: req.toJson(),
+    );
+    // print(response);
+    return StarListingResponseEntity.fromJson(response);
+  }
+
   static Future<UnstarPostResponseEntity> unStarPost(
       UnstarPostRequestEntity req) async {
     var response = await HttpUtil().post(
       '${APIConstants.baseUrl}/v1/api/listing-profile/unstar-listing',
       data: req.toJson(),
     );
-    print(response);
+    // print(response);
     return UnstarPostResponseEntity.fromJson(response);
   }
 
@@ -109,5 +119,23 @@ class PostApi {
       data: req.toJson(),
     );
     return FetchPostedListingsResponseEntity.fromJson(response);
+  }
+
+  static Future<MarkAsSoldResponseEntity> markAsSold(
+      MarkAsSoldRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listings/update-listing',
+      data: req.toJson(),
+    );
+    return MarkAsSoldResponseEntity.fromJson(response);
+  }
+
+  static Future<GetCompletedOrderResponseEntity> getCompletedOrder(
+      GetCompletedOrderRequestEntity req) async {
+    var response = await HttpUtil().post(
+      '${APIConstants.baseUrl}/v1/api/listing-profile/get-customer-completed-listings',
+      data: req.toJson(),
+    );
+    return GetCompletedOrderResponseEntity.fromJson(response);
   }
 }

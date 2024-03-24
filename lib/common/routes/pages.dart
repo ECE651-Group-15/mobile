@@ -18,10 +18,14 @@ import 'package:exchange/pages/searched_post/view.dart';
 import 'package:exchange/pages/sign_up_pages/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../pages/completed_order_page/index.dart';
 import '../../pages/my_profile_page/index.dart';
 import '../../pages/user_profile_page/index.dart';
 import 'routes.dart';
+import 'package:exchange/pages/my_post/index.dart';
+import 'package:exchange/pages/My_Liked_Page/index.dart';
+import 'package:exchange/pages/sign_up_pages/index.dart';
+import 'package:exchange/pages/edit_post/index.dart';
 
 class AppPages {
   static const initial = AppRoutes.initial;
@@ -148,6 +152,11 @@ class AppPages {
       name: AppRoutes.chat,
       page: () => ChatPage(),
       binding: ChatBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.completedOrder,
+      page: () => CompletedOrderScreen(),
+      binding: CompletedOrderBinding(),
     ),
   ];
 

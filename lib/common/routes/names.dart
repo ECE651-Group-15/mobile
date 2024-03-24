@@ -20,6 +20,6 @@ class AppRoutes {
   static const userProfile = '/user_profile'; //详细用户界面
   static const editProfile = '/edit_profile';
   static const SearchMain = '/searched_post';
-
   static const chat = '/chat'; // 聊天页面
+  static const completedOrder = '/completed_order';
 }

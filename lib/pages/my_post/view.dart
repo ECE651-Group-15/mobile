@@ -115,14 +115,13 @@ class MyPostPage extends GetView<MyPostController> {
                             switch (result) {
                               case 'edit':
                                 Get.toNamed(AppRoutes.editPost, arguments: item);
-                                // controller.editPost(context, item['id']);
-                                // 实现编辑功能的代码
                                 break;
                               case 'delete':
                                 controller.showDeleteConfirmationDialog(
                                     context, item['id']);
                                 break;
                               case 'markAsSold':
+                                controller.markAsSold(item);
                                 // 实现标记为已售功能的代码
                                 break;
                             }
