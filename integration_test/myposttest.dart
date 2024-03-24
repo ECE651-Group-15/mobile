@@ -29,16 +29,36 @@ void main() {
 
         await tester.tap(find.byType(ElevatedButton));
         await tester.pumpAndSettle();
+        await Future.delayed(const Duration(seconds: 2));
 
         // 进入我的帖子页面
         await tester.tap(find.text('My Post'));
         await tester.pumpAndSettle(); // 等待导航动画完成
+        await Future.delayed(const Duration(seconds: 2));
 
         // 查找并点击GridView中的第一个GridTile
         final Finder firstGridTile = find.byType(GridTile).at(0);
         await tester.tap(firstGridTile);
         await tester.pumpAndSettle(); // 等待点击事件处理完毕
-      },
+        Get.close(2);
+        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 2));
+
+        await tester.tap(find.text('My Stars'));
+        await tester.pumpAndSettle(); // 等待导航动画完成
+        final Finder secondGridTile = find.byType(GridTile).at(0);
+        await tester.tap(firstGridTile);
+        await tester.pumpAndSettle();
+        Get.close(2);
+        await tester.tap(find.text('Completed Orders '));
+        await tester.pumpAndSettle(); // 等待导航动画完成
+        final Finder thirdGridTile = find.byType(GridTile).at(0);
+        await tester.tap(firstGridTile);
+        await tester.pumpAndSettle();
+        Get.close(2);
+        expect(find.text('Setting'), findsOneWidget);
+
+          },
     );
   });
 }
