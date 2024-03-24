@@ -1,14 +1,28 @@
 import 'dart:convert';
+
+import 'package:exchange/common/routes/routes.dart';
+import 'package:exchange/common/store/store.dart';
 import 'package:exchange/common/values/server.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
 import 'index.dart';
 
-class UserProfileController extends GetxController{
+class UserProfileController extends GetxController {
   UserProfileController();
 
-  final Map<String,dynamic> profilesDetails = Get.arguments;
+  final Map<String, dynamic> profilesDetails = Get.arguments;
   final state = UserProfileControllerState();
+
+  void startConversation() {
+    if (UserStore.to.customerProfilesDetails.isEmpty) {
+      EasyLoading.showInfo('Please login first');
+      return;
+    }
+
+    Get.toNamed(AppRoutes.chat, arguments: profilesDetails["id"]);
+  }
 
   Future<List<dynamic>> fetchCustomerPostedListings(
       String customerId, int page) async {
@@ -18,7 +32,7 @@ class UserProfileController extends GetxController{
     };
 
     var request =
-    http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
+        http.Request('POST', Uri.parse(APIConstants.customerPostedListings));
 
     request.body = json.encode({"page": page, "customerId": customerId});
 
@@ -49,7 +63,7 @@ class UserProfileController extends GetxController{
 
   Future<void> loadData() async {
     state.postedListings =
-    await fetchCustomerPostedListings(profilesDetails['id'], 0);
+        await fetchCustomerPostedListings(profilesDetails['id'], 0);
   }
 
   void refreshUI() {

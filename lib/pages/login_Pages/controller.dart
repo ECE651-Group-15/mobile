@@ -1,16 +1,17 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+
 import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
 import '../home/controller.dart';
 import 'index.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
   LoginController();
 
   final state = LoginControllerState();
 
-  Future<Map<String,dynamic>?> logIn(String email, String password) async {
+  Future<Map<String, dynamic>?> logIn(String email, String password) async {
     LoginRequestEntity req = LoginRequestEntity(
       email: email,
       password: password,
@@ -36,7 +37,7 @@ class LoginController extends GetxController{
       print('Error : $e');
       EasyLoading.showError('login failed : $e');
     }
-     return userProfile;
+    return userProfile;
   }
 
   // void login(String newUserId) {
@@ -47,7 +48,6 @@ class LoginController extends GetxController{
   //   state.customerProfilesDetails =
   //   // login('ff8bc70f-bd42-4c5d-849f-498a70b3f095');
   // }
-
 
   /// 在 widget 内存中分配后立即调用。
   @override

@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../common/routes/names.dart';
 import 'controller.dart';
 
 class UserProfilePage extends StatelessWidget {
   // final HomeController homeController = Get.find<HomeController>();
-  final UserProfileController controller =  Get.find<UserProfileController>();
-   UserProfilePage({super.key});
+  final UserProfileController controller = Get.find<UserProfileController>();
+  UserProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("User's page"),
+        title: const Text("User's page"),
+        centerTitle: false,
         actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              // Handle settings icon action
-            },
+          FilledButton.icon(
+            onPressed: controller.startConversation,
+            icon: const Icon(Icons.chat),
+            label: const Text("Chat with seller"),
           ),
+          const SizedBox(width: 10),
         ],
       ),
       body: SingleChildScrollView(
@@ -32,8 +33,9 @@ class UserProfilePage extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage:  NetworkImage(
-                      controller.profilesDetails['avatar'] ?? 'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
+                    backgroundImage: NetworkImage(
+                      controller.profilesDetails['avatar'] ??
+                          'https://gravatar.com/avatar/default?s=400&d=robohash&r=x',
                     ),
                   ),
                   SizedBox(width: 16),
@@ -48,7 +50,7 @@ class UserProfilePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        controller.profilesDetails['email'] ??'No email',
+                        controller.profilesDetails['email'] ?? 'No email',
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.grey,
@@ -66,16 +68,17 @@ class UserProfilePage extends StatelessWidget {
               indent: 100, // 分割线左端的空白区域
               endIndent: 100, // 分割线右端的空白区域
             ),
-            const Padding(padding: EdgeInsets.all(1.0),
-            child: Text(
-              'All listings',
-              style:  TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+            const Padding(
+              padding: EdgeInsets.all(1.0),
+              child: Text(
+                'All listings',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            ),
-             const Divider(
+            const Divider(
               color: Colors.grey,
               height: 20, // 分割线的高度，包括上下两端的空间
               thickness: 2, // 分割线的厚度
@@ -110,7 +113,8 @@ class UserProfilePage extends StatelessWidget {
                               'customerProfilesDetails': {},
                             };
                             newList['listingDetails'] = item;
-                            Get.toNamed(AppRoutes.postDetails, arguments: newList);
+                            Get.toNamed(AppRoutes.postDetails,
+                                arguments: newList);
                           },
                           child: GridTile(
                             child: Column(
@@ -123,7 +127,7 @@ class UserProfilePage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(8.0),
                                       image: DecorationImage(
                                         image: NetworkImage(item['images']
-                                            .isNotEmpty
+                                                .isNotEmpty
                                             ? 'https://ece-651.oss-us-east-1.aliyuncs.com/${item['images'][0]}'
                                             : 'https://ece-651.oss-us-east-1.aliyuncs.com/default-image.jpg'),
                                         fit: BoxFit.cover,
@@ -134,7 +138,8 @@ class UserProfilePage extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '\$${item['price'].toString()}',
@@ -165,10 +170,16 @@ class UserProfilePage extends StatelessWidget {
                 );
               }
             }),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: FilledButton(
+            //     onPressed: () {},
+            //     child: const Text("Chat with seller"),
+            //   ),
+            // ),
           ],
         ),
       ),
     );
   }
 }
-
