@@ -23,13 +23,13 @@ class ImagePostController extends GetxController {
 
   // final Map<String, dynamic> profilesDetails = Get.arguments;
 
-  void startConversation(String id) {
+  void startConversation(var arguments) {
     if (UserStore.to.customerProfilesDetails.isEmpty) {
       EasyLoading.showInfo('Please login first');
       return;
     }
 
-    Get.toNamed(AppRoutes.chat, arguments: id);
+    Get.toNamed(AppRoutes.chat, arguments: arguments);
   }
 
   Future<void> starListing(String listingId) async {

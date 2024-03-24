@@ -16,11 +16,11 @@ class ChatController extends GetxController {
   final state = ChatState();
 
   String otherUserId = '';
-
   var selfId = UserStore.to.customerProfilesDetails['id'];
   var selfName = UserStore.to.customerProfilesDetails['name'];
   var selfAvatar = UserStore.to.customerProfilesDetails['avatar'];
-
+  var detailedPost = <String,dynamic>{};
+  bool isSendOffer = true;
   TextEditingController input = TextEditingController();
 
   void sendMessage() async {
@@ -41,17 +41,42 @@ class ChatController extends GetxController {
           .getMessageManager()
           .sendMessage(id: id!, receiver: otherUserId, groupID: '');
       if (sendMessageRes.code == 0) {
-        print("send message success");
         state.messages.insert(0, sendMessageRes.data!);
       } else {
-        print("send message failed");
         EasyLoading.showError("Other user haven't register in IM system");
-        print(sendMessageRes.desc);
       }
     }
 
     input.clear();
   }
+
+  void sendHelloMessage(double price, String title) async {
+    // 固定发送的消息内容
+    String messageContent = "hello, I am willing to pay \$$price for your $title";
+
+    V2TimValueCallback<V2TimMsgCreateInfoResult> createTextMessageRes =
+    await TencentImSDKPlugin.v2TIMManager
+        .getMessageManager()
+        .createTextMessage(text: messageContent); // 使用固定内容创建文本消息
+
+    if (createTextMessageRes.code == 0) {
+      String? id = createTextMessageRes.data?.id;
+      V2TimValueCallback<V2TimMessage> sendMessageRes = await TencentImSDKPlugin
+          .v2TIMManager
+          .getMessageManager()
+          .sendMessage(id: id!, receiver: otherUserId, groupID: '');
+      if (sendMessageRes.code == 0) {
+        // 这里假设你有一个状态对象（state）和一个保存消息的列表（messages）
+        // 如果你的应用程序的架构不同，你可能需要调整这部分代码
+        state.messages.insert(0, sendMessageRes.data!);
+      } else {
+        EasyLoading.showError("Other user haven't register in IM system");
+      }
+    }
+
+    // 由于我们不是从输入框读取内容，这里不需要清除输入
+  }
+
 
   Future<void> fetchMessages() async {
     V2TimValueCallback<List<V2TimMessage>> getC2CHistoryMessageListRes =
@@ -91,9 +116,16 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // retrieve arguments from previous screen
-    otherUserId = Get.arguments;
+    final Map<String, dynamic> args = Get.arguments;
 
+    // 从Map中提取参数
+    detailedPost = args['detailedPost'];
+    isSendOffer = args['isSendOffer'];
+    otherUserId =detailedPost['customerProfilesDetails']?['id'];
+    if(isSendOffer)
+      {
+        sendHelloMessage(detailedPost['listingDetails']?['price'],detailedPost['listingDetails']?['title']);
+      }
     // fetch message history
     fetchMessages();
 

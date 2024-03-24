@@ -54,7 +54,11 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
   Widget build(BuildContext context) {
     var detailedPost = controller.state.detailedPost.value;
     controller.checkIfStared();
-
+    bool isSendOffer = true;
+    var arguments = {
+      'detailedPost': detailedPost,
+      'isSendOffer': isSendOffer,
+    };
     final images =
         detailedPost['listingDetails']?['images'] as List<dynamic>? ?? [];
     final title = detailedPost['listingDetails']?['title'] ?? 'Default Title';
@@ -182,6 +186,12 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               // 使用Expanded让按钮填充可用空间
               child: TextButton(
                 onPressed: () {
+                  if (userStore.isLogin) {
+                    arguments['isSendOffer'] = true;
+                    controller.startConversation(arguments);// Chat 的逻辑
+                  } else {
+                    EasyLoading.showInfo('Please log in first');
+                  }
                   // Send offer 的逻辑
                 },
                 style: TextButton.styleFrom(
@@ -199,7 +209,12 @@ class _PostDetailsPageState extends State<PostDetailsPage> {
               // 使用Expanded让按钮填充可用空间
               child: TextButton(
                 onPressed: () {
-                  controller.startConversation(detailedPost['customerProfilesDetails']?['id']);// Chat 的逻辑
+                  if (userStore.isLogin) {
+                    arguments['isSendOffer'] = false;
+                    controller.startConversation(arguments);// Chat 的逻辑
+                  } else {
+                    EasyLoading.showInfo('Please log in first');
+                  }
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
