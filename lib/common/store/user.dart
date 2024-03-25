@@ -135,7 +135,7 @@ class UserStore extends GetxController {
 
         if(isSuccess){
          // EasyLoading.showSuccess('login success');
-
+          timLogin(userProfile['id']);
           Get.back();
         }
       } else {

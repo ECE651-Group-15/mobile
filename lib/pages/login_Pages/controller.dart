@@ -29,12 +29,10 @@ class LoginController extends GetxController {
         homeController.refreshUI();
         Get.back();
       } else {
-        print('Error: getProfile()');
         state.isLogin = false;
         EasyLoading.showError('login failed');
       }
     } catch (e) {
-      print('Error : $e');
       EasyLoading.showError('login failed : $e');
     }
     return userProfile;

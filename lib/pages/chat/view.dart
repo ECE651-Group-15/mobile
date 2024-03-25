@@ -1,67 +1,93 @@
 import 'dart:core';
-
+import 'package:exchange/common/style/color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_message.dart';
-
+import '../../common/routes/names.dart';
+import '../../common/store/user.dart';
 import 'index.dart';
 
 class ChatPage extends GetView<ChatController> {
-  const ChatPage({Key? key}) : super(key: key);
+   const ChatPage({Key? key}) : super(key: key);
 
-  Widget _buildMessageList() {
-    return Obx(
-      () => controller.state.messages.length == 0
-          ? const Center(
-              child: Text("No messages yet"),
-            )
-          : ListView.builder(
-              reverse: true,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                print("index: $index");
-                V2TimMessage message = controller.state.messages[index];
-                String avatar = message.faceUrl ?? "https://picsum.photos/200";
-                String name = message.nickName ?? message.userID ?? '';
+   Widget _buildMessageList() {
+     UserStore userStore = Get.find<UserStore>();
+     return Obx(
+           () => controller.state.messages.length == 0
+           ? const Center(
+         child: Text("No messages yet"),
+       )
+           : ListView.builder(
+         reverse: true,
+         shrinkWrap: true,
+         itemBuilder: (context, index) {
+           V2TimMessage message = controller.state.messages[index];
+           String avatar = message.faceUrl ?? "https://picsum.photos/200";
+           String name = message.nickName ?? message.userID ?? '';
+           String time = DateFormat('yyyy-MM-dd – kk:mm').format(DateTime.fromMillisecondsSinceEpoch(message.timestamp! * 1000));
+           String content = message.textElem!.text ?? "Unknown";
+           bool isCurrentUser = name.toLowerCase() == userStore.customerProfilesDetails['name'].toLowerCase();
 
-                String time = DateFormat('yyyy-MM-dd – kk:mm').format(
-                    DateTime.fromMillisecondsSinceEpoch(
-                        message.timestamp! * 1000));
-                String content = message.textElem!.text ?? "Unknown";
+           // 使用Row来组织头像和消息框，确保它们在同一行
+           // 并通过crossAxisAlignment属性设置为CrossAxisAlignment.start来保证它们顶部对齐
+           return Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+             child: Row(
+               mainAxisAlignment: isCurrentUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+               crossAxisAlignment: CrossAxisAlignment.start, // 使头像和消息框顶部对齐
+               children: [
+                 if (!isCurrentUser) // 对于非当前用户，头像显示在左侧
+                   Padding(
+                     padding: const EdgeInsets.only(left: 8.0),
+                     child: GestureDetector(
+                       onTap: () async {
+                         Map<String, dynamic>? customerProfilesDetails =  await controller.getProfile(message.userID!);
+                         Get.toNamed(AppRoutes.userProfile,
+                             arguments: customerProfilesDetails);
+                       },
+                       child: CircleAvatar(
+                         backgroundImage: NetworkImage(avatar),
+                         radius: 20,
+                       ),
+                     ),
+                   ),
+                 Expanded(
+                   child: Column(
+                     crossAxisAlignment: isCurrentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                     children: [
+                       Container(
+                         padding: const EdgeInsets.all(8.0),
+                         decoration: BoxDecoration(
+                           color: AppColor.myColor, // 调整为您的AppColor.myColor
+                           borderRadius: BorderRadius.circular(8),
+                         ),
+                         child: Text(content, style: const TextStyle(color: Colors.white)),
+                       ),
+                       const SizedBox(height: 4),
+                       Text(time, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                     ],
+                   ),
+                 ),
+                 if (isCurrentUser) // 对于当前用户，头像显示在右侧
+                   Padding(
+                     padding: const EdgeInsets.only(left: 8.0),
+                     child: CircleAvatar(
+                       backgroundImage: NetworkImage(avatar),
+                       radius: 20,
+                     ),
+                   ),
+               ],
+             ),
+           );
+         },
+         itemCount: controller.state.messages.length,
+       ),
+     );
+   }
 
-                return ListTile(
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      avatar,
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  title: Row(
-                    children: [
-                      Text(
-                        name,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        time,
-                        style: const TextStyle(fontSize: 12),
-                      )
-                    ],
-                  ),
-                  subtitle: Text(content),
-                );
-              },
-              itemCount: controller.state.messages.length,
-            ),
-    );
-  }
 
-  Widget _buildInputbox() {
+   Widget _buildInputBox() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
@@ -89,7 +115,7 @@ class ChatPage extends GetView<ChatController> {
         child: Column(
           children: [
             Expanded(child: _buildMessageList()),
-            _buildInputbox(),
+            _buildInputBox(),
           ],
         ),
       ),

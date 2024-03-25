@@ -114,8 +114,13 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     scrollController.addListener(_scrollListener);
-    // loadData();
-    state.staredLists.value = userStore.customerProfilesDetails['starredListIds']??[];
+    if(userStore.isLogin)
+      {
+        state.staredLists.value = userStore.customerProfilesDetails['starredListIds'];
+      }
+    else{
+      state.staredLists.value = [];
+    }
     fetchPostedListings(currentPage.value);
   }
 

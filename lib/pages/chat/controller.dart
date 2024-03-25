@@ -8,6 +8,8 @@ import 'package:tencent_cloud_chat_sdk/models/v2_tim_msg_create_info_result.dart
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_value_callback.dart';
 import 'package:tencent_cloud_chat_sdk/tencent_im_sdk_plugin.dart';
 
+import '../../common/apis/post.dart';
+import '../../common/entities/post.dart';
 import 'index.dart';
 
 class ChatController extends GetxController {
@@ -109,6 +111,25 @@ class ChatController extends GetxController {
     await TencentImSDKPlugin.v2TIMManager
         .getMessageManager()
         .markC2CMessageAsRead(userID: otherUserId);
+  }
+
+  Future<Map<String, dynamic>?> getProfile(String userId) async {
+    GetProfileRequestEntity req = GetProfileRequestEntity(
+      customerId: userId,
+    );
+    Map<String, dynamic>? userProfile = {};
+    // EasyLoading.show(status: 'Loading...', maskType: EasyLoadingMaskType.black);
+    try {
+      GetProfileResponseEntity res = await PostApi.getProfile(req);
+      if (res.code == 200 && res.data != null) {
+        userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
+      } else {
+        userProfile = {};
+      }
+    } catch (e) {
+      userProfile = {}; // 捕获异常时也确保返回一个空Map
+    }
+    return userProfile;
   }
 
   /// 在 widget 内存中分配后立即调用。
