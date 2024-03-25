@@ -6,8 +6,10 @@ import 'package:tencent_cloud_chat_sdk/models/v2_tim_conversation.dart';
 
 class ConversationItem extends StatelessWidget {
   final V2TimConversation conversation;
-
-  const ConversationItem({super.key, required this.conversation});
+  Map<String, dynamic> detailedPost = {};
+  bool isSendOffer = false;
+  // Map<String, dynamic>  arguments = {};
+  ConversationItem({super.key, required this.conversation});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,15 @@ class ConversationItem extends StatelessWidget {
 
     return ListTile(
       onTap: () {
-        Get.toNamed(AppRoutes.chat, arguments: conversation.userID!);
+        // 首先确保`detailedPost`中有一个`Map`类型的`'customerProfilesDetails'`
+        detailedPost['customerProfilesDetails'] = detailedPost['customerProfilesDetails'] ?? {};
+        // 然后安全地在这个Map中设置`'id'`
+        detailedPost['customerProfilesDetails']['id'] = conversation.userID!;
+        var arguments = {
+          'detailedPost': detailedPost,
+          'isSendOffer': isSendOffer,
+        };
+        Get.toNamed(AppRoutes.chat, arguments: arguments);
       },
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),

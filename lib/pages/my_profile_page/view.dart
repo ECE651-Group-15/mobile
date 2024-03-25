@@ -182,11 +182,11 @@ class AccountSettingsSection extends StatelessWidget {
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () => _showDeleteAccountConfirmation(context),
           ),
-          ListTile(
-            title: const Text('Notification preferences'),
-            trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   title: const Text('Notification preferences'),
+          //   trailing: const Icon(Icons.arrow_forward_ios),
+          //   onTap: () {},
+          // ),
           // ...更多ListTile组件
         ],
       ),

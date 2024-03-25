@@ -124,10 +124,10 @@ class CompletedOrderScreen extends StatelessWidget {
                 }
               },
               itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: 'delete',
-                  child: Text('Delete'),
-                ),
+                // const PopupMenuItem<String>(
+                //   value: 'delete',
+                //   child: Text('Delete'),
+                // ),
                 const PopupMenuItem<String>(
                   value: 'markAsAvailable',
                   child: Text('Mark as Available'),

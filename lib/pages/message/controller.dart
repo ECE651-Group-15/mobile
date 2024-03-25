@@ -61,7 +61,7 @@ class MessageController extends GetxController {
   void handleConversation() async {
     V2TimConversationListener listener = V2TimConversationListener(
       onConversationChanged: (List<V2TimConversation> conversationList) {
-        print("onConversationChanged");
+        // print("onConversationChanged");
         for (int i = 0; i < conversationList.length; i++) {
           for (int j = 0; j < state.conversationList.length; j++) {
             if (conversationList[i].conversationID ==
