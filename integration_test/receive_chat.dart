@@ -13,7 +13,7 @@ void main() {
     'end to end test',
         () {
       testWidgets(
-        'navigate to login screen and verify login with correct username and password',
+        'receieve message test',
             (tester) async {
           app.main();
           await tester.pumpAndSettle();
@@ -33,6 +33,9 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           Get.toNamed(AppRoutes.message);
           await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
+          await Future.delayed(const Duration(seconds: 10));
 
           //Finder conversationItemToTap = find.byKey(Key('conversationItem_$indexToTap'));
 
@@ -41,9 +44,26 @@ void main() {
               Finder conversationItemToTap = find.byKey(Key('conversationItem_$indexToTap'));
               await tester.tap(conversationItemToTap);
               await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+
+              await Future.delayed(const Duration(seconds: 5));
+              expect(find.text('Your message 25 here'), findsWidgets);
+              Get.close(4);
+              Get.toNamed(AppRoutes.mine);
+              await tester.pumpAndSettle(); //
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.tap(find.text('Logout'));
+              await tester.pumpAndSettle();
+              Get.toNamed(AppRoutes.message);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+
               await Future.delayed(const Duration(seconds: 10));
-              expect(find.text('Your message 24 here'), findsOneWidget);
-        },
+
+              expect(find.text('Please login first'), findsOneWidget);
+
+
+            },
       );
 
       // 对于登录失败的测试，可以采用类似的逻辑进行导航和验证

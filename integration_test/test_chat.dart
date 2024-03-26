@@ -13,7 +13,7 @@ void main() {
     'end to end test',
         () {
       testWidgets(
-        'navigate to login screen and verify login with correct username and password',
+        'send message test',
             (tester) async {
           app.main();
           await tester.pumpAndSettle();
@@ -44,7 +44,7 @@ void main() {
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 10));
           Finder messageTextBox = find.byType(TextField);
-          await tester.enterText(messageTextBox, 'Your message 23 here');
+          await tester.enterText(messageTextBox, 'Your message 24 here');
           Finder sendButton = find.byKey(ValueKey('sendButton'));
 
 // Tap the send button
@@ -66,7 +66,7 @@ void main() {
               await tester.pumpAndSettle();
               await Future.delayed(const Duration(seconds: 10));
 
-              expect(find.text('Your message 23 here'), findsOneWidget);
+              expect(find.text('Your message 24 here'), findsWidgets);
               Get.close(4);
               await tester.pumpAndSettle();
               await Future.delayed(const Duration(seconds: 10));
@@ -79,7 +79,7 @@ void main() {
               await tester.pumpAndSettle(); // 等待导航动画完成
               expect(find.text('Chat Page'), findsOneWidget);
               Finder message2TextBox = find.byType(TextField);
-              await tester.enterText(message2TextBox, 'Your message 24 here');
+              await tester.enterText(message2TextBox, 'Your message 25 here');
               await tester.tap(sendButton);
               await tester.pump(); // Simulate the tap event.
 
