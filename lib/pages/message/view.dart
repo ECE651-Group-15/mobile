@@ -11,6 +11,7 @@ class MessagePage extends GetView<MessageController> {
   Widget _buildConversationList() {
     return ListView.builder(
       itemBuilder: (context, index) => ConversationItem(
+        key: Key('conversationItem_$index'), // Assign a unique key based on index
         conversation: controller.state.conversationList[index],
       ),
       itemCount: controller.state.conversationList.length,

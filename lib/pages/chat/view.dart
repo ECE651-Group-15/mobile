@@ -88,24 +88,25 @@ class ChatPage extends GetView<ChatController> {
 
 
    Widget _buildInputBox() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: TextField(
-        controller: controller.input,
-        decoration: InputDecoration(
-          isDense: true,
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(30)),
-          ),
-          labelText: 'Type a message',
-          suffixIcon: IconButton(
-            onPressed: controller.sendMessage,
-            icon: const Icon(Icons.send),
-          ),
-        ),
-      ),
-    );
-  }
+     return Padding(
+       padding: const EdgeInsets.all(8.0),
+       child: TextField(
+         controller: controller.input,
+         decoration: InputDecoration(
+           isDense: true,
+           border: const OutlineInputBorder(
+             borderRadius: BorderRadius.all(Radius.circular(30)),
+           ),
+           labelText: 'Type a message',
+           suffixIcon: IconButton(
+             key: ValueKey('sendButton'), // Add this line
+             onPressed: controller.sendMessage,
+             icon: const Icon(Icons.send),
+           ),
+         ),
+       ),
+     );
+   }
 
   @override
   Widget build(BuildContext context) {
