@@ -2,17 +2,16 @@ import 'package:exchange/pages/edit_profile/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../common/store/user.dart';
 import '../my_profile_page/controller.dart'; // Import for picking images
 
 class EditProfileScreen extends StatelessWidget {
-  EditProfileController controller = Get.put(EditProfileController());
-  final myController = Get.find<MyProfileController>();
-  final ImagePicker picker = ImagePicker();
-  EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
-  UserStore userStore = Get.find<UserStore>();
+  const EditProfileScreen({Key? key}) : super(key: key); // Updated for null safety
+
   @override
   Widget build(BuildContext context) {
+    EditProfileController controller = Get.put(EditProfileController());
+    final myController = Get.find<MyProfileController>();
+    final ImagePicker picker = ImagePicker();
     // Using Obx here to listen to changes in controller state
     return Scaffold(
       appBar: AppBar(

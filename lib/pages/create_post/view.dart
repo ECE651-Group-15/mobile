@@ -38,7 +38,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: Obx(
                       () => controller.state.images.isNotEmpty
-                          ? Container(
+                          ? SizedBox(
                               height: 150, // 调整为合适的高度
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -86,7 +86,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                                       children: [
                                         Container(
                                           width: 100, // 图片宽度
-                                          margin: EdgeInsets.symmetric(
+                                          margin: const EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Stack(
                                             alignment: Alignment.topRight,
@@ -96,7 +96,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                                                 fit: BoxFit.cover,
                                               ),
                                               IconButton(
-                                                icon: Icon(Icons.cancel),
+                                                icon: const Icon(Icons.cancel),
                                                 color: Colors.white,
                                                 onPressed: () {
                                                   controller.state.images
@@ -137,7 +137,7 @@ class CreatePostPage extends GetView<CreatePostController> {
                                       Icon(Icons.add,
                                           color:
                                               Theme.of(context).primaryColor),
-                                      SizedBox(width: 8.0),
+                                      const SizedBox(width: 8.0),
                                       Text('Add photo',
                                           style: TextStyle(
                                             color:
