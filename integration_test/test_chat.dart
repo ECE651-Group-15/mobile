@@ -44,7 +44,7 @@ void main() {
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 10));
           Finder messageTextBox = find.byType(TextField);
-          await tester.enterText(messageTextBox, 'Your message 15 here');
+          await tester.enterText(messageTextBox, 'Your message 23 here');
           Finder sendButton = find.byKey(ValueKey('sendButton'));
 
 // Tap the send button
@@ -66,7 +66,7 @@ void main() {
               await tester.pumpAndSettle();
               await Future.delayed(const Duration(seconds: 10));
 
-              //expect(find.text('Your message 14 here'), findsOneWidget);
+              expect(find.text('Your message 23 here'), findsOneWidget);
               Get.close(4);
               await tester.pumpAndSettle();
               await Future.delayed(const Duration(seconds: 10));
@@ -78,6 +78,29 @@ void main() {
               await tester.tap(find.text('Send Offer'));
               await tester.pumpAndSettle(); // 等待导航动画完成
               expect(find.text('Chat Page'), findsOneWidget);
+              Finder message2TextBox = find.byType(TextField);
+              await tester.enterText(message2TextBox, 'Your message 24 here');
+              await tester.tap(sendButton);
+              await tester.pump(); // Simulate the tap event.
+
+// ... continue with any further steps, like settling animations ...
+              await tester.pumpAndSettle();
+              await Future.delayed(const Duration(seconds: 10));
+              Get.close(4);
+              await tester.pumpAndSettle(); // 等待导航动画完成
+              await Future.delayed(const Duration(seconds: 2));
+
+              Get.toNamed(AppRoutes.mine);
+              await tester.pumpAndSettle(); // 等待导航动画完成
+              await Future.delayed(const Duration(seconds: 2));
+
+              await tester.tap(find.text('Logout'));
+              await tester.pumpAndSettle(); // 等待导航动画完成
+
+
+
+
+
 
 
 
