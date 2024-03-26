@@ -24,7 +24,7 @@ class MessagePage extends GetView<MessageController> {
       appBar: AppBar(title: const Text("Message")),
       body: SafeArea(
         child: Obx(
-          () => UserStore.to.customerProfilesDetails.isEmpty
+          () => !UserStore.to.isLogin
               ? const Center(child: Text("Please login first"))
               : _buildConversationList(),
         ),
