@@ -49,6 +49,7 @@ class HomePage extends StatelessWidget {
                           child: Stack(
                             children: [
                               GestureDetector(
+                                key: ValueKey(index.toString()),
                                 onTap: () {
                                   Get.toNamed(AppRoutes.postDetails,
                                       arguments: item.toJson());
