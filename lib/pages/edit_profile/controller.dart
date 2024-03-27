@@ -1,13 +1,15 @@
 import 'dart:typed_data';
+
 import 'package:exchange/common/entities/post.dart';
 import 'package:exchange/common/utils/oss.dart';
 import 'package:exchange/pages/edit_profile/state.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart'; // Add this import for image picking
-import '../../common/store/user.dart';
+
 import '../../common/apis/post.dart';
+import '../../common/store/user.dart';
 
 class EditProfileController extends GetxController {
   EditProfileControllerState state = EditProfileControllerState();
@@ -16,11 +18,16 @@ class EditProfileController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   UserStore userStore = Get.find<UserStore>();
 
-  void uploadImage(XFile? file) async {
+  Future<void> uploadImage(XFile? file) async {
     if (file == null) {
       EasyLoading.showInfo("No image selected");
       return;
     }
+    String name = file.name;
+    if (name.isEmpty) {
+      name = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+    }
+
     EasyLoading.show(
       status: 'uploading...',
       maskType: EasyLoadingMaskType.black,
@@ -30,12 +37,13 @@ class EditProfileController extends GetxController {
       Uint8List fileBytes = await file.readAsBytes();
       await client.putObject(
         fileBytes,
-        file.name,
+        name,
       );
       state.avatar =
-          'https://ece-651.oss-us-east-1.aliyuncs.com/${file.name}'; // store image name in state array
+          'https://ece-651.oss-us-east-1.aliyuncs.com/$name'; // store image name in state array
       EasyLoading.showSuccess('upload image success');
     } catch (e) {
+      print(e);
       EasyLoading.showError('upload image failed, try later');
     }
   }

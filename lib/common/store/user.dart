@@ -93,7 +93,6 @@ class UserStore extends GetxController {
   }
 
   Future<void> timLogin(String userId) async {
-    print("fuck");
     print("userId $userId");
     // request userSig from backend
     var userSig = await HttpUtil().post(
@@ -133,8 +132,8 @@ class UserStore extends GetxController {
             userProfile.values.map((value) => value.toString()).toList();
         bool isSuccess = await StorageService.to.setList(email, profile);
 
-        if(isSuccess){
-         // EasyLoading.showSuccess('login success');
+        if (isSuccess) {
+          // EasyLoading.showSuccess('login success');
           timLogin(userProfile['id']);
           Get.back();
         }
