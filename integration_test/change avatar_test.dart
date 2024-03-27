@@ -1,30 +1,34 @@
-import 'dart:async';
-
-import 'package:dio/src/response.dart';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/edit_profile/state.dart';
+import 'package:exchange/common/utils/oss.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:exchange/main.dart' as app;
-import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
-import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
 
-class MockImagePicker extends Mock implements  ImagePicker{}
-class MockNetworkClient extends Mock implements Client {}// 假设你有一个网络客户端类用于上传图片
-class MockState extends Mock implements EditProfileControllerState {} // 假设你的状态类
+class MockController extends Mock {
+  void uploadImage(XFile image) async {
+    try {
+      Uint8List fileBytes = await image.readAsBytes();
+      var res = await client.putObject(
+        fileBytes,
+        image.name,
+      );
+      print("upload image success ${res.toString()}");
+    } catch (e) {
+      print("upload image error ${e.toString()}");
+    }
+  }
+}
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('end-to-end test', () {
-    // 初始化mock对象
-    final mockImagePicker = MockImagePicker();
-    final mockNetworkClient = MockNetworkClient();
-    final mockState = MockState();
-
     testWidgets(
       'navigate to sign-up page and create account successfully',
           (tester) async {
@@ -52,20 +56,21 @@ void main() {
         await tester.tap(find.text('Edit Profile'));
         await tester.pumpAndSettle(); // 等待导航动画完成
         await Future.delayed(const Duration(seconds: 2));
-        // 配置mock对象的行为
-        // when(mockImagePicker.pickImage(source: ImageSource.gallery))
-        //     .thenAnswer((_) async => XFile('/data/user/0/com.example.exchange/cache/8cf1c8d3-cdad-4f15-808c-a878818afee1/4043232_avatar_batman_comics_hero_icon.png'));
-        // when(mockNetworkClient.putObject(any as List<int>, any as String))
-        //     .thenAnswer((_) async => Future.value(); // 假设Response是你期望的返回类型
-        await tester.pumpAndSettle(); // 等待导航动画完成
-        await Future.delayed(const Duration(seconds: 2));
+
+        MockController mockController = MockController();
+        var response = await http.get(Uri.parse("https://i.pravatar.cc/300"));
+        var bytes = response.bodyBytes;
+        mockController.uploadImage(XFile.fromData(bytes, name: "test_image"));
         // await tester.enterText(find.byType(TextField).at(0), 'l');
         // await Future.delayed(const Duration(seconds: 2));
         // await tester.enterText(find.byType(TextField).at(1), '1');
         // await Future.delayed(const Duration(seconds: 2));
-        // await tester.tap(find.text('Save Changes'));
-        // await tester.pumpAndSettle(); // Wait for save to complete and navigate back
-        // await Future.delayed(const Duration(seconds: 2));
+        await tester.pumpAndSettle(); // 等待导航动画完成
+        await Future.delayed(const Duration(seconds: 2));
+
+        await tester.tap(find.text('Save Changes'));
+        await tester.pumpAndSettle(); // Wait for save to complete and navigate back
+        await Future.delayed(const Duration(seconds: 2));
 
         expect(find.text('Edit Profile'), findsOneWidget);
 
