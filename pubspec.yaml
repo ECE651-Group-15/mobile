@@ -38,7 +38,7 @@ dependencies:
 
   get: ^4.6.6
 
-  http: ^0.13.3
+  http: 1.2.0
 
   flutter_screenutil: ^5.8.4
 
@@ -73,7 +73,7 @@ dev_dependencies:
     sdk: flutter
   integration_test:
     sdk: flutter
-  mockito: ^5.0.0
+  mockito: ^5.4.4
   build_runner: ^2.1.7
   flutter_lints: ^2.0.0
 
