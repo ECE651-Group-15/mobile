@@ -56,7 +56,11 @@ void main() {
               await Future.delayed(const Duration(seconds: 2));
 
               await tester.tap(firstGridTile);
+              await tester.pumpAndSettle();
               await tester.pumpAndSettle(); //
+              await tester.pumpAndSettle(); //
+              await tester.pumpAndSettle(); //
+
               await Future.delayed(const Duration(seconds: 2));
 
           await Future.delayed(const Duration(seconds: 2));
