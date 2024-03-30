@@ -22,7 +22,7 @@ class EditPostController extends GetxController {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
 
-  void uploadImage(XFile? file) async {
+  Future<void>uploadImage(XFile? file) async {
     if (file == null) {
       EasyLoading.showInfo("No image selected");
       return;
