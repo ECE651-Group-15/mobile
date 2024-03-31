@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
         title: const Text("Home Page"),
         actions: [
           IconButton(
+            key: ValueKey('searchIconButton'),
             icon: const Icon(Icons.search),
             onPressed: () {
               // Assuming SearchMain is the route name for your search screen

@@ -27,7 +27,7 @@ void main() {
 
     testWidgets(
       'navigate to sign-up page and create account successfully',
-      (tester) async {
+          (tester) async {
         app.main();
         await tester.pumpAndSettle();
         Get.toNamed(AppRoutes.mine);

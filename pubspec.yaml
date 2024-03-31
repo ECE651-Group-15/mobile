@@ -38,7 +38,7 @@ dependencies:
 
   get: ^4.6.6
 
-  http: ^1.2.1
+  http: 1.2.0
 
   flutter_screenutil: ^5.8.4
 
