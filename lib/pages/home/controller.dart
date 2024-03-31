@@ -21,15 +21,13 @@ class HomeController extends GetxController {
     try {
       FetchPostedListingsResponseEntity response = await PostApi.fetchListings(req);
       if (response.code == 200 && response.data != null && response.data!.listingDetails != null) {
-        // 当n不等于0时，将新的列表项添加到现有的列表中
         if (n != 0) {
           state.listings.addAll(response.data!.listingDetails!);
         } else {
-          // 当n等于0时，先清空列表，再添加新的列表项
-          state.listings.clear();
-          state.listings.addAll(response.data!.listingDetails!);
+          state.listings.assignAll(response.data!.listingDetails!);
         }
         EasyLoading.dismiss();
+        update(); // Calling update to refresh the UI
       } else {
         EasyLoading.showError('Failed to fetch listings');
       }
@@ -96,10 +94,10 @@ class HomeController extends GetxController {
     loadData();
   }
 
-  void loadData() async {
-    currentPage.value=0;
-    fetchPostedListings(currentPage.value);
-    state.staredLists.value = userStore.customerProfilesDetails['starredListIds']??[];
+  Future<void> loadData() async {
+    currentPage.value = 0;
+    await fetchPostedListings(currentPage.value);
+    state.staredLists.assignAll(userStore.customerProfilesDetails['starredListIds'] ?? []);
   }
 
   void _scrollListener() {
@@ -112,16 +110,9 @@ class HomeController extends GetxController {
   /// 在 widget 内存中分配后立即调用。
   @override
   void onInit() {
-    super.onInit();
     scrollController.addListener(_scrollListener);
-    if(userStore.isLogin)
-      {
-        state.staredLists.value = userStore.customerProfilesDetails['starredListIds'];
-      }
-    else{
-      state.staredLists.value = [];
-    }
-    fetchPostedListings(currentPage.value);
+    loadData();
+    super.onInit();
   }
 
   // bool isStared(String postID) {
@@ -138,7 +129,7 @@ class HomeController extends GetxController {
   /// 在 [onDelete] 方法之前调用。
   @override
   void onClose() {
-    scrollController.dispose();
+    scrollController.dispose(); // Always dispose controllers
     super.onClose();
   }
 
