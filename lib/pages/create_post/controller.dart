@@ -18,10 +18,14 @@ class CreatePostController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController priceController = TextEditingController();
-  void uploadImage(XFile? file) async {
+  Future<void> uploadImage(XFile? file) async {
     if (file == null) {
       EasyLoading.showInfo("No image selected");
       return;
+    }
+    String name = file.name;
+    if (name.isEmpty) {
+      name = '${DateTime.now().millisecondsSinceEpoch}.jpg';
     }
     EasyLoading.show(
       status: 'uploading...',
@@ -32,7 +36,7 @@ class CreatePostController extends GetxController {
       Uint8List fileBytes = await file.readAsBytes();
       await client.putObject(
         fileBytes,
-        file.name,
+        name,
       );
       state.images.add(file.name); // store image name in state array
       EasyLoading.showSuccess('upload image success');
