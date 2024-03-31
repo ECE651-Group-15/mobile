@@ -16,6 +16,17 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:mockito/mockito.dart';
+import 'package:exchange/common/routes/names.dart';
+import 'package:exchange/main.dart' as app;
+import 'package:exchange/pages/edit_profile/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_oss_aliyun/flutter_oss_aliyun.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+//import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:integration_test/integration_test.dart';
+import 'package:mockito/mockito.dart';
 
 class MockImagePicker extends Mock implements ImagePicker {}
 
@@ -155,7 +166,14 @@ void main() {
           await tester.tap(firstGirdTileFinder);
           await tester.pumpAndSettle(); // Wait for any potential animations to finish
           await tester.pumpAndSettle(); // Wait for any potential animations to finish
-          final Finder scrollViewFinder = find.byType(SingleChildScrollView);
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+
+              final Finder scrollViewFinder = find.byType(SingleChildScrollView);
 
 // Determine the amount to scroll down
 // You might need to adjust the value based on the size of the content
@@ -170,6 +188,50 @@ void main() {
           expect(find.text('Category: OTHER'), findsOneWidget);
 
           expect(find.text('Name: Leo'), findsOneWidget) ;
+              final Finder backButton = find.byTooltip('Back'); // Flutter typically adds this tooltip by default
+              await tester.tap(backButton);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+              Get.toNamed(AppRoutes.home);
+              await tester.pumpAndSettle(); //
+              await Future.delayed(const Duration(seconds: 2));
+// 等待导航动画完成
+              Finder sendButton = find.byKey(ValueKey('searchIconButton'));
+              await tester.tap(sendButton);
+              await tester.tap(sendButton);
+              await tester.pump(); // Simulate the tap event.
+              await tester.pumpAndSettle();
+              await Future.delayed(const Duration(seconds: 2));
+              final Finder searchInputField = find.byType(TextField);
+              await tester.pumpAndSettle(); //
+
+              await tester.enterText(searchInputField, 'createposttest');
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle();
+
+              final Finder firstGridTile = find.byType(GridTile).at(0);
+              await tester.pumpAndSettle(); //
+
+              await Future.delayed(const Duration(seconds: 2));
+
+              await tester.tap(firstGridTile);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle(); //
+              await tester.pumpAndSettle(); //
+              await tester.pumpAndSettle(); //
+
+              await Future.delayed(const Duration(seconds: 2));
+
+              await Future.delayed(const Duration(seconds: 2));
+              await tester.drag(scrollViewFinder, Offset(0, -scrollAmount));
+              await tester.pumpAndSettle(); // Let the scroll animation settle
+              expect(find.text('Title: createposttest'), findsOneWidget);
+              expect(find.text('Price: \$90.0'), findsOneWidget);
+              expect(find.text('Description: createposttest'), findsOneWidget);
+              expect(find.text('Category: OTHER'), findsOneWidget);
+              expect(find.text('Name: Leo'), findsOneWidget);
         },
       );
 

@@ -38,7 +38,7 @@ class CreatePostController extends GetxController {
         fileBytes,
         name,
       );
-      state.images.add(file.name); // store image name in state array
+      state.images.add(name); // store image name in state array
       EasyLoading.showSuccess('upload image success');
     } catch (e) {
       EasyLoading.showError('upload image failed, try later');
