@@ -19,8 +19,11 @@ class HomeController extends GetxController {
       page: n,
     );
     try {
-      FetchPostedListingsResponseEntity response = await PostApi.fetchListings(req);
-      if (response.code == 200 && response.data != null && response.data!.listingDetails != null) {
+      FetchPostedListingsResponseEntity response =
+          await PostApi.fetchListings(req);
+      if (response.code == 200 &&
+          response.data != null &&
+          response.data!.listingDetails != null) {
         if (n != 0) {
           state.listings.addAll(response.data!.listingDetails!);
         } else {
@@ -35,7 +38,6 @@ class HomeController extends GetxController {
       EasyLoading.showError('Error: $e');
     }
   }
-
 
   Future<void> starListing(String listingId) async {
     StarListingRequestEntity req = StarListingRequestEntity(
@@ -79,11 +81,10 @@ class HomeController extends GetxController {
     }
   }
 
-
-
   void checkIfStared(String listingId) {
     if (userStore.isLogin) {
-      isStared.value = userStore.customerProfilesDetails['starredListIds'].contains(listingId);
+      isStared.value = userStore.customerProfilesDetails['starredListIds']
+          .contains(listingId);
     } else {
       isStared.value = false;
     }
@@ -97,11 +98,13 @@ class HomeController extends GetxController {
   Future<void> loadData() async {
     currentPage.value = 0;
     await fetchPostedListings(currentPage.value);
-    state.staredLists.assignAll(userStore.customerProfilesDetails['starredListIds'] ?? []);
+    state.staredLists
+        .assignAll(userStore.customerProfilesDetails['starredListIds'] ?? []);
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
       currentPage.value++;
       fetchPostedListings(currentPage.value);
     }
