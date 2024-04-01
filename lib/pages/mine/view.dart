@@ -68,7 +68,11 @@ class MinePage extends GetView<MineController> {
                 title: const Text("Completed Orders"),
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () {
-                  Get.toNamed(AppRoutes.completedOrder);
+                  if (userStore.isLogin) {
+                    Get.toNamed(AppRoutes.completedOrder);
+                  } else {
+                    EasyLoading.showInfo('Please log in first');
+                  }
                 },
               ),
               const Divider(),

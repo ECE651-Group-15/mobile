@@ -12,9 +12,9 @@ void main() {
   group('end-to-end test', () {
     testWidgets(
       'navigate to sign-up page and create account successfully',
-          (tester) async {
-            app.main();
-            await tester.pumpAndSettle();
+      (tester) async {
+        app.main();
+        await tester.pumpAndSettle();
 
         // Navigate to the 'Mine' or profile page
         Get.toNamed(AppRoutes.mine);
@@ -25,7 +25,7 @@ void main() {
         // Tap on 'Don't have an account? Sign up' button to navigate to the sign-up screen
         // If it's a TextButton, replace TextButton with the type of button used in your app
         final signUpButtonFinder =
-        find.widgetWithText(TextButton, "Don't have an account? Sign up");
+            find.widgetWithText(TextButton, "Don't have an account? Sign up");
         //await tester.ensureVisible(signUpButtonFinder);
         await tester.pumpAndSettle();
         await tester.tap(signUpButtonFinder);
@@ -36,7 +36,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextField), 'test@uwaterloo.ca');
         final ContinueButtonFinder =
-        find.widgetWithText(ElevatedButton, "Continue");
+            find.widgetWithText(ElevatedButton, "Continue");
         await tester.pumpAndSettle();
         await tester.tap(ContinueButtonFinder);
         await tester
@@ -46,6 +46,7 @@ void main() {
 // Check if the error message 'This email has been used' is shown
         expect(find.text('This email has been used'), findsOneWidget);
         await tester.enterText(find.byType(TextField), '999');
+
         ///ContinueButtonFinder = find.widgetWithText(ElevatedButton, "Continue");
         await Future.delayed(const Duration(seconds: 2));
         await tester.pumpAndSettle();
@@ -55,7 +56,7 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextField), '');
 
-            await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
         await tester.tap(ContinueButtonFinder);
         await tester.pumpAndSettle();
         expect(find.text('Please enter your email address'), findsOneWidget);
@@ -66,7 +67,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.enterText(find.byType(TextField), 'Leo2');
         final Continue2ButtonFinder =
-        find.widgetWithText(ElevatedButton, "Continue");
+            find.widgetWithText(ElevatedButton, "Continue");
         await tester.pumpAndSettle();
         await tester.tap(Continue2ButtonFinder);
         await tester
