@@ -86,7 +86,7 @@ class MyPostController extends GetxController {
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: TextButton(
-                child: const Text('Yes, delete',
+                child: const Text('Yes',
                     style: TextStyle(color: Colors.green)),
                 onPressed: () {
                   deleteListing(postID);

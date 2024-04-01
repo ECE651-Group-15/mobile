@@ -40,9 +40,9 @@ void main() {
   group(
     'end to end test',
         () {
-          final mockImagePicker = MockImagePicker();
-          final mockNetworkClient = MockNetworkClient();
-          final mockState = MockState();
+      final mockImagePicker = MockImagePicker();
+      final mockNetworkClient = MockNetworkClient();
+      final mockState = MockState();
       testWidgets(
         'navigate to login screen and verify login with correct username and password',
             (tester) async {
@@ -95,7 +95,7 @@ void main() {
           await tester.tap(firstTextFieldFinder);
           await tester.pumpAndSettle();
           await tester.enterText(firstTextFieldFinder, ''); // Clear the text
-          await tester.enterText(firstTextFieldFinder, 'createposttest'); // Enter 't'
+          await tester.enterText(firstTextFieldFinder, 'deleteposttest'); // Enter 't'
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
@@ -104,7 +104,7 @@ void main() {
           await tester.tap(secondTextFieldFinder);
           await tester.pumpAndSettle();
           await tester.enterText(secondTextFieldFinder, ''); // Clear the text
-          await tester.enterText(secondTextFieldFinder, 'createposttest'); // Enter 't'
+          await tester.enterText(secondTextFieldFinder, 'deleteposttest'); // Enter 't'
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
@@ -166,14 +166,14 @@ void main() {
           await tester.tap(firstGirdTileFinder);
           await tester.pumpAndSettle(); // Wait for any potential animations to finish
           await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
-              await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
+          await tester.pumpAndSettle(); // Wait for any potential animations to finish
 
-              final Finder scrollViewFinder = find.byType(SingleChildScrollView);
+          final Finder scrollViewFinder = find.byType(SingleChildScrollView);
 
 // Determine the amount to scroll down
 // You might need to adjust the value based on the size of the content
@@ -182,57 +182,33 @@ void main() {
 // Execute the scroll action
           await tester.drag(scrollViewFinder, Offset(0, -scrollAmount));
           await tester.pumpAndSettle(); // Let the scroll animation settle
-          expect(find.text('Title: createposttest'), findsOneWidget);
+          expect(find.text('Title: deleteposttest'), findsOneWidget);
           expect(find.text('Price: \$90.0'), findsOneWidget);
-          expect(find.text('Description: createposttest'), findsOneWidget);
+          expect(find.text('Description: deleteposttest'), findsOneWidget);
           expect(find.text('Category: OTHER'), findsOneWidget);
 
           expect(find.text('Name: Leo'), findsOneWidget) ;
-              final Finder backButton = find.byTooltip('Back'); // Flutter typically adds this tooltip by default
-              await tester.tap(backButton);
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle();
-              Get.toNamed(AppRoutes.home);
-              await tester.pumpAndSettle(); //
-              await Future.delayed(const Duration(seconds: 2));
-// 等待导航动画完成
-              Finder sendButton = find.byKey(ValueKey('searchIconButton'));
-              await tester.tap(sendButton);
-              await tester.tap(sendButton);
-              await tester.pump(); // Simulate the tap event.
-              await tester.pumpAndSettle();
-              await Future.delayed(const Duration(seconds: 2));
-              final Finder searchInputField = find.byType(TextField);
-              await tester.pumpAndSettle(); //
+          final Finder backButton = find.byTooltip('Back'); // Flutter typically adds this tooltip by default
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
 
-              await tester.enterText(searchInputField, 'createposttest');
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 4));
 
-              final Finder firstGridTile = find.byType(GridTile).at(0);
-              await tester.pumpAndSettle(); //
-
-              await Future.delayed(const Duration(seconds: 2));
-
-              await tester.tap(firstGridTile);
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle(); //
-              await tester.pumpAndSettle(); //
-              await tester.pumpAndSettle(); //
-
-              await Future.delayed(const Duration(seconds: 2));
-
-              await Future.delayed(const Duration(seconds: 2));
-              await tester.drag(scrollViewFinder, Offset(0, -scrollAmount));
-              await tester.pumpAndSettle(); // Let the scroll animation settle
-              expect(find.text('Title: createposttest'), findsOneWidget);
-              expect(find.text('Price: \$90.0'), findsOneWidget);
-              expect(find.text('Description: createposttest'), findsOneWidget);
-              expect(find.text('Category: OTHER'), findsOneWidget);
-              expect(find.text('Name: Leo'), findsOneWidget);
-              // 验证元素已经不存在
+          final Finder popupMenuButtonFinder = find.byIcon(Icons.more_vert).at(0);
+          await tester.tap(popupMenuButtonFinder);
+          await tester.pumpAndSettle(); // Wait for the menu to open.
+          await Future.delayed(const Duration(seconds: 2));
+// 假设每个列表条目都有一个唯一的Key
+          final Finder specificItemFinder = find.text('Title: deleteposttest');
+          final Finder deleteOptionFinder = find.text('Delete').at(0);
+          await tester.tap(deleteOptionFinder);
+          await tester.pumpAndSettle(); // Wait for any actions to complete after selection.
+          final Finder yesOptionFinder = find.text('Yes').at(0);
+          await tester.tap(yesOptionFinder);
+          await tester.pumpAndSettle();
+          expect(specificItemFinder, findsNothing); // 验证元素已经不存在
         },
       );
 
