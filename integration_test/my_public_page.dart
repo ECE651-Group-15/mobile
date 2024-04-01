@@ -11,10 +11,10 @@ void main() {
 
   group(
     'end to end test',
-        () {
+    () {
       testWidgets(
         'navigate to login screen and verify login with correct username and password',
-            (tester) async {
+        (tester) async {
           app.main();
           await tester.pumpAndSettle();
           Get.toNamed(AppRoutes.mine);
@@ -23,7 +23,8 @@ void main() {
           await tester.pumpAndSettle(); // 等待导航动画完成
           // 以下是登录测试，与你之前的代码相同
           await Future.delayed(const Duration(seconds: 2));
-          await tester.enterText(find.byType(TextField).at(0), 'z39yu@uwaterloo.ca');
+          await tester.enterText(
+              find.byType(TextField).at(0), 'z39yu@uwaterloo.ca');
           await Future.delayed(const Duration(seconds: 2));
           await tester.enterText(find.byType(TextField).at(1), '123456');
           await Future.delayed(const Duration(seconds: 2));
@@ -38,8 +39,7 @@ void main() {
           await tester.pumpAndSettle(); // 等待导航动画完成
           await Future.delayed(const Duration(seconds: 2));
           expect(find.text('User\'s page'), findsOneWidget);
-
-            },
+        },
       );
 
       // 对于登录失败的测试，可以采用类似的逻辑进行导航和验证

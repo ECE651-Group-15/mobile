@@ -11,10 +11,10 @@ void main() {
 
   group(
     'end to end test',
-        () {
+    () {
       testWidgets(
         'send message test',
-            (tester) async {
+        (tester) async {
           app.main();
           await tester.pumpAndSettle();
           Get.toNamed(AppRoutes.mine);
@@ -23,7 +23,8 @@ void main() {
           await tester.pumpAndSettle(); // 等待导航动画完成
           // 以下是登录测试，与你之前的代码相同
           await Future.delayed(const Duration(seconds: 2));
-          await tester.enterText(find.byType(TextField).at(0), 'leo2@uwaterloo.ca');
+          await tester.enterText(
+              find.byType(TextField).at(0), 'leo2@uwaterloo.ca');
           await Future.delayed(const Duration(seconds: 2));
           await tester.enterText(find.byType(TextField).at(1), '123456');
           await Future.delayed(const Duration(seconds: 2));
@@ -57,58 +58,48 @@ void main() {
           Get.toNamed(AppRoutes.message);
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 10));
-              // To tap on a conversation item with a specific key
-              int indexToTap = 0; // Replace with the index of the item you want to tap
-              Finder conversationItemToTap = find.byKey(Key('conversationItem_$indexToTap'));
+          // To tap on a conversation item with a specific key
+          int indexToTap =
+              0; // Replace with the index of the item you want to tap
+          Finder conversationItemToTap =
+              find.byKey(Key('conversationItem_$indexToTap'));
 
 // Simulate the tap
           await tester.tap(conversationItemToTap);
-              await tester.pumpAndSettle();
-              await Future.delayed(const Duration(seconds: 10));
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 10));
 
-              expect(find.text('Your message 24 here'), findsWidgets);
-              Get.close(4);
-              await tester.pumpAndSettle();
-              await Future.delayed(const Duration(seconds: 10));
+          expect(find.text('Your message 24 here'), findsWidgets);
+          Get.close(4);
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 10));
 
-              await tester.tap(find.byKey(ValueKey('6')));
+          await tester.tap(find.byKey(ValueKey('6')));
 
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              await Future.delayed(const Duration(seconds: 10));
-              await tester.tap(find.text('Send Offer'));
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              expect(find.text('Chat Page'), findsOneWidget);
-              Finder message2TextBox = find.byType(TextField);
-              await tester.enterText(message2TextBox, 'Your message 25 here');
-              await tester.tap(sendButton);
-              await tester.pump(); // Simulate the tap event.
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await Future.delayed(const Duration(seconds: 10));
+          await tester.tap(find.text('Send Offer'));
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          expect(find.text('Chat Page'), findsOneWidget);
+          Finder message2TextBox = find.byType(TextField);
+          await tester.enterText(message2TextBox, 'Your message 25 here');
+          await tester.tap(sendButton);
+          await tester.pump(); // Simulate the tap event.
 
 // ... continue with any further steps, like settling animations ...
-              await tester.pumpAndSettle();
-              await Future.delayed(const Duration(seconds: 10));
-              Get.close(4);
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              await Future.delayed(const Duration(seconds: 2));
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 10));
+          Get.close(4);
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await Future.delayed(const Duration(seconds: 2));
 
-              Get.toNamed(AppRoutes.mine);
-              await tester.pumpAndSettle(); // 等待导航动画完成
-              await Future.delayed(const Duration(seconds: 2));
+          Get.toNamed(AppRoutes.mine);
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await Future.delayed(const Duration(seconds: 2));
 
-              await tester.tap(find.text('Logout'));
-              await tester.pumpAndSettle(); // 等待导航动画完成
-
-
-
-
-
-
-
-
-
-
-
-
-            },
+          await tester.tap(find.text('Logout'));
+          await tester.pumpAndSettle(); // 等待导航动画完成
+        },
       );
 
       // 对于登录失败的测试，可以采用类似的逻辑进行导航和验证
