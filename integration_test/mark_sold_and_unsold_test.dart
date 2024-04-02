@@ -1,5 +1,6 @@
 import 'package:exchange/common/routes/names.dart';
 import 'package:exchange/pages/mine/view.dart';
+import 'package:exchange/pages/my_post/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -135,6 +136,12 @@ void main() {
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 4));
          // final Finder firstGridTile = find.byType(GridTile).at(0);
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 4));
+          await tester.tap(find.text('My Post'));
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await Future.delayed(const Duration(seconds: 4));
           await tester.tap(firstGridTile);
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
@@ -147,11 +154,6 @@ void main() {
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
           expect(find.text('Setting'), findsWidgets);
-
-
-
-
-
 
 
         },
