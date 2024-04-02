@@ -61,9 +61,8 @@ class MyLikedPostController extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.customerId = userStore.customerProfilesDetails['id'];
     state.postedListings = await fetchStarredListings(
-        state.customerId, 0, 6); //id,page,page size  返回第几页数据,一页四个帖子内容
+        userStore.customerProfilesDetails['id'], 0, 6); //id,page,page size  返回第几页数据,一页四个帖子内容
     // state.customerProfilesDetails = (await getProfile())!;
   }
 
