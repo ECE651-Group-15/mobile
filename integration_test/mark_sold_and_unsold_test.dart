@@ -121,6 +121,39 @@ void main() {
               .pumpAndSettle(); // Wait for any actions to complete after selection.
 
           expect(find.text('Logout'), findsWidgets);
+          //final Finder backButton = find.byTooltip(
+          //    'Back'); // Flutter typically adds this tooltip by default
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.tap(find.text('My Post'));
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 4));
+         // final Finder firstGridTile = find.byType(GridTile).at(0);
+          await tester.tap(firstGridTile);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          expect(find.text(fullTitleText!), findsOneWidget);
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          expect(find.text('Setting'), findsWidgets);
+
+
+
+
+
+
+
         },
       );
 
