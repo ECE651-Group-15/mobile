@@ -39,6 +39,26 @@ void main() {
           await tester.pumpAndSettle(); // 等待导航动画完成
 
           await Future.delayed(const Duration(seconds: 4));
+          final Finder firstGridTile = find.byType(GridTile).at(0);
+          await tester.tap(firstGridTile);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
+          final Finder titleFinder = find.byWidgetPredicate(
+                (Widget widget) => widget is Text && widget.data!.startsWith('Title: '),
+          );
+          final String? fullTitleText = (titleFinder.evaluate().single.widget as Text).data;
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
+          final Finder backButton = find.byTooltip(
+              'Back'); // Flutter typically adds this tooltip by default
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
 
           final Finder popupMenuButtonFinder =
               find.byIcon(Icons.more_vert).at(0);
@@ -50,6 +70,8 @@ void main() {
           await tester.tap(SoldOptionFinder);
           await tester
               .pumpAndSettle(); // Wait for any actions to complete after selection.
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
           Get.toNamed(AppRoutes.mine);
           await tester
               .pumpAndSettle(); // Wait for any actions to complete after selection.
@@ -65,7 +87,22 @@ void main() {
               .pumpAndSettle(); // Wait for any actions to complete after selection.
 
           await Future.delayed(const Duration(seconds: 2));
-          expect(find.text('used macbook for sale'), findsOneWidget);
+         // final Finder firstGridTile = find.byType(GridTile).at(0);
+          await tester.tap(firstGridTile);
+          await tester
+              .pumpAndSettle(); // Wait for any actions to complete after selection.
+          await tester
+              .pumpAndSettle(); // Wait for any actions to complete after selection.
+          await tester
+              .pumpAndSettle(); // Wait for any actions to complete after selection.
+
+          expect(find.text(fullTitleText!), findsOneWidget);
+         // final Finder backButton = find.byTooltip(
+          //    'Back'); // Flutter typically adds this tooltip by default
+          await tester.tap(backButton);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
           final Finder popupMenuButtonFinder2 =
               find.byIcon(Icons.more_vert).at(0);
           await tester.tap(popupMenuButtonFinder2);
@@ -76,8 +113,8 @@ void main() {
           await tester.tap(UnsoldOptionFinder);
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 2));
-          final Finder backButton = find.byTooltip(
-              'Back'); // Flutter typically adds this tooltip by default
+         // final Finder backButton = find.byTooltip(
+          //    'Back'); // Flutter typically adds this tooltip by default
           await tester.tap(backButton);
           await tester.pumpAndSettle();
           await tester
