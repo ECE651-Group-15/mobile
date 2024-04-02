@@ -162,9 +162,8 @@ class MyPostController extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.customerId = userStore.customerProfilesDetails['id']??'';
     state.postedListings =
-        await fetchCustomerPostedListings(state.customerId, 0);
+        await fetchCustomerPostedListings(userStore.customerProfilesDetails['id'], 0);
   }
 
   Future<void> refreshUI() async {
