@@ -61,7 +61,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('Please enter your email address'), findsOneWidget);
 
-        await tester.enterText(find.byType(TextField), '99999@uwaterloo.ca');
+        await tester.enterText(find.byType(TextField), '000@uwaterloo.ca');
         await tester.pumpAndSettle();
         await tester.tap(ContinueButtonFinder);
         await tester.pumpAndSettle();
@@ -93,7 +93,7 @@ void main() {
         // Verify that user is navigated back to the login page
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(
-            find.byType(TextField).at(0), '99999@uwaterloo.ca');
+            find.byType(TextField).at(0), '000@uwaterloo.ca');
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextField).at(1), '123456');
         await Future.delayed(const Duration(seconds: 2));

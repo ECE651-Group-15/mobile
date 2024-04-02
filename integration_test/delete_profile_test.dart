@@ -25,7 +25,7 @@ void main() {
           // 以下是登录测试，与你之前的代码相同
           await Future.delayed(const Duration(seconds: 2));
           await tester.enterText(
-              find.byType(TextField).at(0), 'lll@uwaterloo.ca');
+              find.byType(TextField).at(0), '00@uwaterloo.ca');
           await Future.delayed(const Duration(seconds: 2));
           await tester.enterText(find.byType(TextField).at(1), '123456');
           await Future.delayed(const Duration(seconds: 2));
@@ -54,7 +54,7 @@ void main() {
           await tester.pumpAndSettle(); // Wait for any navigation or UI changes to complete.
           await tester.pumpAndSettle();
           await tester.enterText(
-              find.byType(TextField).at(0), 'lll@uwaterloo.ca');
+              find.byType(TextField).at(0), '00@uwaterloo.ca');
           await Future.delayed(const Duration(seconds: 2));
           await tester.enterText(find.byType(TextField).at(1), '123456');
           await Future.delayed(const Duration(seconds: 2));

@@ -32,12 +32,13 @@ void main() {
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
 
+
           await Future.delayed(const Duration(seconds: 2));
           Get.toNamed(AppRoutes.home);
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 10));
 
-          //final Finder firstimage = find.byType(GridTile).at(0);
+          //inal Finder firstimage = find.byType(GridTile).at(0);
           await tester.tap(find.byKey(ValueKey('1')));
           await tester.pumpAndSettle(); // 等待导航动画完成
           await Future.delayed(const Duration(seconds: 10));
@@ -74,9 +75,30 @@ void main() {
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 10));
 
-          await tester.tap(find.byKey(ValueKey('6')));
+          //await tester.tap(find.byKey(ValueKey('6')));
+          Finder searchButton = find.byKey(ValueKey('searchIconButton'));
+          await tester.tap(searchButton);
+          await tester.pump(); // Simulate the tap event.
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 2));
+          final Finder searchInputField = find.byType(TextField);
+          await tester.pumpAndSettle(); //
 
-          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.enterText(searchInputField, 'Brand New 4 Seat Couch Set With a Table');
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle();
+          final Finder firstGridTile = find.byType(GridTile).at(0);
+
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.tap(firstGridTile);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+
+          await Future.delayed(const Duration(seconds: 2));// 等待导航动画完成
           await Future.delayed(const Duration(seconds: 10));
           await tester.tap(find.text('Send Offer'));
           await tester.pumpAndSettle(); // 等待导航动画完成
