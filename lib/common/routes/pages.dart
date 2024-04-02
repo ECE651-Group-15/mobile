@@ -5,7 +5,7 @@ import 'package:exchange/pages/chat/index.dart';
 import 'package:exchange/pages/create_post/bindings.dart';
 import 'package:exchange/pages/create_post/view.dart';
 import 'package:exchange/pages/edit_post/index.dart';
-import 'package:exchange/pages/edit_profile/view.dart';
+import 'package:exchange/pages/edit_profile/index.dart';
 import 'package:exchange/pages/home/index.dart';
 import 'package:exchange/pages/image_post/bindings.dart';
 import 'package:exchange/pages/image_post/view.dart';
@@ -22,10 +22,6 @@ import '../../pages/completed_order_page/index.dart';
 import '../../pages/my_profile_page/index.dart';
 import '../../pages/user_profile_page/index.dart';
 import 'routes.dart';
-import 'package:exchange/pages/my_post/index.dart';
-import 'package:exchange/pages/My_Liked_Page/index.dart';
-import 'package:exchange/pages/sign_up_pages/index.dart';
-import 'package:exchange/pages/edit_post/index.dart';
 
 class AppPages {
   static const initial = AppRoutes.initial;
