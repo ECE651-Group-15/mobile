@@ -13,13 +13,6 @@ class ImagePostController extends GetxController {
   final state = ImagePostState();
   UserStore userStore = Get.find<UserStore>();
 
-  // tap
-  void handleTap(int index) {
-    Get.snackbar(
-      "标题",
-      "消息",
-    );
-  }
 
   // final Map<String, dynamic> profilesDetails = Get.arguments;
 

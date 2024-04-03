@@ -47,6 +47,7 @@ class ChatPage extends GetView<ChatController> {
                              arguments: customerProfilesDetails);
                        },
                        child: CircleAvatar(
+                         key: const Key('userProfileAvatar'),
                          backgroundImage: NetworkImage(avatar),
                          radius: 20,
                        ),
