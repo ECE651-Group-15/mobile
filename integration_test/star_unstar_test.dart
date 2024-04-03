@@ -45,8 +45,16 @@ void main() {
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
+              // 查找FloatingActionButton
+              final fabFinder = find.byType(FloatingActionButton);
+              // 确保FloatingActionButton出现在屏幕上
+              expect(fabFinder, findsOneWidget);
+              // 模拟点击按钮
+              await tester.tap(fabFinder);
+              // 触发一次动画或状态更新后的重绘
+              await Future.delayed(const Duration(seconds: 2));
               final Finder starIconFinder = find.byIcon(Icons.star);
-              await tester.tap(starIconFinder);
+              // await tester.tap(starIconFinder);
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
