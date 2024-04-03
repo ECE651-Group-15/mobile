@@ -75,66 +75,7 @@ class CompletedOrderController extends GetxController {
     }
     return userProfile;
   }
-  // Future<bool> deleteListing(String listingId) async {
-  //   var url = '${APIConstants.deleteListing}/$listingId';
-  //   var request = http.Request('POST', Uri.parse(url));
-  //
-  //   try {
-  //     http.StreamedResponse response = await request.send();
-  //     String responseBody = await response.stream.bytesToString();
-  //     var decodedResponse = json.decode(responseBody);
-  //     if (decodedResponse['code'] == 200) {
-  //       EasyLoading.showSuccess('delete post success');
-  //       homeController.loadData();
-  //       refreshUI();
-  //       return true; // 返回 true 表示删除成功
-  //     } else {
-  //       return false; // 返回 false 表示删除失败
-  //     }
-  //   } catch (e) {
-  //     return false; // 捕获异常，返回 false
-  //   }
-  // }
 
-  void showDeleteConfirmationDialog(BuildContext context, String postID) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          title: const Text('Delete this listing?'),
-          content: const Text('Are you sure you delete this listing?'),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 30.0),
-              child: TextButton(
-                child: const Text('Yes, delete',
-                    style: TextStyle(color: Colors.green)),
-                onPressed: () {
-                  // deleteListing(postID);
-                  Get.back();// Close the dialog
-                },
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Get.back();// Close the dialog
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(
-                    0xFF00008B), // Use backgroundColor instead of primary
-              ),
-              child: const Text(
-                'Cancel',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   /// 在 widget 内存中分配后立即调用。
   @override
