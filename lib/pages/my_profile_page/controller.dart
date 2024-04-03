@@ -27,7 +27,6 @@ class MyProfileController extends GetxController {
         return false;
       }
     } catch (e) {
-      print('Error : $e');
       EasyLoading.showError('Update failed: $e');
       return false;
     }

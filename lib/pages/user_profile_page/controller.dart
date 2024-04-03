@@ -50,12 +50,11 @@ class UserProfileController extends GetxController {
         postedListings = decodedResponse['data']['postedListings'];
         // state.postedListings=postedListings;
       } else {
-        print(response.reasonPhrase);
+        // print(response.reasonPhrase);
         // 可选: 抛出异常或返回错误信息
       }
     } catch (e) {
       // 异常处理
-      print('An error occurred: $e');
       // 可选: 抛出异常或返回错误信息
     }
     return postedListings;
