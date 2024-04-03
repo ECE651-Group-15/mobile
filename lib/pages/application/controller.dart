@@ -54,7 +54,7 @@ class ApplicationController extends GetxController {
   // }
 
   // 程序打开时介入
-  // void handleIncomingLinks() {
+  // void handleIncomingLinks()
   //   if (!kIsWeb) {
   //     uriSub = uriLinkStream.listen((Uri? uri) {
   //       // 这里获取了 scheme 请求

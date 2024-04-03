@@ -154,30 +154,3 @@ class EditPostController extends GetxController {
     super.dispose();
   }
 }
-
-void showSuccessPost(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Create post successfully'),
-        content:
-            const Text('Congratulations, you have successfully create a post'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Return to my post page'),
-            onPressed: () {
-              /// Navigator.pushReplacement(
-              ///   context,
-              ///   MaterialPageRoute(builder: (context) => MyPostPage()),
-              //  ); //
-              Get.toNamed(AppRoutes.application);
-
-// 关闭对话框
-            },
-          ),
-        ],
-      );
-    },
-  );
-}

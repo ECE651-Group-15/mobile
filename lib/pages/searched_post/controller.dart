@@ -51,11 +51,9 @@ class SearchMainController extends GetxController {
       if (res.code == 200 && res.data != null) {
         userProfile = res.data!.toJson(); // 使用 Data 类的 toJson 方法
       } else {
-        print('Error: getProfile()');
         userProfile = {};
       }
     } catch (e) {
-      print('Error : $e');
       userProfile = {}; // 捕获异常时也确保返回一个空Map
     }
     return userProfile;
