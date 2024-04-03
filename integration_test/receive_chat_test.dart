@@ -63,11 +63,60 @@ void main() {
           Finder conversationItemToTap =
               find.byKey(Key('conversationItem_$indexToTap'));
           await tester.tap(conversationItemToTap);
-          await tester.pumpAndSettle();
-          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 15));
 
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 15));
+
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 5));
           expect(find.text('Your message 25 here'), findsWidgets);
+          // // 找到我们通过Key添加的CircleAvatar
+          // final avatarFinder = find.byKey(Key('userProfileAvatar'));
+          //
+          // // 确保CircleAvatar出现在屏幕上
+          // expect(avatarFinder, findsOneWidget);
+          //
+          // // 模拟点击头像
+          // await tester.tap(avatarFinder);
+          //
+          // // 触发一次动画或状态更新后的重绘
+          // await tester.pump();
+          // await Future.delayed(const Duration(seconds: 2));// 等待导航动画完成
+          // Get.back();
+          // await tester.pump();
+          // await Future.delayed(const Duration(seconds: 2));// 等待导航动画完成
           Get.close(4);
           Get.toNamed(AppRoutes.mine);
           await tester.pumpAndSettle(); //

@@ -94,11 +94,8 @@ class CreatePostController extends GetxController {
       } else {
         EasyLoading.showError('create post failed, try later');
       }
-      // print(res.toJson());
-      // TODO: navigate to post detail page
     } catch (e) {
       EasyLoading.showError('create post failed: $e');
-      print('Error : $e');
     }
   }
 
