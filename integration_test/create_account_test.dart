@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:exchange/main.dart' as app;
+import 'dart:math';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -60,8 +61,12 @@ void main() {
         await tester.tap(ContinueButtonFinder);
         await tester.pumpAndSettle();
         expect(find.text('Please enter your email address'), findsOneWidget);
-
-        await tester.enterText(find.byType(TextField), '000@uwaterloo.ca');
+        String generateRandomEmail() {
+          final randomNumber = Random().nextInt(900) + 100; // Ensures a 3-digit number
+          return "${randomNumber}@uwaterloo.ca";
+        }
+        String email = generateRandomEmail();
+        await tester.enterText(find.byType(TextField), email);
         await tester.pumpAndSettle();
         await tester.tap(ContinueButtonFinder);
         await tester.pumpAndSettle();
@@ -93,7 +98,7 @@ void main() {
         // Verify that user is navigated back to the login page
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(
-            find.byType(TextField).at(0), '000@uwaterloo.ca');
+            find.byType(TextField).at(0), email);
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextField).at(1), '123456');
         await Future.delayed(const Duration(seconds: 2));
