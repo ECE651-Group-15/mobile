@@ -57,7 +57,28 @@ void main() {
           await tester.tap(find.text('My Post'));
           await tester.pumpAndSettle(); // 等待导航动画完成
           await tester.pumpAndSettle(); // 等待导航动画完成
-
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 4));
 
           final Finder popupMenuButtonFinder =
@@ -145,11 +166,73 @@ void main() {
 
 // Find and tap the desired category from the list
           final Finder desiredCategoryFinder = find
-              .text('Other')
-              .last; // Use the actual text or key of the category
+              .text('Other');
+               // Use the actual text or key of the category
           await tester.tap(desiredCategoryFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 2));
+
+          //final Finder selectCategoryButtonFinder = find.text(
+          //    'Select Category'); // Replace with your actual key or finder
+          await tester.tap(selectCategoryButtonFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await Future.delayed(const Duration(seconds: 2));
+
+// Find and tap the desired category from the list
+          final Finder HousingCategoryFinder = find
+              .text('Housing'); // Use the actual text or key of the category
+          await tester.tap(HousingCategoryFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+          //final Finder selectCategoryButtonFinder = find.text(
+          //    'Select Category');
+          await tester.tap(selectCategoryButtonFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+          final Finder ElectronicsCategoryFinder = find
+              .text('Electronics');
+          await tester.tap(ElectronicsCategoryFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+          await tester.tap(selectCategoryButtonFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
+
+          final Finder OtherCategoryFinder = find
+              .text('Other');
+          await tester.tap(OtherCategoryFinder);
+          await tester
+              .pumpAndSettle(); // Wait for any pop-up animations to settle
+          await tester
+              .pumpAndSettle();
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
           await Future.delayed(const Duration(seconds: 2));
 // Wait for any pop-up animations to settle
 // Wait for selection to settle
@@ -169,7 +252,25 @@ void main() {
           await tester
               .pumpAndSettle(); // Wait for any potential animations to finish
           await tester
+              .pumpAndSettle();
+          await tester
               .pumpAndSettle(); // Wait for any potential animations to finish
+          await tester
+              .pumpAndSettle();await tester
+              .pumpAndSettle(); // Wait for any potential animations to finish
+          await tester
+              .pumpAndSettle();await tester
+              .pumpAndSettle(); // Wait for any potential animations to finish
+          await tester
+              .pumpAndSettle();await tester
+              .pumpAndSettle(); // Wait for any potential animations to finish
+          await tester
+              .pumpAndSettle();await tester
+              .pumpAndSettle(); // Wait for any potential animations to finish
+          await tester
+              .pumpAndSettle();
+          // Wait for any potential animations to finish
+          await Future.delayed(const Duration(seconds: 2));
           final Finder scrollViewFinder = find.byType(SingleChildScrollView);
 
 // Determine the amount to scroll down
