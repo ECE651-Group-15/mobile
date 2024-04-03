@@ -37,6 +37,15 @@ void main() {
           await tester.pumpAndSettle(); // Wait for the navigation animation to complete
           await tester.pumpAndSettle(); // Wait for the navigation animation to complete
           await tester.pumpAndSettle();
+          final Finder firststarFinder = find.byType(IconButton).first;
+          await tester.tap(firststarFinder);
+
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
           final Finder firstGirdTileFinder = find.byType(GridTile).first;
 // Wait for the navigation animation to complete
               await tester.tap(firstGirdTileFinder);
@@ -98,6 +107,49 @@ void main() {
               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
               await tester.pumpAndSettle();
+              Get.close(1);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+              Get.toNamed(AppRoutes.mine);
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); //await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+              await tester.tap(find.text('My Stars'));
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); //await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+              //final Finder firstGirdTileFinder = find.byType(GridTile).first;
+
+// Tap on the first ListTile
+              await tester.tap(firstGirdTileFinder);
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); //await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+              await tester.tap(starIconFinder);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+              Get.close(1);
+              await tester.pumpAndSettle();
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+              await tester.pumpAndSettle();
+
 
 
 
