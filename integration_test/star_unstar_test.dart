@@ -1,5 +1,4 @@
 import 'package:exchange/common/routes/names.dart';
-import 'package:exchange/pages/mine/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
@@ -45,7 +44,12 @@ void main() {
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
           await tester.pumpAndSettle();
-
+          await tester.tap(firststarFinder);
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 2));
+          await tester.tap(firststarFinder);
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 2));
           final Finder firstGirdTileFinder = find.byType(GridTile).first;
 // Wait for the navigation animation to complete
               await tester.tap(firstGirdTileFinder);
@@ -67,6 +71,12 @@ void main() {
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
+              // 确保FloatingActionButton出现在屏幕上
+              expect(fabFinder, findsOneWidget);
+              // 模拟点击按钮
+              await tester.tap(fabFinder);
+              // 触发一次动画或状态更新后的重绘
+              await Future.delayed(const Duration(seconds: 2));
               await tester.pumpAndSettle();
               await tester.pumpAndSettle();
               Get.close(1);
@@ -129,26 +139,26 @@ void main() {
               //final Finder firstGirdTileFinder = find.byType(GridTile).first;
 
 // Tap on the first ListTile
-              await tester.tap(firstGirdTileFinder);
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); //await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle();
-              await tester.tap(starIconFinder);
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle();
-              Get.close(1);
-              await tester.pumpAndSettle();
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle(); // Wait for the navigation animation to complete
-              await tester.pumpAndSettle();
+//               await tester.tap(firstGirdTileFinder);
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); //await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle();
+//               await tester.tap(starIconFinder);
+//               await tester.pumpAndSettle();
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle();
+//               Get.close(1);
+//               await tester.pumpAndSettle();
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle(); // Wait for the navigation animation to complete
+//               await tester.pumpAndSettle();
 
 
 
