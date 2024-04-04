@@ -24,8 +24,46 @@ void main() {
             find.byType(TextField).at(0), 'test@uwaterloo.ca');
         await tester.enterText(find.byType(TextField).at(1), '123456');
         await tester.tap(find.byType(ElevatedButton));
-        await tester.pumpAndSettle();
         await Future.delayed(const Duration(seconds: 15));
+
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+
+        await Future.delayed(const Duration(seconds: 15));
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
 // 进入我的帖子页面
         await tester.tap(find.text('My Post'));
         await tester.pumpAndSettle(); // 等待导航动画完成

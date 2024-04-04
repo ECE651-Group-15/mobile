@@ -65,7 +65,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(find.text('Please enter your email address'), findsOneWidget);
           String generateRandomEmail() {
-            final randomNumber = Random().nextInt(900) + 100; // Ensures a 3-digit number
+            final randomNumber = Random().nextInt(90000) + 23890; // Ensures a 3-digit number
             return "${randomNumber}@uwaterloo.ca";
           }
           String email = generateRandomEmail();
