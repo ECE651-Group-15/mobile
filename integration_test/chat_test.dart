@@ -19,6 +19,13 @@ void main() {
           await tester.pumpAndSettle();
           Get.toNamed(AppRoutes.mine);
           await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+          await tester.pumpAndSettle(); // 等待导航动画完成
+
           await tester.tap(find.text('Login'));
           await tester.pumpAndSettle(); // 等待导航动画完成
           // 以下是登录测试，与你之前的代码相同
@@ -31,6 +38,13 @@ void main() {
           await tester.tap(find.byType(ElevatedButton));
           await Future.delayed(const Duration(seconds: 2));
           await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle();
+
 
 
           await Future.delayed(const Duration(seconds: 2));
@@ -39,8 +53,29 @@ void main() {
           await Future.delayed(const Duration(seconds: 10));
 
           //inal Finder firstimage = find.byType(GridTile).at(0);
-          await tester.tap(find.byKey(ValueKey('1')));
-          await tester.pumpAndSettle(); // 等待导航动画完成
+          Finder searchButton = find.byKey(ValueKey('searchIconButton'));
+          await tester.tap(searchButton);
+          await tester.pump(); // Simulate the tap event.
+          await tester.pumpAndSettle();
+          await Future.delayed(const Duration(seconds: 2));
+          final Finder searchInputField = find.byType(TextField);
+          await tester.pumpAndSettle(); //
+
+          await tester.enterText(searchInputField, '4 chairs with a table');
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle();
+          final Finder firstGridTile = find.byType(GridTile).at(0);
+
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.tap(firstGridTile);
+          await tester.pumpAndSettle();
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+          await tester.pumpAndSettle(); //
+
+          await Future.delayed(const Duration(seconds: 2));//// 等待导航动画完成
           await Future.delayed(const Duration(seconds: 10));
           await tester.tap(find.text('Chat'));
           await tester.pumpAndSettle();
@@ -76,18 +111,18 @@ void main() {
           await Future.delayed(const Duration(seconds: 10));
 
           //await tester.tap(find.byKey(ValueKey('6')));
-          Finder searchButton = find.byKey(ValueKey('searchIconButton'));
+          //Finder searchButton = find.byKey(ValueKey('searchIconButton'));
           await tester.tap(searchButton);
           await tester.pump(); // Simulate the tap event.
           await tester.pumpAndSettle();
           await Future.delayed(const Duration(seconds: 2));
-          final Finder searchInputField = find.byType(TextField);
+          //final Finder searchInputField = find.byType(TextField);
           await tester.pumpAndSettle(); //
 
           await tester.enterText(searchInputField, 'Brand New 4 Seat Couch Set With a Table');
           await tester.pumpAndSettle(); //
           await tester.pumpAndSettle();
-          final Finder firstGridTile = find.byType(GridTile).at(0);
+          //final Finder firstGridTile = find.byType(GridTile).at(0);
 
           await tester.pumpAndSettle(); //
           await tester.pumpAndSettle(); //
