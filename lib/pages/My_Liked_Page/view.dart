@@ -15,9 +15,9 @@ class LikedPage extends GetView<MyLikedPostController> {
       appBar: AppBar(title: const Text("My Liked Post")),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed(AppRoutes.createPost);
+          controller.refreshUI();
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.refresh),
       ),
       body: SafeArea(
         child: Padding(
@@ -83,7 +83,7 @@ class LikedPage extends GetView<MyLikedPostController> {
                                     fontWeight: FontWeight.bold, // 加粗
                                   ),
                                 ),
-                                SizedBox(height: 4), // 添加一点空间
+                                const SizedBox(height: 4), // 添加一点空间
                                 Text(
                                   item['title'] ?? 'No title',
                                   overflow: TextOverflow.ellipsis,
