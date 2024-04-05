@@ -21,4 +21,11 @@ class APIConstants {
   static const String getProfile = '$baseUrl/v1/api/profile/get-profile/';
   static const String deleteProfile =
       '$baseUrl//v1/api/profile/delete-profile/';
+  static const String createPost =
+      '$baseUrl/v1/api/listings/create-listing';
+  static const String getListing =
+      '$baseUrl/v1/api/listings/get-listing/';
+  static const String updateListing =
+      '$baseUrl/v1/api/listings/update-listing';
+
 }
