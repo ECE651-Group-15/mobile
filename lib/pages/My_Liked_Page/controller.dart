@@ -11,6 +11,7 @@ class MyLikedPostController extends GetxController {
   MyLikedPostController();
 
   final state = MyLikedPostPostState();
+
   UserStore userStore = Get.find<UserStore>();
   Future<List<dynamic>> fetchStarredListings(
       String customerId, int page, int pageSize) async {

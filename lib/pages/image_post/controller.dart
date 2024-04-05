@@ -5,6 +5,7 @@ import '../../common/apis/post.dart';
 import '../../common/entities/post.dart';
 import '../../common/routes/names.dart';
 import '../../common/store/user.dart';
+import '../My_Liked_Page/controller.dart';
 import 'index.dart';
 
 class ImagePostController extends GetxController {
@@ -12,8 +13,6 @@ class ImagePostController extends GetxController {
   HomeController homeController = Get.find<HomeController>();
   final state = ImagePostState();
   UserStore userStore = Get.find<UserStore>();
-
-
   // final Map<String, dynamic> profilesDetails = Get.arguments;
 
   void startConversation(var arguments) {
